@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,14 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios', function (Blueprint $table) {
-            $table->id('UsuarioId');
-            $table->string('UsuarioName');
-            $table->string('UsuarioEmail')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('UsuarioPassword');
-            $table->unsignedBigInteger('fk_rol');
-            $table->foreign('fk_rol')->references('RolId')->on('roles');
-            $table->rememberToken();
+        Schema::create('productos', function (Blueprint $table) {
+            $table->id('ProductoId');
+            $table->string('ProductoNombre');
+            $table->longText('ProductoDescripcion');
+            $table->float('ProductoPrecio', 8, 2);
+            $table->integer('ProductoCantidad');
+            $table->unsignedBigInteger('fk_proveedor');
+            $table->foreign('fk_proveedor')->references('ProveedorId')->on('proveedores');
             $table->timestamps();
             $table->softDeletes('deleted_at');
             $table->engine = 'InnoDB';
@@ -37,6 +36,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('productos');
     }
 }
