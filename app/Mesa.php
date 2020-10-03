@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Mesa extends Model
 {
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'MesaId';
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -21,4 +29,10 @@ class Mesa extends Model
      * @var string
      */
     protected $table = 'mesas';
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

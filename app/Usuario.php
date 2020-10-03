@@ -11,6 +11,13 @@ class Usuario extends Authenticatable
 {
     use Notifiable;
 
+        /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'UsuarioId';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,4 +35,10 @@ class Usuario extends Authenticatable
      * @var string
      */
     protected $table = 'usuarios';
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

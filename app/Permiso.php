@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Permiso extends Model
 {
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'PermisoId';
+
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -21,4 +29,18 @@ class Permiso extends Model
      * @var string
      */
     protected $table = 'permisos';
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The roles that belong to the permiso.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Rol', 'permiso_rol', 'fk_permiso', 'fk_rol');
+    }
 }

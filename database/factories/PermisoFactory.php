@@ -15,9 +15,31 @@ use Faker\Generator as Faker;
 | model instances for testing / seeding your application's database.
 |
 */
-
-$factory->define(Permiso::class, function (Faker $faker) {
+$modelos = [
+    'Cliente',
+    'Compra',
+    'Rol',
+    'Permiso',
+    'Usuario',
+    'Producto',
+    'Proveedor',
+    'Venta',
+    'Mesa',
+];
+$funciones = [
+    'create',
+    'read',
+    'update',
+    'delete',
+];
+$array=[];
+foreach ($modelos as $key => $value) {
+    foreach ($funciones as $key2 => $value2) {
+        $array == array_push($array, $value.$value2);
+    }
+}
+$factory->define(Permiso::class, function (Faker $faker) use ($array) {
     return [
-        //
+        'PermisoNombre' => $faker->randomElement($array),
     ];
 });

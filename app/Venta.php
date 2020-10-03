@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Venta extends Model
 {
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'VentaId';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -25,4 +32,10 @@ class Venta extends Model
      * @var string
      */
     protected $table = 'ventas';
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }

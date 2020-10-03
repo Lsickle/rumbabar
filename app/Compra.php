@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compra extends Model
 {
+        /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'CompraId';
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,4 +31,10 @@ class Compra extends Model
      * @var string
      */
     protected $table = 'compras';
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
 }
