@@ -18,6 +18,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Cliente::class, function (Faker $faker) {
     return [
-        //
+        'ClienteNombre' => $faker->firstName.' '.$faker->lastName,
+        'ClienteDocumento' => $faker->numberBetween($min = 950000000, $max = 1200000000),
     ];
 });
