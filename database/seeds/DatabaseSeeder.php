@@ -15,6 +15,12 @@ class DatabaseSeeder extends Seeder
             PermisoSeeder::class,
             RolSeeder::class,
             UsuarioSeeder::class,
+            ProveedorSeeder::class,
+            ProductoSeeder::class,
+            CompraSeeder::class,
+            MesaSeeder::class,
+            ClienteSeeder::class,
+            VentaSeeder::class,
         ]);
     }
 }

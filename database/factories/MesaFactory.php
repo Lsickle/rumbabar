@@ -17,7 +17,8 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Mesa::class, function (Faker $faker) {
+    $puestos = [2, 4, 6, 8];
     return [
-        //
+        'MesaPuestos' => $faker->randomElement($puestos),
     ];
 });

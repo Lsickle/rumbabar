@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compra extends Model
 {
-        /**
+    /**
      * The primary key associated with the table.
      *
      * @var string
@@ -37,4 +37,12 @@ class Compra extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * The roles that belong to the permiso.
+     */
+    public function productos()
+    {
+        return $this->belongsToMany('App\Producto', 'compra_producto', 'fk_compra', 'fk_producto')->withPivot('compraCantidad')->withTimestamps();
+    }
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ClienteSeeder extends Seeder
+class MesaSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,6 @@ class ClienteSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Cliente::class, 50)->create();
+        factory(App\Mesa::class, 10)->create();
     }
 }

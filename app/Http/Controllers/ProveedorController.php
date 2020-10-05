@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Proveedor;
+use App\Rol;
 use Illuminate\Http\Request;
 
 class ProveedorController extends Controller
@@ -14,7 +15,10 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        //
+        // $proveedores = Proveedor::all('ProveedorID');
+        $roles = Rol::all('RolId');
+
+        return $roles->random()->RolId;
     }
 
     /**

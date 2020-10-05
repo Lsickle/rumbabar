@@ -16,9 +16,9 @@ use Faker\Generator as Faker;
 | model instances for testing / seeding your application's database.
 |
 */
-$roles = Rol::all('RolId');
 
-$factory->define(Usuario::class, function (Faker $faker) use ($roles) {
+$factory->define(Usuario::class, function (Faker $faker) {
+    $roles = Rol::all('RolId');
     $nombre = $faker->userName;
     return [
         'UsuarioName' => $nombre,

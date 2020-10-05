@@ -38,4 +38,12 @@ class Venta extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * The roles that belong to the permiso.
+     */
+    public function productos()
+    {
+        return $this->belongsToMany('App\Producto', 'producto_venta', 'fk_venta', 'fk_producto')->withPivot('ventaCantidad')->withTimestamps();
+    }
 }

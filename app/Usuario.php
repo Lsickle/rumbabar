@@ -27,6 +27,7 @@ class Usuario extends Authenticatable
         'UsuarioName',
         'UsuarioEmail',
         'UsuarioPassword',
+        'fk_rol',
     ];
 
     /**
@@ -41,4 +42,12 @@ class Usuario extends Authenticatable
      * @var bool
      */
     public $timestamps = false;
+
+        /**
+     * The roles that belong to the permiso.
+     */
+    public function rol()
+    {
+        return $this->belongsTo('App\Rol', 'roles', 'fk_rol', 'RolId');
+    }
 }

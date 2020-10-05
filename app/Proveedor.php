@@ -35,4 +35,12 @@ class Proveedor extends Model
      * @var bool
      */
     public $timestamps = false;
+
+    /**
+     * The proveedor that has Many producto.
+     */
+    public function productos()
+    {
+        return $this->hasMany('App\Producto', 'fk_proveedor', 'ProveedorId');
+    }
 }
