@@ -12,7 +12,7 @@ class CompraSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Compra::class, 300)->create()->each(function ($compra){
+        factory(App\Compra::class, 50)->create()->each(function ($compra){
             $faker = Faker\Factory::create();
             $productos = Producto::all();
             $numProductos = $faker->numberBetween($min = 2, $max = 10);
