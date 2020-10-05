@@ -14,7 +14,8 @@ class CreateProductoVentaTable extends Migration
     public function up()
     {
         Schema::create('producto_venta', function (Blueprint $table) {
-            $table->float('ventaCantidad', 8, 2);
+            $table->unsignedSmallInteger('ventaCantidad');
+            $table->float('ventaSubtotal', 10, 2);
             $table->unsignedBigInteger('fk_producto');
             $table->foreign('fk_producto')->references('ProductoId')->on('productos');
             $table->unsignedBigInteger('fk_venta');

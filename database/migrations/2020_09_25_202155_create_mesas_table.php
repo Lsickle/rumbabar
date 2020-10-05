@@ -15,7 +15,7 @@ class CreateMesasTable extends Migration
     {
         Schema::create('mesas', function (Blueprint $table) {
             $table->id('MesaId');
-            $table->unsignedInteger('MesaPuestos');
+            $table->unsignedTinyInteger('MesaPuestos');
             $table->timestamps();
             $table->softDeletes('deleted_at');
             $table->engine = 'InnoDB';

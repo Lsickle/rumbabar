@@ -25,8 +25,8 @@ $factory->define(Producto::class, function (Faker $faker) {
     return [
         'ProductoNombre' => $faker->unique()->randomElement($lista),
         'ProductoDescripcion' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
-        'ProductoPrecio' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 100000),
-        'ProductoCantidad' => $faker->numberBetween($min = 0, $max = 999),
+        'ProductoPrecio' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10000),
+        'ProductoCantidad' => $faker->numberBetween($min = 0, $max = 200),
         'fk_proveedor' => $faker->randomElement($proveedor),
     ];
 });

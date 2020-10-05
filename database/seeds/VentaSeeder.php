@@ -17,7 +17,9 @@ class VentaSeeder extends Seeder
             $numProductos = $faker->numberBetween($min = 2, $max = 10);
             // Seed the relation with random producto
             foreach ($productos->random($numProductos) as $key => $producto) {
-                $compra->productos()->attach($producto->ProductoId, ['ventaCantidad' => ($faker->numberBetween($min = 10, $max = 1000)*100)]);
+                $cantidad = ($faker->numberBetween($min = 1, $max = $producto->ProductoCantidad));
+                $subtotal = $cantidad*$producto->ProductoPrecio;
+                $compra->productos()->attach($producto->ProductoId, ['ventaCantidad' => $cantidad, 'ventaSubtotal' => $subtotal]);
             }
         });
     }

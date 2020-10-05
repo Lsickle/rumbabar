@@ -14,7 +14,8 @@ class CreateCompraProductoTable extends Migration
     public function up()
     {
         Schema::create('compra_producto', function (Blueprint $table) {
-            $table->float('compraCantidad', 8, 2);
+            $table->unsignedSmallInteger('compraCantidad');
+            $table->float('compraSubtotal', 10, 2);
             $table->unsignedBigInteger('fk_producto');
             $table->foreign('fk_producto')->references('ProductoId')->on('productos');
             $table->unsignedBigInteger('fk_compra');
