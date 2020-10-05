@@ -19,7 +19,7 @@ use Faker\Generator as Faker;
 $factory->define(Venta::class, function (Faker $faker) {
     $usuarios = App\Usuario::all('UsuarioId');
     $mesas = App\Mesa::all('MesaId');
-    $clientes = App\Usuario::all('UsuarioId');
+    $clientes = App\Cliente::all('ClienteId');
     $total = $faker->numberBetween($min = 0, $max = 99999);
     return [
         'VentaSaldo' => ($total/$faker->numberBetween($min = 1, $max = 10)),
