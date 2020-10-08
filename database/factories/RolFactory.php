@@ -19,5 +19,7 @@ use Faker\Generator as Faker;
 $factory->define(Rol::class, function (Faker $faker) {
     return [
         'RolNombre' => $faker->randomElement($array = array ('administrador','vendedor')),
+        'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
+        'updated_at' => $faker->dateTimeBetween('2020-09-01', '2020-10-07')->format('Y-m-d H:i:s'),
     ];
 });

@@ -41,5 +41,7 @@ foreach ($modelos as $key => $value) {
 $factory->define(Permiso::class, function (Faker $faker) use ($array) {
     return [
         'PermisoNombre' => $faker->randomElement($array),
+        'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
+        'updated_at' => $faker->dateTimeBetween('2020-09-01', '2020-10-07')->format('Y-m-d H:i:s'),
     ];
 });
