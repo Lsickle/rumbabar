@@ -28,5 +28,7 @@ $factory->define(Producto::class, function (Faker $faker) {
         'ProductoPrecio' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 10000),
         'ProductoCantidad' => $faker->numberBetween($min = 0, $max = 200),
         'fk_proveedor' => $faker->randomElement($proveedor),
+        'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
+        'updated_at' => $faker->dateTimeBetween('2020-09-01', '2020-10-07')->format('Y-m-d H:i:s'),
     ];
 });
