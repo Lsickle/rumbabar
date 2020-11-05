@@ -49,7 +49,7 @@
     background: -moz-linear-gradient(#030095, #4465dd);
     background: linear-gradient(#030095, #4465dd);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;" class="card-title text-left">Registro de Usuario</h2>
+    -webkit-text-fill-color: transparent;" class="card-title text-left">Registro</h2>
                                 <form>
                                     <div class="card border-0 rounded p-3">
                                         <div class="form-group">
