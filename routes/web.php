@@ -25,4 +25,8 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
+Route::get('/ventas', function () {
+    return view('ventas');
+})->name('ventas');
+
 Route::get('/proveedores', 'ProveedorController@index');
