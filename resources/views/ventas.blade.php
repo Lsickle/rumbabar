@@ -215,7 +215,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 1
@@ -256,7 +256,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 1
@@ -297,7 +297,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 5
@@ -338,7 +338,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 1
@@ -379,7 +379,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 1
@@ -420,7 +420,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 1
@@ -461,7 +461,7 @@
                                     <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+                                    <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             <div class="text-dark">Pepito Perez</div>Mesa 1
