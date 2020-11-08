@@ -15,8 +15,8 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id('CompraId');
-            $table->float('CompraSaldo', 8, 2);
-            $table->float('CompraTotal', 8, 2);
+            $table->float('CompraSaldo', 10, 2);
+            $table->float('CompraTotal', 10, 2);
             $table->unsignedBigInteger('fk_user');
             $table->foreign('fk_user')->references('UsuarioId')->on('usuarios');
             $table->timestamps();

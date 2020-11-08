@@ -1,0 +1,157 @@
+//gradients
+$enable-gradients: true;
+
+html,
+body {
+    /* background-color: #fff; */
+    color: #636b6f;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 200;
+    height: 100vh;
+    margin: 0;
+}
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
+
+.top-right {
+    position: absolute;
+    right: 10px;
+    top: 18px;
+}
+
+.content {
+    text-align: center;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links>a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.m-b-md {
+    margin-bottom: 30px;
+}
+
+.border-3 {
+    border-width:3px !important;
+}
+
+.font-inter-100 {
+    font-family: 'Inter', sans-serif;
+    font-weight:100;
+}
+
+.font-inter-200 {
+    font-family: 'Inter', sans-serif;
+    font-weight:200;
+}
+
+.font-inter-300 {
+    font-family: 'Inter', sans-serif;
+    font-weight:300;
+}
+
+.font-inter-400 {
+    font-family: 'Inter', sans-serif;
+    font-weight:400;
+}
+
+.font-inter-500 {
+    font-family: 'Inter', sans-serif;
+    font-weight:500;
+}
+
+.font-inter-600 {
+    font-family: 'Inter', sans-serif;
+    font-weight:600;
+}
+
+.font-inter-700 {
+    font-family: 'Inter', sans-serif;
+    font-weight:700;
+}
+
+.font-inter-800 {
+    font-family: 'Inter', sans-serif;
+    font-weight:800;
+}
+
+.font-inter-900 {
+    font-family: 'Inter', sans-serif;
+    font-weight:900;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+.badge-local {
+  color: #4A4AFF;
+  background-color: #E6E6F2;
+}
+
+.badge-domicilio {
+  color: #6E6893;
+  background-color: #E6E6F2;
+}
+
+.badge-efectivo {
+  color: #007F00;
+  background-color: #CDFFCD;
+}
+
+.badge-debito {
+  color: #965E00;
+  background-color: #FFECCC;
+}
+
+.badge-credito {
+  color: #D30000;
+  background-color: #FFE0E0;
+}
+
+.bg-local {
+  color: #4A4AFF;
+  background-color: #E6E6F2;
+}
+
+.bg-domicilio {
+  color: #6E6893;
+  background-color: #E6E6F2;
+}
+
+.bg-efectivo {
+  color: #007F00;
+  background-color: #CDFFCD;
+}
+
+.bg-debito {
+  color: #965E00;
+  background-color: #FFECCC;
+}
+
+.bg-credito {
+  color: #D30000;
+  background-color: #FFE0E0;
+}
