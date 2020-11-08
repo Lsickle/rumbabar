@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Ventas - Rumbabar</title>
+    <title>Compras - Rumbabar</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -22,7 +22,7 @@
             <div class="sticky-top">
                 <div class="row bg-light">
                     <div class="col">
-                        <p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'lista de ventas'}}</p>
+                        <p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'lista de compras'}}</p>
                     </div>
                     <div class="col">
                         <a class="float-right font-inter-700 text-secondary" href="#"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
@@ -80,7 +80,7 @@
                                 </div>
                             </li>
                             <li class="flex-grow-1 nav-item">
-                                <a class="text-secondary float-right">$ <span style="color: #6D5BD0"><b>{{'1.800.900,15'}}</b></span> COP</a>
+                                <a class="text-secondary float-right">$ <span style="color: #6D5BD0"><b>{{'3.780.750,24'}}</b></span> COP</a>
                             </li>
                         </ul>
                     </div>
@@ -95,7 +95,7 @@
                                 <i class="fas fa-filter"></i> Filtro
                             </div>
                         </button>
-                        <button class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>COBROS</b></button>
+                        <button class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>PAGOS</b></button>
                     </div>
                     <div class="col-12 col-sm-5 my-sm-0 my-2">
                         <div class="input-group">
@@ -112,9 +112,9 @@
                             <thead class="font-inter-600" style="background-color: #F4F2FF;">
                                 <tr>
                                     <th id="th-1" scope="col">#</th>
-                                    <th id="th-3" scope="col">CLIENTE</th>
-                                    <th id="th-4" scope="col">FECHA</th>
-                                    <th id="th-5" scope="col">METODO DE PAGO</th>
+                                    <th id="th-3" scope="col">PROVEEDOR</th>
+                                    <th id="th-4" scope="col">STATUS</th>
+                                    <th id="th-5" scope="col">STATUS DE PAGO</th>
                                     <th id="th-6" scope="col">CANTIDAD</th>
                                     <th id="th-7" scope="col">VER</th>
                                     <th id="th-8" scope="col"></th>
@@ -126,15 +126,15 @@
                                     <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 2
+                                            <div class="text-dark">Colanta S.A.</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
                                             Fecha : 14/APR/2020
                                             <br>
-                                            <span class="badge badge-pill badge-local">
-                                                • Local
+                                            <span class="badge badge-pill badge-Proveedor">
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -143,14 +143,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-efectivo">
-                                                • Efectivo
+                                                • Pagada
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -167,7 +167,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 4
+                                            <div class="text-dark">Empresas Polar</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -175,7 +175,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-domicilio">
-                                                • Domicilio
+                                                • Servicios
                                             </span>
                                         </div>
                                     </td>
@@ -184,14 +184,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-credito">
-                                                • Credito
+                                                • Vencida
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -208,7 +208,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Femsa</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -216,7 +216,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -232,7 +232,7 @@
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -249,7 +249,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Cocacola</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -257,7 +257,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -266,14 +266,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -290,7 +290,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Agua</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -298,7 +298,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -307,14 +307,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Servicios
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -331,7 +331,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 5
+                                            <div class="text-dark">Postobon</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -339,7 +339,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -348,14 +348,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -372,7 +372,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Postobon</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -380,7 +380,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -389,14 +389,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -413,7 +413,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Postobon</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -421,7 +421,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -430,14 +430,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -454,7 +454,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Postobon</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -462,7 +462,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -471,14 +471,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
@@ -495,7 +495,7 @@
                                     <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">Pepito Perez</div>Mesa 1
+                                            <div class="text-dark">Postobon</div>301 4145321
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
@@ -503,7 +503,7 @@
                                             Fecha : 14/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-primary">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                         </div>
                                     </td>
@@ -512,14 +512,14 @@
                                             Paid on 15/APR/2020
                                             <br>
                                             <span class="badge badge-pill badge-success">
-                                                • Local
+                                                • Proveedor
                                             </span>
                                             
                                         </div>
                                     </td>
                                     <td class="align-middle" scope="col">
                                         <div class="text-nowrap">
-                                            <div class="text-dark">$1200,50</div>
+                                            <div class="text-dark">$2000</div>
                                             COP
                                         </div>
                                     </td>
