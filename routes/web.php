@@ -46,3 +46,7 @@ Route::get('/nuevoproducto', function () {
 })->name('nuevoproducto');
 
 Route::get('/proveedores', 'ProveedorController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
