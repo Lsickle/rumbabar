@@ -36,6 +36,7 @@ class Usuario extends Authenticatable
      * @var string
      */
     protected $table = 'usuarios';
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -50,4 +51,27 @@ class Usuario extends Authenticatable
     {
         return $this->belongsTo('App\Rol', 'roles', 'fk_rol', 'RolId');
     }
+
+    public function getAuthPassword()
+    {
+        return $this->UsuarioPassword;
+    }
+
+        /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+        /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

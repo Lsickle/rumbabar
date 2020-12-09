@@ -35,29 +35,41 @@
 					@endauth
 				</ul>
 			</nav>
-			<div class="jumbotron py-5 h-90" style="background-image: url('img/bar-background-offcolor.webp');background-repeat: no-repeat;
-  background-size: cover;background-position:center center;">
+			<div class="jumbotron py-5 h-90" style="background-image: url('img/bar-background-offcolor.webp');background-repeat: no-repeat; background-size: cover;background-position:center center;">
 				<div class="row">
 					<div class="col-xl-5">
 						<div class="card bg-transparent min-vh-90" style="background-image: linear-gradient(rgba(60, 1, 128, 0.6), rgba(0, 26, 130, 0.6), rgba(23, 201, 0, 0.6));">
 							<img class="card-img-top" src="img/espacioParaLogo.png" alt="Card image cap">
 							<div class="card-body">
-								<h2 style="font-family: 'Revalia', cursive; 
-								color:white;
-    background: -webkit-linear-gradient(#030095, #4465dd);
-    background: -o-linear-gradient(#030095, #4465dd);
-    background: -moz-linear-gradient(#030095, #4465dd);
-    background: linear-gradient(#030095, #4465dd);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;" class="card-title text-left">Login</h2>
-								<form>
+								<h2 style="font-family: 'Revalia', cursive; color:white; background: -webkit-linear-gradient(#030095, #4465dd); background: -o-linear-gradient(#030095, #4465dd); background: -moz-linear-gradient(#030095, #4465dd); background: linear-gradient(#030095, #4465dd); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" class="card-title text-left">Login</h2>
+								<form method="POST" action="{{ route('login') }}">
+                        		@csrf
 									<div class="card border-0 rounded p-3">
+										@if ($errors->any())
+											<div class="alert alert-danger">
+												<ul>
+													@foreach ($errors->all() as $error)
+														<li>{{ $error }}</li>
+													@endforeach
+												</ul>
+											</div>
+										@endif
 										<div class="form-group">
-											<input name="username" type="email" class="form-control" id="exampleInputUser1" aria-describedby="userHelp"
-												placeholder="Ingrese su Usuario">
+											<input name="UsuarioName" type="text" class="form-control @error('UsuarioName') is-invalid @enderror" id="exampleInputUser1" aria-describedby="userHelp"
+												placeholder="Ingrese su Usuario" required autocomplete="UsuarioName" autofocus>
+											@error('UsuarioName')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
 										</div>
 										<div class="form-group">
-											<input name="contraseña" type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su Contraseña">
+											<input name="UsuarioPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su Contraseña">
+											@error('UsuarioPassword')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
 										</div>
 										<button type="submit" class="btn btn-primary">Ingresar</button>
 									</div>
