@@ -3,7 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Compra;
-use App\Usuario;
+use App\User;
 use Faker\Generator as Faker;
 
 /*
@@ -17,12 +17,12 @@ use Faker\Generator as Faker;
 |
 */
 $factory->define(Compra::class, function (Faker $faker) {
-    $usuarios = Usuario::all('UsuarioId');
+    $users = User::all('id');
     $total = $faker->numberBetween($min = 0, $max = 99999);
     return [
         'CompraSaldo' => ($total/$faker->numberBetween($min = 1, $max = 10)),
         'CompraTotal' => $total,
-        'fk_user' => $faker->randomElement($usuarios),
+        'fk_user' => $faker->randomElement($users),
         'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
         'updated_at' => $faker->dateTimeBetween('2020-09-01', '2020-10-07')->format('Y-m-d H:i:s'),
     ];

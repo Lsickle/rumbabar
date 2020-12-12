@@ -10,12 +10,12 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The table associated with the model.
+        /**
+     * The primary key associated with the table.
      *
      * @var string
      */
-    protected $table = 'usuarios';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -23,10 +23,35 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'fk_rol',
     ];
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+        /**
+     * The roles that belong to the permiso.
+     */
+    public function rol()
+    {
+        return $this->belongsTo('App\Rol', 'roles', 'fk_rol', 'RolId');
+    }
+
+        /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -35,7 +60,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    /**
+        /**
      * The attributes that should be cast to native types.
      *
      * @var array

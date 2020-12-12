@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use App\Rol;
-use App\Usuario;
+use App\User;
 
-class UsuarioSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +13,6 @@ class UsuarioSeeder extends Seeder
      */
     public function run()
     {
-        factory(Usuario::class, 5)->create();
+        factory(User::class, 5)->create();
     }
 }

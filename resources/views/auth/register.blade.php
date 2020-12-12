@@ -50,16 +50,37 @@
     background: linear-gradient(#030095, #4465dd);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;" class="card-title text-left">Registro</h2>
-                                <form>
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
                                     <div class="card border-0 rounded p-3">
                                         <div class="form-group">
-                                            <input name="username" type="text" class="form-control" id="registerInputUser1" aria-describedby="userHelp" placeholder="Ingrese su Usuario">
+                                            <input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="registerInputUser1"  aria-describedby="userHelp" placeholder="Ingrese su Usuario" value="{{ old('name') }}">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" id="registerInputEmail1"  aria-describedby="userHelp" placeholder="Ingrese su Correo" value="{{ old('email') }}">
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <input name="password" type="password" class="form-control  @error('password') is-invalid @enderror" id="registerInputPassword1"  placeholder="Ingrese su Contraseña"  value="{{ old('password') }}" >
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input name="contraseña" type="password" class="form-control" id="registerInputPassword1" placeholder="Ingrese su Contraseña">
-                                        </div>
-                                        <div class="form-group">
-                                            <input name="contraseñaVerify" type="password" class="form-control" id="registerVerifyPassword1" placeholder="Repita su Contraseña">
+                                            <input name="password_confirmation" type="password" class="form-control"  id="password-confirm" placeholder="Repita su Contraseña">
                                         </div>
                                         <button type="submit" class="btn btn-primary">Registrar</button>
                                     </div>

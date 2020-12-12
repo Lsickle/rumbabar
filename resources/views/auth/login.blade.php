@@ -55,17 +55,17 @@
 											</div>
 										@endif
 										<div class="form-group">
-											<input name="UsuarioName" type="text" class="form-control @error('UsuarioName') is-invalid @enderror" id="exampleInputUser1" aria-describedby="userHelp"
-												placeholder="Ingrese su Usuario" required autocomplete="UsuarioName" autofocus>
-											@error('UsuarioName')
+											<input name="name" type="text" class="form-control @error('name') is-invalid @enderror" id="exampleInputUser1" aria-describedby="userHelp"
+												placeholder="Ingrese su Usuario" required autocomplete="name" autofocus>
+											@error('name')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
 												</span>
 											@enderror
 										</div>
 										<div class="form-group">
-											<input name="UsuarioPassword" type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su Contraseña">
-											@error('UsuarioPassword')
+											<input name="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su Contraseña">
+											@error('password')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
 												</span>

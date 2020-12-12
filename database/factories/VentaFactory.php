@@ -17,14 +17,14 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Venta::class, function (Faker $faker) {
-    $usuarios = App\Usuario::all('UsuarioId');
+    $users = App\User::all('id');
     $mesas = App\Mesa::all('MesaId');
     $clientes = App\Cliente::all('ClienteId');
     $total = $faker->numberBetween($min = 0, $max = 99999);
     return [
         'VentaSaldo' => ($total/$faker->numberBetween($min = 1, $max = 10)),
         'VentaTotal' => $total,
-        'fk_user' => $usuarios->random(),
+        'fk_user' => $users->random(),
         'fk_mesa' => $mesas->random(),
         'fk_cliente' => $clientes->random(),
         'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
