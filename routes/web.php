@@ -24,8 +24,11 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     // middleware routes
 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('/compra','CompraController');
-    Route::resource('/venta','VentaController');
-    Route::resource('/producto','ProductoController');
-    Route::resource('/proveedor','ProveedorController');
+    Route::resource('/compras','CompraController');
+    Route::resource('/ventas','VentaController');
+    Route::resource('/productos','ProductoController');
+    Route::resource('/proveedors','ProveedorController');
+	Route::get('/getProduct','ajaxController@getProduct')->name('getProduct');
+	Route::put('/addProductVenta/{venta}','ajaxController@addProductVenta')->name('addProductVenta');
+
 });

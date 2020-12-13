@@ -11,7 +11,7 @@ class Producto extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'ProveedorId';
+    protected $primaryKey = 'ProductoId';
 
     /**
      * The attributes that are mass assignable.

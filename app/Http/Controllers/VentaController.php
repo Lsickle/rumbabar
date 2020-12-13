@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Venta;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class VentaController extends Controller
 {
@@ -14,7 +15,17 @@ class VentaController extends Controller
      */
     public function index()
     {
-        //
+		$ventas = Venta::with(['cliente', 'productos'])->paginate(10);
+		$ventasgeneral = Venta::with(['cliente', 'productos'])->get();
+		$totalgeneral = 0;
+
+		foreach ($ventasgeneral as $key => $venta) {
+			foreach ($venta->productos as $key => $producto) {
+				$totalgeneral = $totalgeneral + ($producto->ProductoPrecio * $producto->pivot->ventaCantidad);
+			}
+		}
+
+		return View('ventas', compact(['ventas', 'totalgeneral']));
     }
 
     /**
@@ -46,7 +57,9 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-        //
+		$productos = $venta->productos()->paginate(10);
+
+		return View('nuevaventa', compact(['venta', 'productos']));
     }
 
     /**

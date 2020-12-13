@@ -14,7 +14,17 @@ class CompraController extends Controller
      */
     public function index()
     {
-        //
+		$compras = Compra::with(['productos.proveedor', 'comprador'])->paginate(10);
+		$comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->get();
+		$totalgeneral = 0;
+
+		foreach ($comprasgeneral as $key => $compra) {
+			foreach ($compra->productos as $key => $producto) {
+				$totalgeneral = $totalgeneral + ($producto->ProductoPrecio * $producto->pivot->compraCantidad);
+			}
+		}
+
+		return View('compras', compact(['compras', 'totalgeneral']));
     }
 
     /**
