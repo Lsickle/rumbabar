@@ -11,7 +11,7 @@
 							<span class="navbar-toggler-icon"></span>
 						</button>
 						<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-							<a class="navbar-brand" href="#">Hidden brand</a>
+							<a class="navbar-brand" href="#">Rumbabar DashBoard</a>
 							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 								<li class="nav-item active">
 									<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -39,9 +39,9 @@
 					@endif
 					<div class="card-deck mb-4">
 						<div class="card">
-							{{-- <img src="..." class="card-img-top" alt="..."> --}}
+							{{-- <img src="..." class"card-img-top" alt="..."> --}}
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title">Cliente</h5>
 								<p class="card-text">This is a longer card with supporting text below as a natural
 									lead-in to additional content. This content is a little bit longer.</p>
 								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -50,7 +50,7 @@
 						<div class="card">
 							{{-- <img src="..." class="card-img-top" alt="..."> --}}
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title">Compras</h5>
 								<p class="card-text">This card has supporting text below as a natural lead-in to
 									additional content.</p>
 								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -59,7 +59,7 @@
 						<div class="card">
 							{{-- <img src="..." class="card-img-top" alt="..."> --}}
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title">Mesa</h5>
 								<p class="card-text">This is a wider card with supporting text below as a natural
 									lead-in to additional content. This card has even longer content than the first to
 									show that equal height action.</p>
@@ -71,7 +71,7 @@
 						<div class="card">
 							{{-- <img src="..." class="card-img-top" alt="..."> --}}
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title">Ventas</h5>
 								<p class="card-text">This is a longer card with supporting text below as a natural
 									lead-in to additional content. This content is a little bit longer.</p>
 								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -80,7 +80,7 @@
 						<div class="card">
 							{{-- <img src="..." class="card-img-top" alt="..."> --}}
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title">Producto</h5>
 								<p class="card-text">This card has supporting text below as a natural lead-in to
 									additional content.</p>
 								<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -89,7 +89,7 @@
 						<div class="card">
 							{{-- <img src="..." class="card-img-top" alt="..."> --}}
 							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
+								<h5 class="card-title">Usuarios</h5>
 								<p class="card-text">This is a wider card with supporting text below as a natural
 									lead-in to additional content. This card has even longer content than the first to
 									show that equal height action.</p>
@@ -104,7 +104,7 @@
 									<div class="row">
 										<div class="col">
 											<h5 class="card-title text-uppercase text-muted mb-0 text-white">Total
-												traffic</h5>
+												ventas</h5>
 											<span class="h2 font-weight-bold mb-0 text-white">350,897</span>
 										</div>
 										<div class="col-auto">
@@ -115,7 +115,7 @@
 									</div>
 									<p class="mt-3 mb-0 text-sm">
 										<span class="text-white mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-										<span class="text-nowrap text-light">Since last month</span>
+										<span class="text-nowrap text-light">Último Mes</span>
 									</p>
 								</div>
 							</div>
