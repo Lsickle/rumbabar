@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Compra;
+use App\Venta;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+		$ultimaventa = Venta::all()->last();
+		$ultimacompra = Compra::all()->last();
+        return view('home', compact(['ultimaventa', 'ultimacompra']));
     }
 }

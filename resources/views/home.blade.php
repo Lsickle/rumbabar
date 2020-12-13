@@ -13,11 +13,11 @@
 						<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 							<a class="navbar-brand" href="#">DashBoard</a>
 							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-								<li class="nav-item active">
-									<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+								<li class="nav-item">
+									<a class="nav-link" href="{{route('ventas.show', ['venta' => $ultimaventa])}}">Última venta <span class="sr-only">(current)</span></a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Link</a>
+									<a class="nav-link" href="{{route('compras.show', ['compra' => $ultimacompra])}}">Última compra</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -53,7 +53,7 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="#">
+						<a class="card bg-dark text-white shadow" href="{{route('compras.index')}}">
 							<img src="{{asset('img\compras.jpg')}}" class="card-img-top" alt="ventas">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
@@ -83,7 +83,7 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="#">
+						<a class="card bg-dark text-white shadow" href="{{route('productos.create')}}">
 							<img src="{{asset('img\products.jpg')}}" class="card-img-top" alt="ventas">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">

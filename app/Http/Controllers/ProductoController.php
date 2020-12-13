@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Producto;
+use App\Proveedor;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -24,7 +25,9 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+		$proveedores = Proveedor::all();
+
+		return View('nuevoproducto', compact(['proveedores']));
     }
 
     /**
