@@ -14,7 +14,7 @@ class VentaSeeder extends Seeder
         factory(App\Venta::class, 100)->create()->each(function ($compra){
             $faker = Faker\Factory::create();
             $productos = App\Producto::all();
-            $numProductos = $faker->numberBetween($min = 2, $max = 10);
+            $numProductos = $faker->numberBetween($min = 2, $max = 20);
             // Seed the relation with random producto
             foreach ($productos->random($numProductos) as $key => $producto) {
                 $cantidad = ($faker->numberBetween($min = 1, $max = $producto->ProductoCantidad));

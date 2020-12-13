@@ -18,7 +18,7 @@ class CreateVentasTable extends Migration
             $table->float('VentaSaldo', 10, 2);
             $table->float('VentaTotal', 10, 2);
             $table->unsignedBigInteger('fk_user');
-            $table->foreign('fk_user')->references('UsuarioId')->on('usuarios');
+            $table->foreign('fk_user')->references('id')->on('users');
             $table->unsignedBigInteger('fk_mesa');
             $table->foreign('fk_mesa')->references('MesaId')->on('mesas');
             $table->unsignedBigInteger('fk_cliente');

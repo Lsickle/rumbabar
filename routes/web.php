@@ -12,37 +12,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes(['verify' => false]);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
 
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 
-Route::get('/ventas', function () {
-    return view('ventas');
-})->name('ventas');
+    // middleware routes
 
-Route::get('/nuevaventa', function () {
-    return view('nuevaventa');
-})->name('nuevaventa');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('/compras','CompraController');
+    Route::resource('/ventas','VentaController');
+    Route::resource('/productos','ProductoController');
+    Route::resource('/proveedors','ProveedorController');
+	Route::get('/getProduct','ajaxController@getProduct')->name('getProduct');
+	Route::put('/addProductVenta/{venta}','ajaxController@addProductVenta')->name('addProductVenta');
 
-Route::get('/compras', function () {
-    return view('compras');
-})->name('compras');
-
-Route::get('/nuevacompra', function () {
-    return view('nuevacompra');
-})->name('nuevacompra');
-
-Route::get('/nuevoproducto', function () {
-    return view('nuevoproducto');
-})->name('nuevoproducto');
-
-Route::get('/proveedores', 'ProveedorController@index');
+});
