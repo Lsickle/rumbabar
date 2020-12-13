@@ -18,26 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/ventas', function () {
-    return view('ventas');
-})->name('ventas');
 
-Route::get('/nuevaventa', function () {
-    return view('nuevaventa');
-})->name('nuevaventa');
+Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 
-Route::get('/compras', function () {
-    return view('compras');
-})->name('compras');
+    // middleware routes
 
-Route::get('/nuevacompra', function () {
-    return view('nuevacompra');
-})->name('nuevacompra');
-
-Route::get('/nuevoproducto', function () {
-    return view('nuevoproducto');
-})->name('nuevoproducto');
-
-Route::get('/proveedores', 'ProveedorController@index');
-
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('/compra','CompraController');
+    Route::resource('/venta','VentaController');
+    Route::resource('/producto','ProductoController');
+    Route::resource('/proveedor','ProveedorController');
+});
