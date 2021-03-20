@@ -14,7 +14,9 @@ class MesaController extends Controller
      */
     public function index()
     {
-        //
+        $mesas  = Mesa::paginate(10);
+
+		return View('Mesa.index', compact(['mesas']));
     }
 
     /**
@@ -24,7 +26,7 @@ class MesaController extends Controller
      */
     public function create()
     {
-        //
+        return View('Mesa.create');
     }
 
     /**
@@ -35,7 +37,15 @@ class MesaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'MesaPuestos' => 'required|numeric|min:0'
+        ]);
+
+        $mesa = new Mesa();
+		$mesa->MesaPuestos = $request->input('MesaPuestos');
+		$mesa->save();
+
+        return redirect()->route('mesas.index');
     }
 
     /**
