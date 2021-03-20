@@ -24,7 +24,7 @@ class CompraController extends Controller
 			}
 		}
 
-		return View('compras', compact(['compras', 'totalgeneral']));
+		return View('Compra.index', compact(['compras', 'totalgeneral']));
     }
 
     /**

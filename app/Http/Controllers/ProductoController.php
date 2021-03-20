@@ -27,7 +27,7 @@ class ProductoController extends Controller
     {
 		$proveedores = Proveedor::all();
 
-		return View('nuevoproducto', compact(['proveedores']));
+		return View('Producto.create', compact(['proveedores']));
     }
 
     /**

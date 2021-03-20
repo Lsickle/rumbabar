@@ -25,7 +25,7 @@ class VentaController extends Controller
 			}
 		}
 
-		return View('ventas', compact(['ventas', 'totalgeneral']));
+		return View('Venta.index', compact(['ventas', 'totalgeneral']));
     }
 
     /**
