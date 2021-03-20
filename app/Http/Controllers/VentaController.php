@@ -59,7 +59,7 @@ class VentaController extends Controller
     {
 		$productos = $venta->productos()->paginate(10);
 
-		return View('nuevaventa', compact(['venta', 'productos']));
+		return View('Venta.show', compact(['venta', 'productos']));
     }
 
     /**

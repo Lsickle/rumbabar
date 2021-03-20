@@ -58,7 +58,7 @@ class CompraController extends Controller
     {
 		$productos = $compra->productos()->paginate(10);
 
-		return View('nuevacompra', compact(['venta', 'productos']));
+		return View('Compra.show', compact(['venta', 'productos']));
     }
 
     /**
