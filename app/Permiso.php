@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Permiso extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *

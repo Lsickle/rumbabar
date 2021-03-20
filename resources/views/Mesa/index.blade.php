@@ -48,6 +48,7 @@ Lista de Mesas
                         <th id="th-3" scope="col">PUESTOS</th>
                         <th id="th-4" scope="col">FECHA</th>
                         <th id="th-7" scope="col" class="text-right">EDITAR</th>
+                        <th id="th-7" scope="col" class="text-right">ELIMINAR</th>
                         <th id="th-8" scope="col"></th>
                         <th id="th-9" scope="col"><i class="fas fa-ellipsis-v"></i></th>
                     </tr>
@@ -71,9 +72,16 @@ Lista de Mesas
                             </div>
                         </td>
                         <td class="align-middle text-right" scope="col">
-                            <a href="{{route('mesas.show', ['mesa' => $mesa->MesaId])}}" class="btn btn-sm btn-warning">
+                            <a href="{{route('mesas.edit', ['mesa' => $mesa->MesaId])}}" class="btn btn-sm btn-warning">
                                 <div class="text-nowrap">Editar</div>
                             </a>
+                        </td>
+                        <td class="align-middle text-right" scope="col">
+                            <form method="POST" id="formDestroy{{$mesa->MesaId}}" action="{{route('mesas.destroy', ['mesa' => $mesa->MesaId])}}">
+                            @csrf
+                            @method('DELETE')
+                            <input type="submit" class="btn btn-sm btn-danger text-nowrap" value="Eliminar">
+                            </form>
                         </td>
                         <td class="align-middle" scope="col">
                         </td>

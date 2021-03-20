@@ -67,7 +67,7 @@ class MesaController extends Controller
      */
     public function edit(Mesa $mesa)
     {
-        //
+        return View('Mesa.edit', compact('mesa'));
     }
 
     /**
@@ -79,7 +79,14 @@ class MesaController extends Controller
      */
     public function update(Request $request, Mesa $mesa)
     {
-        //
+        $validate = $request->validate([
+            'MesaPuestos' => 'required|numeric|min:0'
+        ]);
+
+		$mesa->MesaPuestos = $request->input('MesaPuestos');
+		$mesa->save();
+
+        return redirect()->route('mesas.index');
     }
 
     /**
@@ -90,6 +97,8 @@ class MesaController extends Controller
      */
     public function destroy(Mesa $mesa)
     {
-        //
+        $mesa->delete();
+
+        return redirect()->route('mesas.index');
     }
 }

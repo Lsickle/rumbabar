@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Mesa extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -21,7 +23,7 @@ class Mesa extends Model
      */
     protected $fillable = [
         'MesaPuestos',
-    ];
+    ];  
 
     /**
      * The table associated with the model.
