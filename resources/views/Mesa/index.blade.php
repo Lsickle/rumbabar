@@ -64,7 +64,7 @@ Lista de Mesas
                         </td>
                         <td class="align-middle" scope="col">
                             <div class="text-nowrap">
-                                Fecha : {{$mesa->created_at}}
+                                Fecha : {{$mesa->updated_at}}
                                 <br>
                                 <span class="badge badge-pill badge-local">
                                     • Local

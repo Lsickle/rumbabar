@@ -83,7 +83,7 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="{{route('productos.create')}}">
+						<a class="card bg-dark text-white shadow" href="{{route('productos.index')}}">
 							<img src="{{asset('img\products.jpg')}}" class="card-img-top" alt="ventas">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
