@@ -95,9 +95,9 @@ Nuevo Producto
 									<div class="input-group-prepend">
 										<span class="input-group-text" id="basic-addon1"><i class="fas fa-images"></i></span>
 									</div>
-									<input name="ProductoImage" id="imagen" type="file" class="form-control" placeholder="imagen" aria-label="imagen" aria-describedby="basic-addon1">
+									<input name="ProductoImage" id="ProductoImage" type="file" class="form-control" placeholder="imagen" aria-label="imagen" aria-describedby="basic-addon1">
 								</div>
-								<img class="card-img p-2" src="https://picsum.photos/600/400?text=Image cap" alt="Card image cap">
+								<img width="100%" id="ProductoImageOutput" class="card-img p-2" src="{{asset('img/default-image.png')}}" alt="Card image cap">
 							</div>
 						</div>
 					</div>
@@ -120,6 +120,26 @@ Nuevo Producto
         // });
         console.log('hola');
     });
+</script>
+<script type="text/javascript">
+	function readURL(input) {
+    if (input.files && input.files[0]) {
+
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			var output = $('#'+input.id+'Output');
+			output.attr('src', e.target.result);
+			output.attr('class', 'd-block');
+		}
+
+		reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$('input[type="file"]').change(function(){
+		readURL(this);
+	});
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 @endsection
