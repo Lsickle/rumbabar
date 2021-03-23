@@ -122,24 +122,7 @@ Editar Producto
     });
 </script>
 <script type="text/javascript">
-	function readURL(input) {
-    if (input.files && input.files[0]) {
-
-		var reader = new FileReader();
-
-		reader.onload = function (e) {
-			var output = $('#'+input.id+'Output');
-			output.attr('src', e.target.result);
-			output.attr('class', 'd-block');
-		}
-
-		reader.readAsDataURL(input.files[0]);
-		}
-	}
-
-	$('input[type="file"]').change(function(){
-		readURL(this);
-	});
+@include('scriptspersonalizados')
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 @endsection
