@@ -26,6 +26,8 @@ class Producto extends Model
         'ProductoDescripcion',
         'ProductoPrecio',
         'ProductoCantidad',
+        'ProductoCodigo',
+        'ProductoImage',
         'fk_proveedor',
     ];
 

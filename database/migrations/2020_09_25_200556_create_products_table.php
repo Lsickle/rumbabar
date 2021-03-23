@@ -19,6 +19,8 @@ class CreateProductsTable extends Migration
             $table->longText('ProductoDescripcion');
             $table->float('ProductoPrecio', 10, 2);
             $table->unsignedMediumInteger('ProductoCantidad');
+            $table->string('ProductoCodigo');
+            $table->string('ProductoImage');
             $table->unsignedBigInteger('fk_proveedor');
             $table->foreign('fk_proveedor')->references('ProveedorId')->on('proveedores');
             $table->timestamps();
