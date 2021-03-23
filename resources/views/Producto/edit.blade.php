@@ -12,7 +12,7 @@ Editar Producto
 <div class="sticky-top px-3 mt-2">
 	<div class="row bg-light">
 		<div class="col">
-			<p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'Nuevo Producto'}}</p>
+			<p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'Editar Producto'}}</p>
 		</div>
 		<div class="col">
 			<a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
