@@ -14,7 +14,9 @@ class PermisoController extends Controller
      */
     public function index()
     {
-        //
+        $permisos  = Permiso::paginate(10);
+
+		return View('Permiso.index', compact(['permisos']));
     }
 
     /**
@@ -24,7 +26,7 @@ class PermisoController extends Controller
      */
     public function create()
     {
-        //
+        return View('Permiso.create');
     }
 
     /**
@@ -36,6 +38,15 @@ class PermisoController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'PermisoNombre' => 'required'
+        ]);
+
+        $permiso = new Permiso();
+		$permiso->PermisoNombre = $request->input('PermisoNombre');
+		$permiso->save();
+
+        return redirect()->route('permisos.index');
     }
 
     /**
@@ -47,6 +58,8 @@ class PermisoController extends Controller
     public function show(Permiso $permiso)
     {
         //
+        return View('Permiso.show', compact('permiso'));
+
     }
 
     /**
@@ -58,6 +71,8 @@ class PermisoController extends Controller
     public function edit(Permiso $permiso)
     {
         //
+        return View('Permiso.edit', compact('permiso'));
+
     }
 
     /**
@@ -70,6 +85,14 @@ class PermisoController extends Controller
     public function update(Request $request, Permiso $permiso)
     {
         //
+        $validate = $request->validate([
+            'PermisoNombre' => 'required'
+        ]);
+
+		$permiso->PermisoNombre = $request->input('PermisoNombre');
+		$permiso->save();
+
+        return redirect()->route('permisos.index');
     }
 
     /**
@@ -81,5 +104,8 @@ class PermisoController extends Controller
     public function destroy(Permiso $permiso)
     {
         //
+        $permiso->delete();
+
+        return redirect()->route('mesas.index');
     }
 }

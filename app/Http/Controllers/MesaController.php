@@ -56,7 +56,7 @@ class MesaController extends Controller
      */
     public function show(Mesa $mesa)
     {
-        //
+        return View('Mesa.show', compact('mesa'));
     }
 
     /**

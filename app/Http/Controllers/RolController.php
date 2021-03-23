@@ -15,6 +15,9 @@ class RolController extends Controller
     public function index()
     {
         //
+    $roles  = Rol::paginate(10);
+
+    return View('Rol.index', compact(['roles']));
     }
 
     /**
@@ -25,6 +28,8 @@ class RolController extends Controller
     public function create()
     {
         //
+        return View('Rol.create');
+
     }
 
     /**
@@ -36,6 +41,15 @@ class RolController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'RolNombre' => 'required'
+        ]);
+
+        $rol = new Rol();
+		$rol->RolNombre = $request->input('RolNombre');
+		$rol->save();
+
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -47,6 +61,8 @@ class RolController extends Controller
     public function show(Rol $rol)
     {
         //
+        return View('Rol.show', compact('rol'));
+
     }
 
     /**
@@ -58,6 +74,8 @@ class RolController extends Controller
     public function edit(Rol $rol)
     {
         //
+        return View('Rol.edit', compact('rol'));
+
     }
 
     /**
@@ -70,6 +88,14 @@ class RolController extends Controller
     public function update(Request $request, Rol $rol)
     {
         //
+        $validate = $request->validate([
+            'RolNombre' => 'required'
+        ]);
+
+		$rol->RolNombre = $request->input('RolNombre');
+		$rol->save();
+
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -81,5 +107,8 @@ class RolController extends Controller
     public function destroy(Rol $rol)
     {
         //
+        $rol->delete();
+
+        return redirect()->route('roles.index');
     }
 }

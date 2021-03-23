@@ -31,6 +31,7 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     Route::resource('/mesas','MesaController');
     Route::resource('/clientes','ClienteController');
     Route::resource('/usuarios','UsuarioController');
+    Route::resource('/roles','RolController');
 	Route::get('/getProduct','ajaxController@getProduct')->name('getProduct');
 	Route::put('/addProductVenta/{venta}','ajaxController@addProductVenta')->name('addProductVenta');
 

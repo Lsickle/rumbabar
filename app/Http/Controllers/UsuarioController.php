@@ -15,6 +15,9 @@ class UsuarioController extends Controller
     public function index()
     {
         //
+        $usuarios  = Usuario::paginate(10);
+
+		return View('Usuario.index', compact(['usuarios']));
     }
 
     /**
@@ -25,6 +28,8 @@ class UsuarioController extends Controller
     public function create()
     {
         //
+        return View('Usuario.create');
+
     }
 
     /**
@@ -36,6 +41,18 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'MesaPuestos' => 'required|numeric|min:0'
+        ]);
+
+        $usuarios = new Usuario();
+		$usuarios->name = $request->input('name');
+		$usuarios->email = $request->input('email');
+		$usuarios->password = $request->input('password');
+		$usuarios->fk_rol = $request->input('fk_rol');
+		$usuarios->save();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -47,6 +64,8 @@ class UsuarioController extends Controller
     public function show(Usuario $usuario)
     {
         //
+        return View('Usuario.show', compact('usuario'));
+
     }
 
     /**
@@ -58,6 +77,8 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario)
     {
         //
+        return View('Usuario.edit', compact('usuario'));
+
     }
 
     /**
@@ -70,6 +91,17 @@ class UsuarioController extends Controller
     public function update(Request $request, Usuario $usuario)
     {
         //
+        $validate = $request->validate([
+            'MesaPuestos' => 'required|numeric|min:0'
+        ]);
+
+		$usuarios->name = $request->input('name');
+		$usuarios->email = $request->input('email');
+		$usuarios->password = $request->input('password');
+		$usuarios->fk_rol = $request->input('fk_rol');
+		$usuarios->save();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -81,5 +113,8 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         //
+        $usuarios->delete();
+
+        return redirect()->route('usuarios.index');
     }
 }
