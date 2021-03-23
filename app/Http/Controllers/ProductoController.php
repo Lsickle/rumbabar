@@ -46,7 +46,7 @@ class ProductoController extends Controller
 
 		$validate = $request->validate([
             'fk_proveedor' => 'required|numeric|exists:proveedores,ProveedorId',
-            'ProductoNombre' => 'required',
+            'ProductoNombre' => 'required|string|max:255',
             'ProductoCodigo' => 'required|numeric|min:0',
             'ProductoPrecio' => 'required|min:0',
             'ProductoImage' => 'required|file'
@@ -109,7 +109,7 @@ class ProductoController extends Controller
         //
 		$validate = $request->validate([
             'fk_proveedor' => 'required|numeric|exists:proveedores,ProveedorId',
-            'ProductoNombre' => 'required',
+            'ProductoNombre' => 'required|string|max:255',
             'ProductoCodigo' => 'required|numeric|min:0',
             'ProductoPrecio' => 'required|min:0',
             'ProductoImage' => 'required|file'

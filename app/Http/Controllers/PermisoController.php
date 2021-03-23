@@ -39,7 +39,7 @@ class PermisoController extends Controller
     {
         //
         $validate = $request->validate([
-            'PermisoNombre' => 'required'
+            'PermisoNombre' => 'required|string|max:255'
         ]);
 
         $permiso = new Permiso();
@@ -86,7 +86,7 @@ class PermisoController extends Controller
     {
         //
         $validate = $request->validate([
-            'PermisoNombre' => 'required'
+            'PermisoNombre' => 'required|string|max:255'
         ]);
 
 		$permiso->PermisoNombre = $request->input('PermisoNombre');

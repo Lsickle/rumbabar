@@ -46,7 +46,7 @@ class ProveedorController extends Controller
     {
         //
         $validate = $request->validate([
-            'ProveedorNombre' => 'required',
+            'ProveedorNombre' => 'required|string|max:255',
             'ProveedorNit' => 'required'
         ]);
 
@@ -94,7 +94,7 @@ class ProveedorController extends Controller
     public function update(Request $request, Proveedor $proveedor)
     {
         $validate = $request->validate([
-            'ProveedorNombre' => 'required',
+            'ProveedorNombre' => 'required|string|max:255',
             'ProveedorNit' => 'required'
         ]);
 

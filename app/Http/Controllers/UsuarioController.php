@@ -42,7 +42,9 @@ class UsuarioController extends Controller
     {
         //
         $validate = $request->validate([
-            'MesaPuestos' => 'required|numeric|min:0'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed'
         ]);
 
         $usuarios = new Usuario();
@@ -92,7 +94,9 @@ class UsuarioController extends Controller
     {
         //
         $validate = $request->validate([
-            'MesaPuestos' => 'required|numeric|min:0'
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed'
         ]);
 
 		$usuarios->name = $request->input('name');

@@ -42,7 +42,7 @@ class RolController extends Controller
     {
         //
         $validate = $request->validate([
-            'RolNombre' => 'required'
+            'RolNombre' => 'required|string|max:255'
         ]);
 
         $rol = new Rol();
@@ -89,7 +89,7 @@ class RolController extends Controller
     {
         //
         $validate = $request->validate([
-            'RolNombre' => 'required'
+            'RolNombre' => 'required|string|max:255'
         ]);
 
 		$rol->RolNombre = $request->input('RolNombre');
