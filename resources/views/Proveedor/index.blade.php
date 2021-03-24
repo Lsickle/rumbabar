@@ -10,120 +10,120 @@ Lista de Proveedores
 
 @section('header')
 <div class="sticky-top px-3 mt-2">
-    <div class="row bg-light">
-        <div class="col">
-            <p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'Lista de Proveedores'}}</p>
-        </div>
-        <div class="col">
-            <a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
-        </div>
-    </div>
+	<div class="row bg-light">
+		<div class="col">
+			<p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'Lista de Proveedores'}}</p>
+		</div>
+		<div class="col">
+			<a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
+		</div>
+	</div>
 </div>
 @endsection
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
-    <div class="row justify-content-between py-2 my-2" id='mesaslistHeader'>
-        <div class="col-12 col-sm-2 d-flex justify-content-between">
-            <button class="btn btn-outline-secondary dropdown">
-                <div class="text-nowrap bd-highlight">
-                    <i class="fas fa-filter"></i> Filtro
-                </div>
-            </button>
-            <a href="{{route('proveedors.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
-        </div>
-        <div class="col-12 col-sm-5 my-sm-0 my-2">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                </div>
-                <input id="inputsearchProduct" type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="table-responsive">
-            <table id="productsTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
-                <thead class="font-inter-600" style="background-color: #F4F2FF;">
-                    <tr>
-                        <th id="th-1" scope="col">#</th>
-                        <th id="th-3" scope="col">RAZÓN SOCIAL</th>
-                        <th id="th-4" scope="col">NIT</th>
-                        <th id="th-4" scope="col">ACTUALIZACION</th>
-                        <th id="th-7" scope="col" class="text-right">EDITAR</th>
-                        <th id="th-7" scope="col" class="text-right">ELIMINAR</th>
-                        <th id="th-8" scope="col"></th>
-                        <th id="th-9" scope="col"><i class="fas fa-ellipsis-v"></i></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($proveedores as $proveedor)
-                    <tr>
-                        <th class="align-middle" scope="row">#{{$proveedor->ProveedorId}}</th>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                <div class="text-dark">{{$proveedor->ProveedorNombre}}</div>
-                            </div>
-                        </td>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                <div class="text-dark">${{$proveedor->ProveedorNit}}</div>
-                            </div>
-                        </td>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                Fecha : {{$proveedor->updated_at}}
-                                <br>
-                                <span class="badge badge-pill badge-local">
-                                    • Local
-                                </span>
-                            </div>
-                        </td>
-                        <td class="align-middle text-right" scope="col">
-                            <a href="{{route('proveedors.edit', ['producto' => $proveedor->ProveedorId])}}" class="btn btn-sm btn-warning">
-                                <div class="text-nowrap">Editar</div>
-                            </a>
-                        </td>
-                        <td class="align-middle text-right" scope="col">
-                            <form method="POST" id="formDestroy{{$proveedor->ProveedorId}}" action="{{route('proveedors.destroy', ['proveedor' => $proveedor->ProveedorId])}}">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" class="btn btn-sm btn-danger text-nowrap" value="Eliminar">
-                            </form>
-                        </td>
-                        <td class="align-middle" scope="col">
-                        </td>
-                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row flex-row d-flex" style="background-color: #F4F2FF; color:#6E6893 !important;">
-        <div class="col my-auto">
-            <div class="text-left">filas por página: {{$proveedores->count()}}</div>
-        </div>
+	<div class="row justify-content-between py-2 my-2" id='mesaslistHeader'>
+		<div class="col-12 col-sm-2 d-flex justify-content-between">
+			<button class="btn btn-outline-secondary dropdown">
+				<div class="text-nowrap bd-highlight">
+					<i class="fas fa-filter"></i> Filtro
+				</div>
+			</button>
+			<a href="{{route('proveedors.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
+		</div>
+		<div class="col-12 col-sm-5 my-sm-0 my-2">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+				</div>
+				<input id="inputsearchProduct" type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="table-responsive">
+			<table id="productsTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
+				<thead class="font-inter-600" style="background-color: #F4F2FF;">
+					<tr>
+						<th id="th-1" scope="col">#</th>
+						<th id="th-3" scope="col">RAZÓN SOCIAL</th>
+						<th id="th-4" scope="col">NIT</th>
+						<th id="th-4" scope="col">ACTUALIZACION</th>
+						<th id="th-7" scope="col" class="text-right">EDITAR</th>
+						<th id="th-7" scope="col" class="text-right">ELIMINAR</th>
+						<th id="th-8" scope="col"></th>
+						<th id="th-9" scope="col"><i class="fas fa-ellipsis-v"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach ($proveedores as $proveedor)
+					<tr>
+						<th class="align-middle" scope="row">#{{$proveedor->ProveedorId}}</th>
+						<td class="align-middle" scope="col">
+							<div class="text-nowrap">
+								<div class="text-dark">{{$proveedor->ProveedorNombre}}</div>
+							</div>
+						</td>
+						<td class="align-middle" scope="col">
+							<div class="text-nowrap">
+								<div class="text-dark">${{$proveedor->ProveedorNit}}</div>
+							</div>
+						</td>
+						<td class="align-middle" scope="col">
+							<div class="text-nowrap">
+								Fecha : {{$proveedor->updated_at}}
+								<br>
+								<span class="badge badge-pill badge-local">
+									• Local
+								</span>
+							</div>
+						</td>
+						<td class="align-middle text-right" scope="col">
+							<a href="{{route('proveedors.edit', [$proveedor])}}" class="btn btn-sm btn-warning">
+								<div class="text-nowrap">Editar</div>
+							</a>
+						</td>
+						<td class="align-middle text-right" scope="col">
+							<form method="POST" id="formDestroy{{$proveedor->ProveedorId}}" action="{{route('proveedors.destroy', ['proveedor' => $proveedor->ProveedorId])}}">
+								@csrf
+								@method('DELETE')
+								<input type="submit" class="btn btn-sm btn-danger text-nowrap" value="Eliminar">
+							</form>
+						</td>
+						<td class="align-middle" scope="col">
+						</td>
+						<td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row flex-row d-flex" style="background-color: #F4F2FF; color:#6E6893 !important;">
+		<div class="col my-auto">
+			<div class="text-left">filas por página: {{$proveedores->count()}}</div>
+		</div>
 
-        <div class="col">
-            <div class="text-right">
-                <div class="mx-3">{{$proveedores->firstItem()}}-{{$proveedores->lastItem()}} of {{$proveedores->total()}}</div>
-                <a href="{{$proveedores->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
-                <a href="{{$proveedores->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
-                <a href="{{$proveedores->previousPageUrl()}}"><i class="px-1">{{$proveedores->currentPage() > 1 ? $proveedores->currentPage() - 1 : ''}}</i></a>
-                <i class="px-0">{{$proveedores->currentPage()}}</i>
-                <a href="{{$proveedores->nextPageUrl()}}"><i class="px-1">{{$proveedores->currentPage() + 1}}</i></a>
-                <a href="{{$proveedores->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
-                <a href="{{$proveedores->url($proveedores->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
-            </div>
-        </div>
-    </div>
+		<div class="col">
+			<div class="text-right">
+				<div class="mx-3">{{$proveedores->firstItem()}}-{{$proveedores->lastItem()}} of {{$proveedores->total()}}</div>
+				<a href="{{$proveedores->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
+				<a href="{{$proveedores->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
+				<a href="{{$proveedores->previousPageUrl()}}"><i class="px-1">{{$proveedores->currentPage() > 1 ? $proveedores->currentPage() - 1 : ''}}</i></a>
+				<i class="px-0">{{$proveedores->currentPage()}}</i>
+				<a href="{{$proveedores->nextPageUrl()}}"><i class="px-1">{{$proveedores->currentPage() + 1}}</i></a>
+				<a href="{{$proveedores->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
+				<a href="{{$proveedores->url($proveedores->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 
 @section('scripts')
 <script>
-    $(document).ready(function(){
+	$(document).ready(function(){
         // $("button").click(function(){
         //     $("p").slideToggle();
         // });

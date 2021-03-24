@@ -45,7 +45,7 @@ class Usuario extends Authenticatable
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
         /**
      * The roles that belong to the permiso.

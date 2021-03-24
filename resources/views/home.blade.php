@@ -131,8 +131,8 @@
 						</a>
 					</div>
 					<div class="card-deck mb-4">
-						<a class="card bg-dark text-white shadow" href="{{route('clientes.index')}}">
-							<img src="{{asset('img\customers2.jpg')}}" class="card-img-top" alt="clientes">
+						<a class="card bg-dark text-white shadow" href="{{route('proveedors.index')}}">
+							<img src="{{asset('img\customers2.jpg')}}" class="card-img-top" alt="proveedores">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
 									<tbody>

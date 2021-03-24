@@ -37,7 +37,7 @@ class Proveedor extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The proveedor that has Many producto.

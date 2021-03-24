@@ -28,17 +28,8 @@ Nuevo Producto
 		@csrf
 
 		<div class="row justify-content-between py-2 my-2" id='ventasHeader'>
-			<div class="col-6 my-2 col-md-2 d-flex">
-				<div class="input-group">
-					<select class="btn btn-outline-secondary" id="inputGroupSelect02" type="button" name="fk_proveedor">
-						<option class="text-nowrap bd-highlight" name="fk_proveedor" selected>Proveedor...</option>
-						@foreach ($proveedores as $proveedor)
-						<option class="text-nowrap bd-highlight" value="{{$proveedor->ProveedorId}}">{{$proveedor->ProveedorNombre}}</option>
-						@endforeach
-					</select>
-				</div>
-			</div>
-			<div class="col-6 my-2 col-md-4">
+			<div class="col-12 my-2">
+				<a href="{{route('productos.index')}}" class="float-left btn btn-info text-white font-inter-600" style="font-size:12px;">Volver</a>
 				<input type="submit" value="+ Guardar" class="float-right btn btn-primary text-white font-inter-600" style="font-size:12px;">
 			</div>
 		</div>

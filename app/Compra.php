@@ -39,7 +39,7 @@ class Compra extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The roles that belong to the permiso.
