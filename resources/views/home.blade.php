@@ -130,6 +130,37 @@
 							</div>
 						</a>
 					</div>
+					<div class="card-deck mb-4">
+						<a class="card bg-dark text-white shadow" href="{{route('clientes.index')}}">
+							<img src="{{asset('img\customers2.jpg')}}" class="card-img-top" alt="clientes">
+							<div class="card-img-overlay shadow">
+								<table class="h-100">
+									<tbody>
+										<tr>
+											<td class="align-bottom">
+												<h1 class="font-weight-bold mb-3">PROVEEDORES</h2>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+
+						<a class="card bg-dark text-white shadow" href="{{route('usuarios.index')}}">
+							<img src="{{asset('img\Users.jpg')}}" class="card-img-top" alt="clientes">
+							<div class="card-img-overlay shadow">
+								<table class="h-100">
+									<tbody>
+										<tr>
+											<td class="align-bottom">
+												<h1 class="font-weight-bold mb-3">ROLES/PERMISOS</h2>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
 					<div class="row mb-4">
 						<div class="col-md-4 mb-3">
 							<div class="card shadow bg-gradient-success">
