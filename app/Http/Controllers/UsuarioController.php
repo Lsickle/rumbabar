@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Usuario;
+use App\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
 
 class UsuarioController extends Controller
 {
@@ -28,7 +31,9 @@ class UsuarioController extends Controller
     public function create()
     {
         //
-        return View('Usuario.create');
+        $roles = Rol::all();
+
+        return View('Usuario.create', compact(['roles']));
 
     }
 
@@ -50,7 +55,7 @@ class UsuarioController extends Controller
         $usuarios = new Usuario();
 		$usuarios->name = $request->input('name');
 		$usuarios->email = $request->input('email');
-		$usuarios->password = $request->input('password');
+		$usuarios->password = Hash::make($request->input('password'));
 		$usuarios->fk_rol = $request->input('fk_rol');
 		$usuarios->save();
 
@@ -66,7 +71,8 @@ class UsuarioController extends Controller
     public function show(Usuario $usuario)
     {
         //
-        return View('Usuario.show', compact('usuario'));
+        $roles = Rol::all();
+        return View('Usuario.show', compact(['usuario', 'roles']));
 
     }
 
@@ -79,7 +85,8 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario)
     {
         //
-        return View('Usuario.edit', compact('usuario'));
+        $roles = Rol::all();
+        return View('Usuario.edit', compact(['usuario', 'roles']));
 
     }
 
@@ -117,7 +124,7 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         //
-        $usuarios->delete();
+        $usuario->delete();
 
         return redirect()->route('usuarios.index');
     }

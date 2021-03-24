@@ -30,7 +30,7 @@ Lista de Usuarios
                     <i class="fas fa-filter"></i> Filtro
                 </div>
             </button>
-            <a href="{{route('permisos.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
+            <a href="{{route('usuarios.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
         </div>
         <div class="col-12 col-sm-5 my-sm-0 my-2">
             <div class="input-group">
@@ -86,12 +86,12 @@ Lista de Usuarios
                             </div>
                         </td>
                         <td class="align-middle text-right" scope="col">
-                            <a href="{{route('usuarios.edit', ['usuario' => $usuario->id])}}" class="btn btn-sm btn-warning">
+                            <a href="{{route('usuarios.edit', [$usuario] )}}" class="btn btn-sm btn-warning">
                                 <div class="text-nowrap">Editar</div>
                             </a>
                         </td>
                         <td class="align-middle text-right" scope="col">
-                            <form method="POST" id="formDestroy{{$usuario->id}}" action="{{route('usuarios.destroy', ['usuario' => $usuario->id])}}">
+                            <form method="POST" id="formDestroy{{$usuario->id}}" action="{{route('usuarios.destroy', [$usuario] )}}">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" class="btn btn-sm btn-danger text-nowrap" value="Eliminar">
@@ -127,7 +127,8 @@ Lista de Usuarios
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
+<script src="{{ asset('js/scriptspersonalizados.js')}}"></script>
 <script>
     $(document).ready(function(){
         // $("button").click(function(){
@@ -143,4 +144,4 @@ Lista de Usuarios
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-@endsection
+@endpush

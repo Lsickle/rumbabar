@@ -28,17 +28,8 @@ Nuevo Usuario
         @csrf
 
         <div class="row justify-content-between py-2 my-2" id='rolesHeader'>
-            <div class="col-6 my-2 col-md-2 d-flex">
-                <div class="input-group">
-                    <select class="btn btn-outline-secondary" id="inputGroupSelect02" type="button" name="fk_proveedor">
-                        <option class="text-nowrap bd-highlight" name="fk_rol" selected>Rol...</option>
-                        @foreach ($roles as $rol)
-                        <option class="text-nowrap bd-highlight" value="{{$rol->RolId}}">{{$rol->RolNombre}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-6 my-2 col-md-4">
+            <div class="col-12 my-2">
+				<a href="{{route('usuarios.index')}}" class="float-left btn btn-info text-white font-inter-600" style="font-size:12px;">Volver</a>
                 <input type="submit" value="+ Guardar" class="float-right btn btn-primary text-white font-inter-600" style="font-size:12px;">
             </div>
         </div>
@@ -48,72 +39,65 @@ Nuevo Usuario
                 <div class="row m-2">
                     <div class="card col-sm-12">
                         <div class="card-body">
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="name" class="float-left text-secondary form-check-label">Nombre de Usuario</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
+                                            </div>
+                                            <input required id="name" name="name" type="text" class="form-control" placeholder="nombre" aria-label="nombre" aria-describedby="basic-addon1">
+                                        </div>
                                     </div>
-                                    <input required name="name" type="text" class="form-control" placeholder="nombre" aria-label="nombre" aria-describedby="basic-addon1">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                                    </div>
-                                    <input required name="email" type="email" class="form-control" placeholder="email" aria-label="email" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                                    </div>
-                                    <input required name="password" type="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                                    </div>
-                                    <input required name="name" type="text" class="form-control" placeholder="nombre" aria-label="nombre" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
-                                    </div>
-                                    <input required name="name" type="text" class="form-control" placeholder="nombre" aria-label="nombre" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-                            
                                 <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    <div class="form-group">
+                                        <label class="float-left text-secondary form-check-label" for="inputGroupSelect02">Rol</label>
+                                        <select class="form-control" id="inputGroupSelect02" name="fk_rol">
+                                            <option class="text-nowrap bd-highlight" selected>Roles...</option>
+                                            @foreach ($roles as $rol)
+                                            <option class="text-nowrap bd-highlight" value="{{$rol->RolId}}">{{$rol->RolNombre}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email" class="float-left text-secondary form-check-label">Correo</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">@</span>
+                                            </div>
+                                            <input required id="email" name="email" type="email" class="form-control" placeholder="email" aria-label="email" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password" class="float-left text-secondary form-check-label">Password</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">#</span>
+                                            </div>
+                                            <input required id="password" name="password" type="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon1">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="password-confirm" class="float-left text-secondary form-check-label">Confirmacion Password</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1">#</span>
+                                            </div>
+                                            <input required id="password-confirm" name="password_confirmation" type="password" class="form-control" placeholder="password" aria-label="password" aria-describedby="basic-addon1" autocomplete="new-password">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="card col-sm-6">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label class=" float-left text-secondary form-check-label" for="imagen">
-                                    Imagen del Producto
-                                </label>
-                                <div class="input-group">
-
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1"><i class="fas fa-images"></i></span>
-                                    </div>
-                                    <input name="ProductoImage" id="ProductoImage" type="file" class="form-control" placeholder="imagen" aria-label="imagen" aria-describedby="basic-addon1">
-                                </div>
-                                <img width="100%" id="ProductoImageOutput" class="card-img p-2" src="{{asset('img/default-image.png')}}" alt="Card image cap">
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
 
             </div>
@@ -125,7 +109,8 @@ Nuevo Usuario
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
+<script src="{{ asset('js/scriptspersonalizados.js')}}"></script>
 <script>
     $(document).ready(function(){
         // $("button").click(function(){
@@ -134,8 +119,5 @@ Nuevo Usuario
         console.log('hola');
     });
 </script>
-<script type="text/javascript">
-    @include('scriptspersonalizados')
-</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-@endsection
+@endpush

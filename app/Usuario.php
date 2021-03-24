@@ -19,7 +19,7 @@ class Usuario extends Authenticatable
      *
      * @var string
      */
-    protected $primaryKey = 'UsuarioId';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -27,9 +27,9 @@ class Usuario extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'UsuarioName',
-        'UsuarioEmail',
-        'UsuarioPassword',
+        'name',
+        'email',
+        'password',
         'fk_rol',
     ];
 
@@ -38,7 +38,7 @@ class Usuario extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'usuarios';
+    protected $table = 'users';
 
     /**
      * Indicates if the model should be timestamped.
