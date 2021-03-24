@@ -146,14 +146,14 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="{{route('usuarios.index')}}">
+						<a class="card bg-dark text-white shadow" href="{{route('reportes.dashboard')}}">
 							<img src="{{asset('img\Users.jpg')}}" class="card-img-top" alt="clientes">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
 									<tbody>
 										<tr>
 											<td class="align-bottom">
-												<h1 class="font-weight-bold mb-3">ROLES/PERMISOS</h2>
+												<h1 class="font-weight-bold mb-3">REPORTES/INVENTARIO</h2>
 											</td>
 										</tr>
 									</tbody>
