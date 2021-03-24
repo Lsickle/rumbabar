@@ -40,6 +40,15 @@ Nuevo Producto
 					<div class="card col-sm-6">
 						<div class="card-body">
 							<div class="form-group">
+								<label class="float-left text-secondary form-check-label" for="inputGroupSelect02">Proveedor</label>
+								<select class="form-control" id="inputGroupSelect02" name="fk_proveedor">
+									<option class="text-nowrap bd-highlight" name="fk_proveedor" selected>Proveedor...</option>
+									@foreach ($proveedores as $proveedor)
+									<option class="text-nowrap bd-highlight" value="{{$proveedor->ProveedorId}}">{{$proveedor->ProveedorNombre}}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
 										<span class="input-group-text" id="basic-addon1"><i class="fas fa-keyboard"></i></span>
@@ -64,13 +73,9 @@ Nuevo Producto
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="float-left text-secondary form-check-label" for="ProductoDescripcion">Descripción</label>
 								<div class="input-group">
-									<label class="text-secondary form-check-label" for="text">
-										Descripcion del Producto
-									</label>
-									<textarea name="ProductoDescripcion" id="text" name="text" rows="4" cols="50" placeholder="descripcion" aria-label="descripcion" aria-describedby="basic-addon1">
-														Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptates culpa facilis deserunt repellendus, assumenda pariatur at est, et adipisci voluptate odio sint tempore molestias commodi suscipit molestiae aliquid nulla reiciendis?
-													</textarea>
+									<textarea class="form-control" style="resize: vertical; min-with:100%" maxlength="250" name="ProductoDescripcion" id="ProductoDescripcion" rows="5" placeholder="descripcion" aria-label="descripcion" aria-describedby="basic-addon1"></textarea>
 								</div>
 							</div>
 						</div>
