@@ -23,10 +23,10 @@ Editar Producto
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
-	<form action="{{route('productos.update')}}" method="POST" enctype="multipart/form-data">
+	<form action="{{route('productos.update', ['producto'=> $producto])}}" method="POST" enctype="multipart/form-data">
 		@csrf
 		@method('PUT')
-	
+
 		<div class="row justify-content-between py-2 my-2" id='ventasHeader'>
 			<div class="col-6 my-2 col-md-2 d-flex">
 				<div class="input-group">
@@ -42,7 +42,7 @@ Editar Producto
 				<input type="submit" value="+ Guardar" class="float-right btn btn-primary text-white font-inter-600" style="font-size:12px;">
 			</div>
 		</div>
-	
+
 		<div class="row bg-local">
 			<div class="col">
 				<div class="row m-2">
@@ -91,7 +91,7 @@ Editar Producto
 									Imagen del Producto
 								</label>
 								<div class="input-group">
-	
+
 									<div class="input-group-prepend">
 										<span class="input-group-text" id="basic-addon1"><i class="fas fa-images"></i></span>
 									</div>
@@ -102,12 +102,12 @@ Editar Producto
 						</div>
 					</div>
 				</div>
-	
+
 			</div>
 		</div>
 		<div class="row flex-row bg-white d-flex p-4">
 		</div>
-	
+
 	</form>
 </div>
 @endsection
@@ -122,7 +122,7 @@ Editar Producto
     });
 </script>
 <script type="text/javascript">
-@include('scriptspersonalizados')
+	@include('scriptspersonalizados')
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 @endsection

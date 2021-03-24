@@ -93,7 +93,9 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         //
-        return View('Producto.edit', compact('producto'));
+		$proveedores = Proveedor::all();
+
+        return View('Producto.edit', compact(['proveedores', 'producto']));
 
     }
 
