@@ -17,8 +17,10 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(Cliente::class, function (Faker $faker) {
+	$tipodoc=['CC','CE','TI','PP','OTRO'];
     return [
         'ClienteNombre' => $faker->firstName.' '.$faker->lastName,
+        'ClienteTipoDoc' => $faker->randomElement($tipodoc),
         'ClienteDocumento' => $faker->numberBetween($min = 950000000, $max = 1200000000),
         'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
         'updated_at' => $faker->dateTimeBetween('2020-09-01', '2020-10-07')->format('Y-m-d H:i:s'),

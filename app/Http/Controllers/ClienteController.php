@@ -14,7 +14,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes  = Mesa::paginate(10);
+        $clientes  = Cliente::paginate(10);
 
 		return View('Cliente.index', compact(['clientes']));
     }
