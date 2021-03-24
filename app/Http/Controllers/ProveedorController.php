@@ -17,7 +17,7 @@ class ProveedorController extends Controller
     {
         // $proveedores = Proveedor::all('ProveedorID');
         // $roles = Rol::all('RolId');
-        
+
         // return $roles->random()->RolId;
         $proveedores  = Proveedor::paginate(10);
 
@@ -97,8 +97,6 @@ class ProveedorController extends Controller
             'ProveedorNombre' => 'required|string|max:255',
             'ProveedorNit' => 'required'
         ]);
-
-        $proveedor = new Proveedor();
 		$proveedor->ProveedorNombre = $request->input('ProveedorNombre');
 		$proveedor->ProveedorNit = $request->input('ProveedorNit');
 		$proveedor->save();
