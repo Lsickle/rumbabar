@@ -71,7 +71,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        return View('Cliente.show', compact('cliente'));
+        return View('Cliente.edit', compact('cliente'));
     }
 
     /**
@@ -85,11 +85,13 @@ class ClienteController extends Controller
     {
         $validate = $request->validate([
             'ClienteNombre' => 'required|string|max:255',
-            'ClienteDocumento' => 'required|numeric|min:0'
+            'ClienteDocumento' => 'required|numeric|min:0',
+            'ClienteTipoDoc' => 'in:CC,CE,TI,PP,OTRO'
         ]);
 
 		$cliente->ClienteNombre = $request->input('ClienteNombre');
 		$cliente->ClienteDocumento = $request->input('ClienteDocumento');
+		$cliente->ClienteTipoDoc = $request->input('ClienteTipoDoc');
 		$cliente->save();
 
         return redirect()->route('clientes.index');

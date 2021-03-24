@@ -60,7 +60,7 @@ Nuevo Cliente
 					<div class="row">
 						<div class="form-group col-md-6">
 							{{-- <label class="float-left text-secondary form-check-label" for="ClienteTipoDoc">Proveedor</label> --}}
-							<select class="form-control" id="inputGroupSelect02" name="ClienteTipoDoc">
+							<select required class="form-control" id="inputGroupSelect02" name="ClienteTipoDoc">
 								<option class="text-nowrap bd-highlight" selected value="">Tipo de documento...</option>
 								<option class="text-nowrap bd-highlight" value="CC">Cedula de Cidadania</option>
 								<option class="text-nowrap bd-highlight" value="CE">Cedula de Extranjeria</option>
@@ -75,7 +75,7 @@ Nuevo Cliente
 								<div class="input-group-prepend">
 									<span class="input-group-text" id="basic-addon1">#</span>
 								</div>
-								<input name="ClienteDocumento" type="number" class="form-control" placeholder="Documento" aria-label="Documento" aria-describedby="basic-addon1">
+								<input required name="ClienteDocumento" type="number" class="form-control" placeholder="Documento" aria-label="Documento" aria-describedby="basic-addon1">
 							</div>
 						</div>
 					</div>
