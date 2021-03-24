@@ -53,7 +53,7 @@ class ProductoController extends Controller
         ]);
 
 		if ($request->hasFile('ProductoImage')&&$request->file('ProductoImage')->isValid()) {
-			$path = $request->file('ProductoImage')->store('public/Products');
+			$path = $request->file('ProductoImage')->store('Products', 'public');
 		}else{
 			$path = 'img/photo-default.png';
 		}
@@ -93,6 +93,9 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         //
+
+		// $visibility = Storage::getVisibility($producto->ProductoImage);
+		// return $visibility;
 		$proveedores = Proveedor::all();
 
         return View('Producto.edit', compact(['proveedores', 'producto']));

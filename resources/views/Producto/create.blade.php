@@ -112,17 +112,7 @@ Nuevo Producto
 </div>
 @endsection
 
-@section('scripts')
-<script>
-	$(document).ready(function(){
-        // $("button").click(function(){
-        //     $("p").slideToggle();
-        // });
-        console.log('hola');
-    });
-</script>
-<script type="text/javascript">
-@include('scriptspersonalizados')
-</script>
+@push('scripts')
+<script src="{{ asset('js/scriptspersonalizados.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-@endsection
+@endpush
