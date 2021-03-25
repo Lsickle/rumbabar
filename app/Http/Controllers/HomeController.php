@@ -34,7 +34,7 @@ class HomeController extends Controller
         $totalcompraslastmonth = Compra::whereDate('updated_at', '>', Carbon::now()->subDays(30))->get('CompraTotal')->sum('CompraTotal');
         $numerocompraslastmonth = Compra::whereDate('updated_at', '>', Carbon::now()->subDays(30))->get()->count();
 
-        return $numerocompraslastmonth;
+        // return $numerocompraslastmonth;
         return view('home', compact(['ultimaventa', 'ultimacompra', 'totalventaslastmonth']));
     }
 }
