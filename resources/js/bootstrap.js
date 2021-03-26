@@ -9,8 +9,28 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    dt = require('datatables.net')(window, $);
+    Chart = require('chart.js');
 
     require('bootstrap');
+
+    require('datatables.net-bs4')();
+    require('datatables.net-autofill-bs4')();
+    require('datatables.net-buttons-bs4')();
+    require('datatables.net-buttons/js/buttons.colVis.js')();
+    require('datatables.net-buttons/js/buttons.print.js')();
+    require('datatables.net-colreorder-bs4')();
+    require('datatables.net-datetime')();
+    require('datatables.net-fixedcolumns-bs4')();
+    require('datatables.net-fixedheader-bs4')();
+    require('datatables.net-keytable-bs4')();
+    require('datatables.net-responsive-bs4')();
+    require('datatables.net-rowgroup-bs4')();
+    require('datatables.net-scroller-bs4')();
+    require('datatables.net-searchbuilder-bs4')();
+    require('datatables.net-searchpanes-bs4')();
+    require('datatables.net-select-bs4')();
+
 } catch (e) {}
 
 /**
