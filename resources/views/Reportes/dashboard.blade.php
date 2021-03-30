@@ -28,6 +28,7 @@ Reportes/Inventario
         <div class="row justify-content-between py-2 my-2" id='reportesHeader'>
             <div class="col-12 my-2">
                 <a href="{{route('home')}}" class="float-left btn btn-info text-white font-inter-600" style="font-size:12px;">Volver</a>
+                <a href="#" class="float-right d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
             </div>
         </div>
 
@@ -38,8 +39,7 @@ Reportes/Inventario
                 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        {{-- <h1 class="h3 mb-0 text-gray-800">Dashboard</h1> --}}
                     </div>
                 
                     <!-- Content Row -->
