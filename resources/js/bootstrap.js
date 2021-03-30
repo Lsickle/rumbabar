@@ -10,7 +10,6 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
     dt = require('datatables.net')(window, $);
-    Chart = require('chart.js');
 
     require('bootstrap');
 
