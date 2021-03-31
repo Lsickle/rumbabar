@@ -5,7 +5,7 @@ Reportes/Inventario
 @endsection
 
 @section('styles')
-<link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+<link href="{{asset('css/sb-admin-2.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" />
 @endsection
 
@@ -52,7 +52,7 @@ Reportes/Inventario
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
+                                                Ventas (Mes)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -70,7 +70,7 @@ Reportes/Inventario
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
+                                                Ventas (Año)</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
                                         </div>
                                         <div class="col-auto">
@@ -354,10 +354,10 @@ Reportes/Inventario
 <script src="{{ asset('js/scriptspersonalizados.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
 <!-- Core plugin JavaScript-->
-<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<script src="{{ asset('js/jquery.easing.js')}}"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="{{ asset('js/sb-admin-2.min.js')}}"></script>
+<script src="{{ asset('js/sb-admin-2.js')}}"></script>
 
 <!-- Page level plugins -->
 {{-- <script src="{{ asset('vendor/chart.js/Chart.min.js')}}"></script> --}}
