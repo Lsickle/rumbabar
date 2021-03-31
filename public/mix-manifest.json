@@ -1,5 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/scriptspersonalizados.js": "/js/scriptspersonalizados.js"
+    "/js/scriptspersonalizados.js": "/js/scriptspersonalizados.js",
+    "/js/sb-admin-2.js": "/js/sb-admin-2.js",
+    "/js/demo/chart-area-demo.js": "/js/demo/chart-area-demo.js",
+    "/js/demo/chart-bar-demo.js": "/js/demo/chart-bar-demo.js",
+    "/js/demo/chart-pie-demo.js": "/js/demo/chart-pie-demo.js"
 }
