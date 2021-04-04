@@ -9,11 +9,13 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+	window.JSZip = require('jszip');
+	window.pdfMake = require('pdfmake/build/pdfmake.js');
+	window.pdfFonts = require('pdfmake/build/vfs_fonts.js');
+	pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     require('bootstrap');
 
-	require('jszip');
-	require('pdfmake');
 	require('datatables.net-bs4');
 	require('datatables.net-autofill-bs4');
 	require('datatables.net-buttons-bs4');
