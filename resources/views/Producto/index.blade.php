@@ -28,13 +28,13 @@ Lista de Productos
 			<table id="productsTable" class="table table-hover table-sm mb-0" style="color:#6E6893 !important;">
 				<thead class="font-inter-600" style="background-color: #F4F2FF;">
 					<tr>
-						<th id="th-1" scope="col">#</th>
-						<th id="th-2" scope="col">NOMBRE</th>
-						<th id="th-3" scope="col">PRECIO</th>
+						<th id="th-1" scope="col" class="text-center">#</th>
+						<th id="th-2" scope="col" class="">NOMBRE</th>
+						<th id="th-3" scope="col" class="text-center">PRECIO</th>
 						<th id="th-4" scope="col" class="text-center">CANTIDAD</th>
-						<th id="th-5" scope="col">ACTUALIZACION</th>
-						<th id="th-6" scope="col" class="text-right">EDITAR</th>
-						<th id="th-7" scope="col" class="text-right">ELIMINAR</th>
+						<th id="th-5" scope="col" class="text-center">ACTUALIZACION</th>
+						<th id="th-6" scope="col" class="text-center">EDITAR</th>
+						<th id="th-7" scope="col" class="text-center">ELIMINAR</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,10 +48,10 @@ Lista de Productos
 						</td>
 						<td class="align-middle" scope="col">
 							<div class="text-nowrap">
-								<div class="text-dark">${{$producto->ProductoPrecio}}</div>
+								<div class="text-dark">{{ number_format($producto->ProductoPrecio, 2) }}</div>
 							</div>
 						</td>
-						<td class="align-middle text-center" scope="col">
+						<td class="align-middle" scope="col">
 							<div class="text-nowrap">
 								<div class="text-dark">{{$producto->ProductoCantidad}}</div>
 							</div>
@@ -65,12 +65,12 @@ Lista de Productos
 								</span>
 							</div>
 						</td>
-						<td class="align-middle text-right" scope="col">
+						<td class="align-middle" scope="col">
 							<a href="{{route('productos.edit', ['producto' => $producto->ProductoId])}}" class="btn btn-sm btn-warning">
 								<div class="text-nowrap">Editar</div>
 							</a>
 						</td>
-						<td class="align-middle text-right" scope="col">
+						<td class="align-middle" scope="col">
 							<form method="POST" id="formDestroy{{$producto->ProductoId}}" action="{{route('productos.destroy', ['producto' => $producto->ProductoId])}}">
 								@csrf
 								@method('DELETE')
@@ -111,9 +111,9 @@ Lista de Productos
 								   : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
 		$('#productsTable').DataTable({
-			dom: "<'row pt-2 pb-0'<'col-6 col-md-2 text-left'l><'col-12 col-md-7 text-md-center d-none d-md-block'B><'col-6 col-md-3 d-block'f>>" +
+			dom:"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
 				"<'row'<'col-md-12'tr>>" +
-				"<'pt-0 pb-2 d-flex flex-wrap justify-content-center justify-content-md-between'<'justify-content-md-start justify-content-center align-self-center'i><'justify-content-md-end justify-content-center'p>>",
+				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
 			scrollX: false,
 			autoWidth: false,
 			select: true,
@@ -130,7 +130,7 @@ Lista de Productos
 			],
 			language: {
 				"sProcessing":     "Procesando...",
-				"sLengthMenu":     "_MENU_",
+				"sLengthMenu":     "_MENU_ Filas",
 				"sZeroRecords":    "No se encontraron resultados",
 				"sEmptyTable":     "Ningún dato disponible en esta tabla",
 				"sInfo":           "_START_ al _END_ de _TOTAL_",
@@ -153,7 +153,14 @@ Lista de Productos
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				},
 				"colvis": 'Columnas Visibles'
-			}
+			},
+			"columnDefs": [
+				{ "type": "num-fmt", "targets": 0 },
+				{ "orderable": false, "targets": [5,6] },
+				{ "className": "text-right", "targets": [2,3,4]},
+				{ "className": "text-left", "targets": [1]},
+				// { "type": "date", "targets": 4 }
+			]
             // "rowGroup": {
             //     endRender: null,
             //     startRender: function ( rows, group ) {
@@ -179,10 +186,11 @@ Lista de Productos
             //     },
             //     dataSrc: [ 0, 5 ]
             // },
-            // "columnDefs": [ {
+			// "columnDefs": [ {
             //     targets: [ 0, 5 ],
             //     visible: false
-            // } ]
+            // }
+			// ]
 		});
 	});
 	/*funcion para actualizar elplugin responsive in chrome*/
