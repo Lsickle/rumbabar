@@ -11,8 +11,21 @@ const mix = require('laravel-mix');
  |
  */
 
+// mix.autoload({ 'jquery': ['window.$', 'window.jQuery'] });
+
+mix.webpackConfig({
+	resolve: {
+		alias: {
+			'jquery': path.join(__dirname, 'node_modules/jquery/src/jquery'),
+		}
+	}
+});
+
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
+	.js('resources/js/jszip.js', 'public/js')
+	.js('resources/js/pdfmake.js', 'public/js')
+	.js('resources/js/datatables-bs4.js', 'public/js')
+	.sass('resources/sass/app.scss', 'public/css')
 	.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
 	.copy('node_modules/jquery.easing/jquery.easing.js', 'public/js/jquery.easing.js')
 	.copy('node_modules/jquery.easing/jquery.easing.compatibility.js', 'public/js/jquery.easing.compatibility.js')
@@ -23,6 +36,7 @@ mix.js('resources/js/app.js', 'public/js')
 	.copy('resources/js/demo/chart-area-demo.js', 'public/js/demo/chart-area-demo.js')
 	.copy('resources/js/demo/chart-bar-demo.js', 'public/js/demo/chart-bar-demo.js')
 	.copy('resources/js/demo/chart-pie-demo.js', 'public/js/demo/chart-pie-demo.js');
+	// .sourceMaps();
 
 if (mix.inProduction()) {
     mix.version();

@@ -102,36 +102,44 @@ Lista de Productos
         });
     });
 </script>
+{{-- toastr --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/vfs_fonts.min.js"></script> --}}
+
+{{-- jszip --}}
+<script src="{{asset('js/jszip.js')}}"></script>
+
+{{-- pdfmake --}}
+<script src="{{asset('js/pdfmake.js')}}"></script>
+
+{{-- datatables --}}
+<script src="{{asset('js/datatables-bs4.js')}}"></script>
 
 <script>
 	$(document).ready(function() {
 		/*var rol defino el rol del usuario*/
 		var rol = "<?php echo Auth::user()->fk_rol; ?>";
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}]
-								   : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
+		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
 		$('#productsTable').DataTable({
-			dom:"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+			"dom":"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
 				"<'row'<'col-md-12'tr>>" +
 				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
-			scrollX: false,
-			autoWidth: false,
-			select: true,
-			colReorder: true,
-			ordering: true,
-			order: [0, 'desc'],
-			searchHighlight: true,
-			responsive: true,
-			keys: true,
-			lengthChange: true,
-			searching: true,
-			buttons: [
+			"scrollX": false,
+			"autoWidth": false,
+			"select": true,
+			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
+			"searchHighlight": true,
+			"responsive": true,
+			"keys": true,
+			"lengthChange": true,
+			"searching": true,
+			"buttons": [
 				botoncito
 			],
-			language: {
+			"language": {
 				"sProcessing":     "Procesando...",
 				"sLengthMenu":     "_MENU_ Filas",
 				"sZeroRecords":    "No se encontraron resultados",
@@ -188,12 +196,7 @@ Lista de Productos
             //             .append( '<td/>' );
             //     },
             //     dataSrc: [ 0, 5 ]
-            // },
-			// "columnDefs": [ {
-            //     targets: [ 0, 5 ],
-            //     visible: false
             // }
-			// ]
 		});
 	});
 	/*funcion para actualizar elplugin responsive in chrome*/
