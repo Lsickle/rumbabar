@@ -23,26 +23,8 @@ Lista de Productos
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
-	<div class="row justify-content-between py-2 my-2" id='mesaslistHeader'>
-		<div class="col-12 col-sm-2 d-flex justify-content-between">
-			<button class="btn btn-outline-secondary dropdown">
-				<div class="text-nowrap bd-highlight">
-					<i class="fas fa-filter"></i> Filtro
-				</div>
-			</button>
-			<a href="{{route('productos.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
-		</div>
-		<div class="col-12 col-sm-5 my-sm-0 my-2">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-				</div>
-				<input id="inputsearchProduct" type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
-			</div>
-		</div>
-	</div>
 	<div class="row">
-		<div class="table-responsive">
+		<div class="col table-responsive">
 			<table id="productsTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
 				<thead class="font-inter-600" style="background-color: #F4F2FF;">
 					<tr>
@@ -78,7 +60,7 @@ Lista de Productos
 						</td>
 						<td class="align-middle" scope="col">
 							<div class="text-nowrap">
-								Fecha : {{$producto->updated_at}}
+								{{$producto->updated_at}}
 								<br>
 								<span class="badge badge-pill badge-local">
 									• Local
@@ -106,28 +88,10 @@ Lista de Productos
 			</table>
 		</div>
 	</div>
-	<div class="row flex-row d-flex" style="background-color: #F4F2FF; color:#6E6893 !important;">
-		<div class="col my-auto">
-			<div class="text-left">filas por página: {{$productos->count()}}</div>
-		</div>
-
-		<div class="col">
-			<div class="text-right">
-				<div class="mx-3">{{$productos->firstItem()}}-{{$productos->lastItem()}} of {{$productos->total()}}</div>
-				<a href="{{$productos->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
-				<a href="{{$productos->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
-				<a href="{{$productos->previousPageUrl()}}"><i class="px-1">{{$productos->currentPage() > 1 ? $productos->currentPage() - 1 : ''}}</i></a>
-				<i class="px-0">{{$productos->currentPage()}}</i>
-				<a href="{{$productos->nextPageUrl()}}"><i class="px-1">{{$productos->currentPage() + 1}}</i></a>
-				<a href="{{$productos->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
-				<a href="{{$productos->url($productos->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
-			</div>
-		</div>
-	</div>
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script>
 	$(document).ready(function(){
         // $("button").click(function(){
@@ -143,4 +107,103 @@ Lista de Productos
     });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-@endsection
+<script>
+	$(document).ready(function() {
+		/*var rol defino el rol del usuario*/
+		var rol = "<?php echo Auth::user()->fk_rol; ?>";
+		/*var botoncito define los botones que se usaran si el usuario es programador*/
+		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}]
+								   : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
+		/*inicializacion de datatable general*/
+		$('#productsTable').DataTable({
+			dom: "<'row py-2'<'col-6 col-md-2 text-left'l><'col-12 col-md-8 text-right text-md-center d-none d-md-block'B><'col-6 col-md-2 w-100 d-block'f>>" +
+				"<'row'<'col-md-12'tr>>" +
+				"<'d-flex flex-wrap justify-content-center justify-content-md-between'<'justify-content-md-start justify-content-center align-self-center'i><'justify-content-md-end justify-content-center'p>>",
+			scrollX: false,
+			autoWidth: true,
+			select: true,
+			colReorder: true,
+			ordering: true,
+			order: [0, 'desc'],
+			searchHighlight: true,
+			responsive: true,
+			keys: true,
+			lengthChange: true,
+			searching: true,
+			buttons: [
+				botoncito
+			],
+			language: {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "_MENU_",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "_START_ al _END_ de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "",
+				"sInfoPostFix":    "",
+				"sSearch":         "_INPUT_",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "->",
+					"sPrevious": "<-"
+				},
+
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+				"colvis": 'Columnas Visibles'
+			}
+            // "rowGroup": {
+            //     endRender: null,
+            //     startRender: function ( rows, group ) {
+            //         var subtotalTrat = rows
+            //             .data()
+            //             .pluck(8)
+            //             .reduce( function (a, b) {
+            //                 return a + parseFloat(b);
+            //             }, 0);
+
+            //         var categoria = rows
+            //             .data()
+            //             .pluck(6)
+            //             .reduce( function (a, b) {
+            //                 return b;
+            //             }, 0);
+
+            //         return $('<tr/>')
+            //             .append( '<td colspan="6">'+group+'</td>' )
+            //             .append( '<td>'+subtotalTrat+' Kg.</td>' )
+            //             .append( '<td/>' )
+            //             .append( '<td/>' );
+            //     },
+            //     dataSrc: [ 0, 5 ]
+            // },
+            // "columnDefs": [ {
+            //     targets: [ 0, 5 ],
+            //     visible: false
+            // } ]
+		});
+	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+	var table = $('#productsTable').DataTable();
+	table.columns.adjust();
+	table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
+		}
+	});
+</script>
+@endpush
