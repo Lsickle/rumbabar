@@ -25,18 +25,16 @@ Lista de Productos
 <div class="container shadow rounded border border-3 h-90 bg-white">
 	<div class="row">
 		<div class="col table-responsive">
-			<table id="productsTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
+			<table id="productsTable" class="table table-hover table-sm mb-0" style="color:#6E6893 !important;">
 				<thead class="font-inter-600" style="background-color: #F4F2FF;">
 					<tr>
 						<th id="th-1" scope="col">#</th>
-						<th id="th-3" scope="col">NOMBRE</th>
-						<th id="th-4" scope="col">PRECIO</th>
+						<th id="th-2" scope="col">NOMBRE</th>
+						<th id="th-3" scope="col">PRECIO</th>
 						<th id="th-4" scope="col" class="text-center">CANTIDAD</th>
-						<th id="th-4" scope="col">ACTUALIZACION</th>
-						<th id="th-7" scope="col" class="text-right">EDITAR</th>
+						<th id="th-5" scope="col">ACTUALIZACION</th>
+						<th id="th-6" scope="col" class="text-right">EDITAR</th>
 						<th id="th-7" scope="col" class="text-right">ELIMINAR</th>
-						<th id="th-8" scope="col"></th>
-						<th id="th-9" scope="col"><i class="fas fa-ellipsis-v"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -79,9 +77,6 @@ Lista de Productos
 								<input type="submit" class="btn btn-sm btn-danger text-nowrap" value="Eliminar">
 							</form>
 						</td>
-						<td class="align-middle" scope="col">
-						</td>
-						<td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -116,11 +111,11 @@ Lista de Productos
 								   : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
 		$('#productsTable').DataTable({
-			dom: "<'row py-2'<'col-6 col-md-2 text-left'l><'col-12 col-md-8 text-right text-md-center d-none d-md-block'B><'col-6 col-md-2 w-100 d-block'f>>" +
+			dom: "<'row pt-2 pb-0'<'col-6 col-md-2 text-left'l><'col-12 col-md-7 text-md-center d-none d-md-block'B><'col-6 col-md-3 d-block'f>>" +
 				"<'row'<'col-md-12'tr>>" +
-				"<'d-flex flex-wrap justify-content-center justify-content-md-between'<'justify-content-md-start justify-content-center align-self-center'i><'justify-content-md-end justify-content-center'p>>",
+				"<'pt-0 pb-2 d-flex flex-wrap justify-content-center justify-content-md-between'<'justify-content-md-start justify-content-center align-self-center'i><'justify-content-md-end justify-content-center'p>>",
 			scrollX: false,
-			autoWidth: true,
+			autoWidth: false,
 			select: true,
 			colReorder: true,
 			ordering: true,

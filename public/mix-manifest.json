@@ -1,6 +1,8 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/js/jquery.easing.js": "/js/jquery.easing.js",
+    "/js/jquery.easing.compatibility.js": "/js/jquery.easing.compatibility.js",
     "/js/scriptspersonalizados.js": "/js/scriptspersonalizados.js",
     "/css/sb-admin-2.css": "/css/sb-admin-2.css",
     "/js/sb-admin-2.js": "/js/sb-admin-2.js",
