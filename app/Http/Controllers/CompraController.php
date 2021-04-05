@@ -14,7 +14,7 @@ class CompraController extends Controller
      */
     public function index()
     {
-		$compras = Compra::with(['productos.proveedor', 'comprador'])->paginate(10);
+		$compras = Compra::with(['productos.proveedor', 'comprador'])->get();
 		$comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->get();
 		$totalgeneral = 0;
 

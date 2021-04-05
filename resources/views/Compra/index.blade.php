@@ -136,7 +136,7 @@ Nombre de la pagina
                             {{$compra->productos->count()}}
                         </td>
                         <td class="align-middle" scope="col">
-                            {{date('Y/m/d', strtotime($compra->updated_at))}}
+                            {{date('d/m/Y', strtotime($compra->created_at))}}
                         </td>
                         <td class="align-middle" scope="col">
                             {{$compra->updated_at}}
@@ -182,8 +182,8 @@ Nombre de la pagina
 				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
 			"searchPanes": {
 				cascadePanes: true,
-				// layout: 'columns-3',
-				// columns: [1,4],
+				layout: 'columns-2',
+				columns: [1,4],
 				count: '{total}',
 				countFiltered: '{shown} / {total}',
 				viewTotal: true,
