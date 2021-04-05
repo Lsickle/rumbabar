@@ -22,6 +22,7 @@ class Venta extends Model
      * @var array
      */
     protected $fillable = [
+        'VentaStatus',
         'VentaSaldo',
         'VentaTotal',
         'fk_user',

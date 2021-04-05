@@ -15,6 +15,7 @@ class CreateComprasTable extends Migration
     {
         Schema::create('compras', function (Blueprint $table) {
             $table->id('CompraId');
+            $table->string('CompraStatus')->default('Abierta');
             $table->float('CompraSaldo', 10, 2);
             $table->float('CompraTotal', 10, 2);
             $table->unsignedBigInteger('fk_user');

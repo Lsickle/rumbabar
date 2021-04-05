@@ -23,6 +23,7 @@ class Compra extends Model
      * @var array
      */
     protected $fillable = [
+        'CompraStatus',
         'CompraSaldo',
         'CompraTotal',
         'fk_user',

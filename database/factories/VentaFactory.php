@@ -22,6 +22,7 @@ $factory->define(Venta::class, function (Faker $faker) {
     $clientes = App\Cliente::all('ClienteId');
     $total = $faker->numberBetween($min = 0, $max = 99999);
     return [
+        'VentaStatus' => ($faker->randomElement($array = array ('Abierta','Facturada','Pagada', 'Cancelada', 'Pendiente')) ),
         'VentaSaldo' => ($total/$faker->numberBetween($min = 1, $max = 10)),
         'VentaTotal' => $total,
         'fk_user' => $users->random(),

@@ -74,7 +74,8 @@ Lista de Productos
 							{{$producto->proveedor->ProveedorNombre}}
 						</td>
 						<td class="align-middle text-nowrap text-dark" scope="col">
-							{{$producto->updated_at}}
+							{{-- {{$producto->updated_at}} --}}
+							{{date('Y/m/d', strtotime($producto->updated_at))}}
 						</td>
 						<td class="align-middle" scope="col">
 							<a href="{{route('productos.edit', ['producto' => $producto->ProductoId])}}" class="btn btn-sm btn-warning">
@@ -138,8 +139,8 @@ Lista de Productos
 				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
 			"searchPanes": {
 				cascadePanes: true,
-				layout: 'columns-1',
-				columns: [4],
+				layout: 'columns-2',
+				columns: [4,3],
 				count: '{total}',
 				countFiltered: '{shown} / {total}',
 				viewTotal: true,
@@ -199,23 +200,54 @@ Lista de Productos
 				{ "className": "text-left", "targets": [1]},
 				// { "visible": false, "targets": [4]}
 			],
-            // "rowGroup": {
+            "rowGroup": {
+                endRender: null,
+                startRender: function ( rows, group ) {
+
+					var totalcantidad = rows
+                        .data()
+                        .pluck(3)
+                        .reduce( function (a, b) {
+                            return a + parseFloat(b);
+                        }, 0);
+
+                    var provedor = rows
+                        .data()
+                        .pluck(4)
+                        .reduce( function (a, b) {
+                            return b;
+                        }, 0);
+
+                    return $('<tr/>')
+                        .append( '<td class="text-left" colspan="7">'+provedor+'</td>' )
+						.append( '<td>'+totalcantidad+' Unidades.</td>' );;
+                },
+                dataSrc: [ 4 ]
+            }
+			// "rowGroup": {
             //     endRender: null,
             //     startRender: function ( rows, group ) {
 
-
-            //         var provedor = rows
+			// 		var totalcantidad = rows
             //             .data()
-            //             .pluck(4)
+            //             .pluck(3)
             //             .reduce( function (a, b) {
-            //                 return b;
+            //                 return a + parseFloat(b);
             //             }, 0);
 
-            //         return $('<tr/>')
-            //             .append( '<td class="text-left" colspan="8">'+provedor+'</td>' );
+			// 		var provedor = rows
+			// 			.data()
+			// 			.pluck(5)
+			// 			.reduce( function (a, b) {
+			// 			return b;
+			// 			}, 0);
+						
+			// 			return $('<tr />')
+			// 			.append( '<td class="text-left" colspan="7">'+provedor+'</td>' )
+			// 			.append( '<td>'+totalcantidad+' Unidades.</td>' );
             //     },
-            //     dataSrc: [ 4 ]
-            // }
+            //     dataSrc: [ 5 ]
+            // },
 		});
 	});
 	/*funcion para actualizar elplugin responsive in chrome*/

@@ -34,7 +34,9 @@ class CompraController extends Controller
      */
     public function create()
     {
-        //
+        $productos = Producto::all();
+
+		return View('Compra.index', compact(['productos']));
     }
 
     /**

@@ -80,70 +80,48 @@ Nombre de la pagina
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
-    <div class="row justify-content-between py-2 my-2" id='ventasHeader'>
+    <div class="row justify-content-between py-2 my-2" id='mesaslistHeader'>
         <div class="col-12 col-sm-2 d-flex justify-content-between">
-            <button class="btn btn-outline-secondary dropdown">
+            <button class="btn btn-outline-secondary dropdown" type="button" data-toggle="collapse" data-target=".collapse" aria-expanded="false" aria-controls="collapseExample">
                 <div class="text-nowrap bd-highlight">
-                    <i class="fas fa-filter"></i> Filtro
+                    <i class="fas fa-filter"></i> Filtros
                 </div>
             </button>
-            <button class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>PAGOS</b></button>
+            <a href="{{route('productos.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
         </div>
         <div class="col-12 col-sm-5 my-sm-0 my-2">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                </div>
-                <input type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
+            {{-- <div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+				</div>
+				<input id="inputsearchProduct" type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
+			</div> --}}
         </div>
     </div>
     <div class="row">
-        <div class="table-responsive">
-            <table class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
+        <div class="col table-responsive">
+            <table id="comprasTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
                 <thead class="font-inter-600" style="background-color: #F4F2FF;">
                     <tr>
                         <th id="th-1" scope="col">#</th>
-                        <th id="th-3" scope="col">PRODUCTOS</th>
                         <th id="th-4" scope="col">STATUS</th>
-                        <th id="th-5" scope="col">STATUS DE PAGO</th>
-                        <th id="th-6" scope="col">CANTIDAD</th>
-                        <th id="th-7" scope="col">VER</th>
-                        <th id="th-8" scope="col"></th>
-                        <th id="th-9" scope="col"><i class="fas fa-ellipsis-v"></i></th>
+                        <th id="th-5" scope="col">TOTAL</th>
+                        <th id="th-2" scope="col">PRODUCTOS</th>
+                        <th id="th-3" scope="col">CREADA</th>
+                        <th id="th-3" scope="col">ACTUALIZADA</th>
+                        <th id="th-6" scope="col">VER</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($compras as $compra)
                     <tr>
-                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap font-inter-600">
-                                <span class="badge badge-domicilio" style="font-size: 20px !important;">
-                                    • {{$compra->productos->count()}}
-                                </span>
-                            </div>
+                        <td class="align-middle text-nowrap font-inter-600" style="font-size: 20px !important;" scope="col">
+                            {{$compra->CompraId}}
                         </td>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                Fecha : {{$compra->created_at}}
-                                <br>
-                                <span class="badge badge-pill badge-Proveedor">
-                                    • Proveedor
-                                </span>
-                            </div>
+                        <td class="align-middle text-nowrap" scope="col">
+                            {{$compra->CompraStatus}}
                         </td>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                Paid on {{$compra->updated_at}}
-                                <br>
-                                <span class="badge badge-pill badge-efectivo">
-                                    • Pagada
-                                </span>
-    
-                            </div>
-                        </td>
-                        <td class="align-middle" scope="col">
+                        <td class="align-middle text-nowrap text-dark" scope="col">
                             @php
                             $subtotal = 0
                             @endphp
@@ -152,464 +130,159 @@ Nombre de la pagina
                             $subtotal = $producto->pivot->compraCantidad * $producto->ProductoPrecio;
                             @endphp
                             @endforeach
-                            <div class="text-nowrap">
-                                <div class="text-dark">${{$subtotal}}</div>
-                                COP
-                            </div>
+                            {{ number_format($subtotal, 2) }}
+                        </td>
+                        <td class="align-middle text-nowrap font-inter-600" style="font-size: 20px !important;" scope="col">
+                            {{$compra->productos->count()}}
+                        </td>
+                        <td class="align-middle" scope="col">
+                            {{date('Y/m/d', strtotime($compra->updated_at))}}
+                        </td>
+                        <td class="align-middle" scope="col">
+                            {{$compra->updated_at}}
                         </td>
                         <td class="align-middle" scope="col">
                             <a href="{{route('compras.show', ['compra' => $compra])}}" class="btn btn-sm btn-info text-white">
                                 <div class="text-nowrap">Ver Mas</div>
                             </a>
                         </td>
-                        <td class="align-middle" scope="col">
-                        </td>
-                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                     </tr>
                     @endforeach
-                    {{-- <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Colanta S.A.</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-Proveedor">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-efectivo">
-                                                    • Pagada
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Empresas Polar</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-domicilio">
-                                                    • Servicios
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-credito">
-                                                    • Vencida
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Femsa</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-debito">
-                                                    • Debito
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Cocacola</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Proveedor
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Agua</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Servicios
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Postobon</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Proveedor
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Postobon</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Proveedor
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Postobon</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Proveedor
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Postobon</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Proveedor
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Postobon</div>301 4145321
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Proveedor
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Proveedor
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$2000</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr> --}}
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
-        <div class="col my-auto">
-            <div class="text-left">filas por página: {{$compras->count()}}</div>
-        </div>
-    
-        <div class="col">
-            <div class="text-right">
-                <div class="mx-3">{{$compras->firstItem()}}-{{$compras->lastItem()}} of {{$compras->total()}}</div>
-                <a href="{{$compras->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
-                <a href="{{$compras->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
-                <a href="{{$compras->previousPageUrl()}}"><i class="px-1">{{$compras->currentPage() > 1 ? $compras->currentPage() - 1 : ''}}</i></a>
-                <i class="px-0">{{$compras->currentPage()}}</i>
-                <a href="{{$compras->nextPageUrl()}}"><i class="px-1">{{$compras->currentPage() + 1}}</i></a>
-                <a href="{{$compras->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
-                <a href="{{$compras->url($compras->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
-            </div>
         </div>
     </div>
 </div>
 @endsection
 
-@section('scripts')
-<script>
-    $(document).ready(function(){
-        // $("button").click(function(){
-        //     $("p").slideToggle();
-        // });
-        console.log('hola');
-    });
-</script>
+@push('scripts')
+{{-- toastr --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-@endsection
+
+{{-- jszip --}}
+<script src="{{asset('js/jszip.js')}}"></script>
+
+{{-- pdfmake --}}
+<script src="{{asset('js/pdfmake.js')}}"></script>
+
+{{-- datatables --}}
+<script src="{{asset('js/datatables-bs4.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+		/*var rol defino el rol del usuario*/
+		var rol = "<?php echo Auth::user()->fk_rol; ?>";
+		/*var botoncito define los botones que se usaran si el usuario es programador*/
+		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
+		/*inicializacion de datatable general*/
+		$('#comprasTable').DataTable({
+			"dom":"<'row collapse'<'col-md-8'P><'col-md-4'<'card my-1'<'card-body'Q>>>>" +
+				"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+				"<'row'<'col-md-12'rt>>" +
+				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
+			"searchPanes": {
+				cascadePanes: true,
+				// layout: 'columns-3',
+				// columns: [1,4],
+				count: '{total}',
+				countFiltered: '{shown} / {total}',
+				viewTotal: true,
+				dtOpts: {
+					select: {
+						style: 'multi'
+					}
+				}
+			},
+			"scrollX": false,
+			"serverSide": false,
+			"autoWidth": false,
+			"select": true,
+			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
+			"searchHighlight": true,
+			"responsive": true,
+			"keys": true,
+			"lengthChange": true,
+			"searching": true,
+			"buttons": [
+				botoncito
+			],
+			"language": {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "_MENU_ Filas",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "_START_ al _END_ de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "",
+				"sInfoPostFix":    "",
+				"sSearch":         "_INPUT_",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "->",
+					"sPrevious": "<-"
+				},
+
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+				"colvis": 'Columnas Visibles'
+			},
+			"columnDefs": [
+				{ "type": "num-fmt", "targets": [0,2,3]},
+				{ "type": "date", "targets": [4,5]},
+				{ "type": "html", "targets": '_all'},
+				{ "orderable": false, "targets": [6] },
+				// { "className": "text-right", "targets": [2,3,5]},
+				// { "className": "text-left", "targets": [1]},
+				// { "visible": false, "targets": [4]}
+			],
+            // "rowGroup": {
+            //     endRender: null,
+            //     startRender: function ( rows, group ) {
+
+			// 		var totalcantidad = rows
+            //             .data()
+            //             .pluck(3)
+            //             .reduce( function (a, b) {
+            //                 return a + parseFloat(b);
+            //             }, 0);
+
+            //         var provedor = rows
+            //             .data()
+            //             .pluck(4)
+            //             .reduce( function (a, b) {
+            //                 return b;
+            //             }, 0);
+
+            //         return $('<tr/>')
+            //             .append( '<td class="text-left" colspan="7">'+provedor+'</td>' )
+			// 			.append( '<td>'+totalcantidad+' Unidades.</td>' );;
+            //     },
+            //     dataSrc: [ 4 ]
+            // }
+		});
+	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+	var table = $('#comprasTable').DataTable();
+	table.columns.adjust();
+	table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
+		}
+	});
+</script>
+@endpush
