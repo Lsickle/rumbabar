@@ -24,6 +24,24 @@ Lista de Productos
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
+	<div class="row justify-content-between py-2 my-2" id='mesaslistHeader'>
+		<div class="col-12 col-sm-2 d-flex justify-content-between">
+			<button class="btn btn-outline-secondary dropdown" type="button" data-toggle="collapse" data-target=".collapse" aria-expanded="false" aria-controls="collapseExample">
+				<div class="text-nowrap bd-highlight">
+					<i class="fas fa-filter"></i> Filtros
+				</div>
+			</button>
+			<a href="{{route('productos.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
+		</div>
+		<div class="col-12 col-sm-5 my-sm-0 my-2">
+			{{-- <div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+				</div>
+				<input id="inputsearchProduct" type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
+			</div> --}}
+		</div>
+	</div>
 	<div class="row">
 		<div class="col table-responsive">
 			<table id="productsTable" class="table table-hover table-sm mb-0" style="color:#6E6893 !important;">
@@ -33,6 +51,7 @@ Lista de Productos
 						<th id="th-2" scope="col" class="">NOMBRE</th>
 						<th id="th-3" scope="col" class="text-center">PRECIO</th>
 						<th id="th-4" scope="col" class="text-center">CANTIDAD</th>
+						<th id="th-4" scope="col" class="text-center">PROVEEDOR</th>
 						<th id="th-5" scope="col" class="text-center">ACTUALIZACION</th>
 						<th id="th-6" scope="col" class="text-center">EDITAR</th>
 						<th id="th-7" scope="col" class="text-center">ELIMINAR</th>
@@ -43,28 +62,19 @@ Lista de Productos
 					<tr>
 						<th class="align-middle" scope="row">#{{$producto->ProductoId}}</th>
 						<td class="align-middle" scope="col">
-							<div class="text-nowrap">
-								<div class="text-dark">{{$producto->ProductoNombre}}</div>
-							</div>
+							{{$producto->ProductoNombre}}
 						</td>
-						<td class="align-middle" scope="col">
-							<div class="text-nowrap">
-								<div class="text-dark">{{ number_format($producto->ProductoPrecio, 2) }}</div>
-							</div>
+						<td class="align-middle text-nowrap text-dark" scope="col">
+							{{ number_format($producto->ProductoPrecio, 2) }}
 						</td>
-						<td class="align-middle" scope="col">
-							<div class="text-nowrap">
-								<div class="text-dark">{{$producto->ProductoCantidad}}</div>
-							</div>
+						<td class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->ProductoCantidad}}
 						</td>
-						<td class="align-middle" scope="col">
-							<div class="text-nowrap">
-								{{$producto->updated_at}}
-								<br>
-								<span class="badge badge-pill badge-local">
-									• Local
-								</span>
-							</div>
+						<td class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->proveedor->ProveedorNombre}}
+						</td>
+						<td class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->updated_at}}
 						</td>
 						<td class="align-middle" scope="col">
 							<a href="{{route('productos.edit', ['producto' => $producto->ProductoId])}}" class="btn btn-sm btn-warning">
@@ -122,10 +132,25 @@ Lista de Productos
 		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
 		$('#productsTable').DataTable({
-			"dom":"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
-				"<'row'<'col-md-12'tr>>" +
+			"dom":"<'row collapse'<'col-md-8'P><'col-md-4'<'card my-1'<'card-body'Q>>>>" +
+				"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+				"<'row'<'col-md-12'rt>>" +
 				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
+			"searchPanes": {
+				cascadePanes: true,
+				layout: 'columns-1',
+				columns: [4],
+				count: '{total}',
+				countFiltered: '{shown} / {total}',
+				viewTotal: true,
+				dtOpts: {
+					select: {
+						style: 'multi'
+					}
+				}
+			},
 			"scrollX": false,
+			"serverSide": false,
 			"autoWidth": false,
 			"select": true,
 			"colReorder": true,
@@ -166,36 +191,30 @@ Lista de Productos
 				"colvis": 'Columnas Visibles'
 			},
 			"columnDefs": [
-				{ "type": "num-fmt", "targets": 0 },
-				{ "orderable": false, "targets": [5,6] },
-				{ "className": "text-right", "targets": [2,3,4]},
+				{ "type": "num-fmt", "targets": [0,2,3]},
+				{ "type": "date", "targets": [5]},
+				{ "type": "html", "targets": '_all'},
+				{ "orderable": false, "targets": [6,7] },
+				{ "className": "text-right", "targets": [2,3,5]},
 				{ "className": "text-left", "targets": [1]},
-				// { "type": "date", "targets": 4 }
-			]
+				// { "visible": false, "targets": [4]}
+			],
             // "rowGroup": {
             //     endRender: null,
             //     startRender: function ( rows, group ) {
-            //         var subtotalTrat = rows
-            //             .data()
-            //             .pluck(8)
-            //             .reduce( function (a, b) {
-            //                 return a + parseFloat(b);
-            //             }, 0);
 
-            //         var categoria = rows
+
+            //         var provedor = rows
             //             .data()
-            //             .pluck(6)
+            //             .pluck(4)
             //             .reduce( function (a, b) {
             //                 return b;
             //             }, 0);
 
             //         return $('<tr/>')
-            //             .append( '<td colspan="6">'+group+'</td>' )
-            //             .append( '<td>'+subtotalTrat+' Kg.</td>' )
-            //             .append( '<td/>' )
-            //             .append( '<td/>' );
+            //             .append( '<td class="text-left" colspan="8">'+provedor+'</td>' );
             //     },
-            //     dataSrc: [ 0, 5 ]
+            //     dataSrc: [ 4 ]
             // }
 		});
 	});

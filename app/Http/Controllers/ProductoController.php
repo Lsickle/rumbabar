@@ -18,7 +18,7 @@ class ProductoController extends Controller
     public function index()
     {
         // $productos  = Producto::paginate(10);
-        $productos  = Producto::all();
+        $productos  = Producto::with('proveedor')->get();
 
 		return View('Producto.index', compact(['productos']));
 		// return View('datatablesexample');
