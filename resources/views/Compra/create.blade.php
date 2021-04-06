@@ -40,8 +40,8 @@ Nueva Compra
                     <div class="card-body row">
                         <div class="form-group col-md-8">
                             <label class="float-left text-secondary form-check-label" for="selectProveedor">Proveedor</label>
-                            <select class="form-control" id="selectProveedor" name="fk_proveedor">
-                                <option class="text-nowrap bd-highlight" selected>Proveedor...</option>
+                            <select required onchange="reiniciarcompra()" class="form-control" id="selectProveedor" name="fk_proveedor">
+                                <option class="text-nowrap bd-highlight" selected value="">Seleccion el Proveedor...</option>
                                 @foreach ($proveedores as $proveedor)
                                 <option class="text-nowrap bd-highlight" value="{{$proveedor->ProveedorId}}">{{$proveedor->ProveedorNombre}}</option>
                                 @endforeach
@@ -69,7 +69,7 @@ Nueva Compra
                                     <div class="input-group-prepend">
                                         <button onclick="borrarproducto(0)" class="btn btn-outline-danger" type="button">Borrar</button>
                                     </div>
-                                    <select class="form-control" id="productsSelect0" name="fk_producto[]">
+                                    <select required class="form-control" id="productsSelect0" name="fk_producto[]">
                                         <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
                                         @foreach ($productos as $producto)
                                         <option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
@@ -84,7 +84,7 @@ Nueva Compra
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">#</span>
                                     </div>
-                                    <input name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                                    <input required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1" min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -187,7 +187,7 @@ $(document).ready(function(){
                                         <div class="input-group-prepend">
                                             <button onclick="borrarproducto(`+productcounter+`)" class="btn btn-outline-danger" type="button">Borrar</button>
                                         </div>
-                                        <select class="form-control" id="productsSelect`+productcounter+`" name="fk_producto[]">
+                                        <select required class="form-control" id="productsSelect`+productcounter+`" name="fk_producto[]">
                                             <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
                                         </select>
                                     </div>
@@ -198,7 +198,7 @@ $(document).ready(function(){
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">#</span>
                                         </div>
-                                        <input name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                                        <input required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1" min="0" value="0">
                                     </div>
                                 </div>
                             </div>
@@ -232,7 +232,11 @@ $(document).ready(function(){
 });
 
 function borrarproducto(id){
-    $("#products"+id).remove()
+    $("#products"+id).remove();
 }
+function reiniciarcompra(){
+    $("#listadeproductos").empty();
+}
+
 </script>
 @endpush

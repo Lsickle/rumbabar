@@ -54,11 +54,48 @@ class CompraController extends Controller
         return $request;
 
         $validate = $request->validate([
-            'proveedor' => 'exists:proveedores,ProveedorId'
+        'proveedor' => 'exists:proveedores,ProveedorId'
         ],
         [
             'proveedor.exists' => 'proveedor no existe...',
         ]);
+
+        $compra = new Compra();
+        $compra->CompraStatus = 'Abierta';
+        $compra->CompraSaldo = 0;
+        $compra->CompraTotal = 0;
+        
+        $compra->fk_user = Auth::id();
+        $compra->fk_proveedor = $request->input('proveedor');
+        $compra->save();
+        
+        $productosdelacompra = $request->input('fk_producto');
+        $compraCantidad  = $request->input('compraCantidads');
+
+        $total = 0;
+        $saldo = 0;
+        foreach ($productosdelacompra as $key => $id) {
+            // $compraCantidad[$key] * 
+
+            $producto = Producto::find($id);
+            $producto->ProductoCantidad = $producto->ProductoCantidad + $compraCantidad[$key];
+            $producto->save();
+
+            $total = $total + $producto->ProductoCantidad * $compraCantidad[$key];
+            $saldo = $total;
+        }
+
+        $compra->CompraSaldo = 0;
+        $compra->CompraTotal = 0;
+        
+        $compra->fk_user = Auth::id();
+        $compra->fk_proveedor = $request->input('proveedor');
+        $compra->save();
+
+        $compra->productos->attach($request->input('fk_producto'));
+
+        return redirect()->route('compras.index');
+    
     }
 
     /**

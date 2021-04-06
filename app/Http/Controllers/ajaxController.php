@@ -8,6 +8,7 @@ use App\Venta;
 use App\Proveedor;
 
 
+
 class ajaxController extends Controller
 {
 	/**
