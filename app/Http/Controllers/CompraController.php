@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Compra;
 use Illuminate\Http\Request;
+use App\Producto;
+use App\Proveedor;
 
 class CompraController extends Controller
 {
@@ -35,8 +37,10 @@ class CompraController extends Controller
     public function create()
     {
         $productos = Producto::all();
+		$proveedores = Proveedor::all();
 
-		return View('Compra.index', compact(['productos']));
+
+		return View('Compra.create', compact(['productos', 'proveedores']));
     }
 
     /**
@@ -47,7 +51,14 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
+
+        $validate = $request->validate([
+            'proveedor' => 'exists:proveedores,ProveedorId'
+        ],
+        [
+            'proveedor.exists' => 'proveedor no existe...',
+        ]);
     }
 
     /**

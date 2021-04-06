@@ -35,5 +35,6 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     Route::get('/reportes','ReporteController@dashboard')->name('reportes.dashboard');
 	Route::get('/getProduct','ajaxController@getProduct')->name('getProduct');
 	Route::put('/addProductVenta/{venta}','ajaxController@addProductVenta')->name('addProductVenta');
+	Route::get('/filterproducts','ajaxController@filterProducts')->name('filterProducts');
 
 });

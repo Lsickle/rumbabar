@@ -20,6 +20,8 @@ class CreateComprasTable extends Migration
             $table->float('CompraTotal', 10, 2);
             $table->unsignedBigInteger('fk_user');
             $table->foreign('fk_user')->references('id')->on('users');
+            $table->unsignedBigInteger('fk_proveedor');
+            $table->foreign('fk_proveedor')->references('ProveedorId')->on('proveedores');
             $table->timestamps();
             $table->softDeletes('deleted_at');
             $table->engine = 'InnoDB';

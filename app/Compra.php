@@ -50,6 +50,10 @@ class Compra extends Model
         return $this->belongsToMany('App\Producto', 'compra_producto', 'fk_compra', 'fk_producto')->withPivot('compraCantidad')->withTimestamps();
 	}
 
+    public function proveedor()
+    {
+        return $this->belongsTo('App\Proveedor', 'ProveedorId', 'fk_proveedor');
+	}
 	/**
      * The roles that belong to the permiso.
      */

@@ -1,7 +1,7 @@
 @extends('layouts.adminApp')
 
 @section('pagename')
-Nombre de la pagina
+Lista de Compras
 @endsection
 
 @section('styles')
@@ -87,7 +87,7 @@ Nombre de la pagina
                     <i class="fas fa-filter"></i> Filtros
                 </div>
             </button>
-            <a href="{{route('productos.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
+            <a href="{{route('compras.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>CREAR</b></a>
         </div>
         <div class="col-12 col-sm-5 my-sm-0 my-2">
             {{-- <div class="input-group">
