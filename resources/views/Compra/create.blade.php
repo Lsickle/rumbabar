@@ -260,8 +260,6 @@ function updateproductdata(contador){
 	var compraCantidad = $('#compraCantidad'+contador);
 	var compraImage = $('#ProductoImageOutput'+contador);
 
-    var storagePath = "{!! storage_path() !!}";
-
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -282,7 +280,11 @@ function updateproductdata(contador){
 				case 200:
                     compraPrecio.val(data.producto.ProductoPrecio);
                     compraCantidad.attr('min', 0);
+                    if (data.producto.ProductoImage == 'img/default-image.png') {
+                    compraImage.attr('src', '/img/default-image.png');
+                    }else{
                     compraImage.attr('src', data.urlImage);
+                    }
 					toastr.success(data['message']);
 					break;
 

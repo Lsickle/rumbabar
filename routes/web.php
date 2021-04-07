@@ -36,5 +36,6 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
 	Route::get('/getProduct','ajaxController@getProduct')->name('getProduct');
 	Route::put('/addProductVenta/{venta}','ajaxController@addProductVenta')->name('addProductVenta');
 	Route::get('/filterproducts','ajaxController@filterProducts')->name('filterProducts');
+	Route::put('/addproductcompra/{compra}','ajaxController@addProductCompra')->name('addProductCompra');
 
 });

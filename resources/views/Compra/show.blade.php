@@ -93,7 +93,7 @@ Compra #{{$compra->CompraId}}
 						</div>
 						<br>
 						<div>
-							<button class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir a Compra</b></button>
+							<button onclick="addToCompra()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir a Compra</b></button>
 						</div>
 					</div>
 				</div>
@@ -117,16 +117,16 @@ Compra #{{$compra->CompraId}}
 			<tbody>
 				@foreach ($compra->productos as $producto)
 				<tr>
-					<td class="align-middle text-nowrap text-dark" scope="col">
+					<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
 						{{$producto->ProductoNombre}}
 					</td>
-					<td class="align-middle text-nowrap text-dark" scope="col">
+					<td id="compraCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
 						{{$producto->pivot->compraCantidad}}
 					</td>
 					<td class="align-middle" scope="col">
 						{{$producto->ProductoPrecio}}
 					</td>
-					<td class="align-middle" scope="col">
+					<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle" scope="col">
 						{{$producto->pivot->compraSubtotal}}
 					</td>
 					<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
@@ -282,10 +282,10 @@ Compra #{{$compra->CompraId}}
         "progressBar": true,
         "positionClass": "toast-top-right",
         "preventDuplicates": false,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "6000",
-        "extendedTimeOut": "3000",
+        "showDuration": "150",
+        "hideDuration": "500",
+        "timeOut": "3000",
+        "extendedTimeOut": "1500",
         "showEasing": "swing",
         "hideEasing": "linear",
         "showMethod": "fadeIn",
@@ -341,39 +341,36 @@ Compra #{{$compra->CompraId}}
                     case 200:
                         productcounter=productcounter+1;
                         toastr.success(data['message']);
-                        $('#listadeproductos').prepend(`
-                            <div class="row" id="products`+productcounter+`">
-                                <div class="form-group col-md-2">
-                                    <img width="100%" id="ProductoImageOutput`+productcounter+`" class="card-img p-2 d-none d-md-block" src="{{asset('img/default-image.png')}}" alt="Card image cap">
-                                </div>
-                                <div class="form-group col-md-8">
-                                    <label class="float-left text-secondary form-check-label" for="inputGroupSelect`+productcounter+`2">Producto</label>
-                                    <div class="input-group" id="inputGroupSelect`+productcounter+`2">
-                                        <div class="input-group-prepend">
-                                            <button onclick="borrarproducto(`+productcounter+`)" class="btn btn-outline-danger" type="button">Borrar</button>
-                                        </div>
-                                        <select required class="form-control" id="productsSelect`+productcounter+`" name="fk_producto[]">
-                                            <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-2">
-                                    <label class="float-left text-secondary form-check-label" for="inputGroup`+productcounter+`3">Cantidad</label>
-                                    <div class="input-group" id="inputGroup`+productcounter+`3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">#</span>
-                                        </div>
-                                        <input required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1" min="0" value="0">
-                                    </div>
-                                </div>
-                            </div>
-                        `);
-                        data.productos.forEach(element => {
-                            $('#productsSelect'+productcounter).append(`
-                                <option class="text-nowrap bd-highlight" value="`+element.ProductoId+`">`+element.ProductoNombre+`</option>
-                            `);
-                        });
-
+						$('#productTable').prepend(`
+							<tr>
+								<th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+								<td class="align-middle" scope="col">
+									<div class="text-nowrap">
+										<div class="text-dark">`+data.producto.ProductoNombre+`</div>#`+data.producto.ProductoId+`
+									</div>
+								</td>
+								<td class="align-middle" scope="col">
+									<div class="text-nowrap font-inter-600">
+										<span class="badge badge-domicilio" style="font-size: 20px !important;">
+											• `+data.producto.CantidadComprada+`
+										</span>
+									</div>
+								</td>
+								<td class="align-middle text-right" scope="col">
+									<div class="text-nowrap">
+										<div class="text-dark">$`+data.producto.ProductoPrecio+`</div>
+										COP
+									</div>
+								</td>
+								<td class="align-middle text-right" scope="col">
+									<div class="text-nowrap">
+										<div class="text-dark">$`+data.producto.subtotal+`</div>
+										COP
+									</div>
+								</td>
+								<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
+							</tr>
+						`);
                         break;
 
                     default:
@@ -402,9 +399,7 @@ function borrarproducto(id){
 function reiniciarcompra(){
     $("#listadeproductos").empty();
 }
-function reiniciarcompra(){
-    $("#listadeproductos").empty();
-}
+
 function showProduct(){
 	var select = $('#selectProducto');
 	var id = select.val();
@@ -444,9 +439,14 @@ function showProduct(){
 			productoNombre.html(data.producto.ProductoNombre);
 			productoDescripcion.html(data.producto.ProductoDescripcion);
 			ProductoPrecio.val(data.producto.ProductoPrecio);
-			ProductoCantidad.val(data.producto.ProductoCantidad);
+			ProductoCantidad.val(1);
+			ProductoCantidad.attr('min', 0);
 			ProductoCodigo.val(data.producto.ProductoCodigo);
-			ProductoImage.attr('src', data.producto.ProductoImage);
+			if (data.producto.ProductoImage == 'img/default-image.png') {
+				ProductoImage.attr('src', '/img/default-image.png');
+			}else{
+				ProductoImage.attr('src', data.urlImage);
+			}
 			// enablesearhbutton();
 		},
 		error: function(xhr, textStatus, jqXHR){
@@ -462,7 +462,85 @@ function showProduct(){
 
 		}
 	});
-	e.preventDefault();
+}
+
+function addToCompra(){
+    var select = $('#selectProducto');
+	var id = select.val();
+
+	var productoNombre = $("#SetProductoNombre");
+	var productoDescripcion = $('#SetProductoDescripcion');
+	var ProductoPrecio = $('#SetProductoPrecio');
+	var ProductoCantidad = $('#SetProductoCantidad');
+	var ProductoCodigo = $('#SetProductoCodigo');
+	var ProductoImage = $('#SetProductoImage');
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{route('addProductCompra', ['compra' => $compra])}}",
+		method: 'PUT',
+		data: {
+			'id': id,
+			'compraCantidad': ProductoCantidad.val(),
+			},
+		beforeSend: function(){
+			// disablesearhbutton();
+			// productoNombre.empty();
+			// productoDescripcion.empty();
+		},
+		success: function(data, textStatus, jqXHR) {
+			renewtoken(data.newtoken);
+			switch (jqXHR['status']) {
+				case 200:
+					toastr.success(data['message']);
+					if ($( "#productsCompraTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
+
+						$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
+						$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal);
+					}else{
+						$('#productsCompraTable tbody').prepend(`
+							<tr>
+								<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+									`+data.producto.ProductoNombre+`
+								</td>
+								<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+									`+data.producto.CantidadComprada+`
+								</td>
+								<td class="align-middle" scope="col">
+									`+data.producto.ProductoPrecio+`
+								</td>
+								<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle" scope="col">
+									`+data.producto.subtotal+`
+								</td>
+								<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
+							</tr>
+						`);
+					}
+					
+					break;
+
+				default:
+					toastr.error(data['message']);
+					break;
+			}
+		},
+		error: function(xhr, textStatus, jqXHR){
+			renewtoken(xhr.newtoken);
+			xhr.responseJSON.errors.id.forEach( errormessage => {
+				toastr.error(errormessage);
+			});
+			productoNombre.html('no existe');
+			productoDescripcion.html('producto no encontrado');
+			// enablesearhbutton();
+		},
+		complete: function(){
+
+		}
+	});
 }
 </script>
 @endpush
