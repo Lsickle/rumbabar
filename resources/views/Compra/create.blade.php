@@ -63,20 +63,19 @@ Nueva Compra
                             <div class="form-group col-md-2">
                                 <img width="100%" id="ProductoImageOutput0" class="card-img p-2 d-none d-md-block" src="{{asset('img/default-image.png')}}" alt="Card image cap">
                             </div>
-                            <div class="form-group col-md-8">
+                            <div class="form-group col-md-6">
                                 <label class="float-left text-secondary form-check-label" for="inputGroupSelect02">Producto</label>
                                 <div class="input-group" id="inputGroupSelect02">
                                     <div class="input-group-prepend">
                                         <button onclick="borrarproducto(0)" class="btn btn-outline-danger" type="button">Borrar</button>
                                     </div>
-                                    <select required class="form-control" id="productsSelect0" name="fk_producto[]">
+                                    <select onchange="updateproductdata(0)" required class="form-control" id="productsSelect0" name="fk_producto[]">
                                         <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
                                         @foreach ($productos as $producto)
                                         <option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                            
                             </div>
                             <div class="form-group col-md-2">
                                 <label class="float-left text-secondary form-check-label" for="inputGroup03">Cantidad</label>
@@ -84,7 +83,16 @@ Nueva Compra
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1">#</span>
                                     </div>
-                                    <input required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1" min="0" value="0">
+                                    <input required name="compraCantidad[]" id="compraCantidad0" type="number" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label class="float-left text-secondary form-check-label" for="inputGroup04">Precio</label>
+                                <div class="input-group" id="inputGroup04">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">$</span>
+                                    </div>
+                                    <input id="compraPrecio0" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1" min="0" value="0">
                                 </div>
                             </div>
                         </div>
@@ -171,7 +179,6 @@ $(document).ready(function(){
             },
             success: function(data, textStatus, jqXHR) {
                 renewtoken(data.newtoken);
-                console.log(data);
                 switch (jqXHR['status']) {
                     case 200:
                         productcounter=productcounter+1;
@@ -181,13 +188,13 @@ $(document).ready(function(){
                                 <div class="form-group col-md-2">
                                     <img width="100%" id="ProductoImageOutput`+productcounter+`" class="card-img p-2 d-none d-md-block" src="{{asset('img/default-image.png')}}" alt="Card image cap">
                                 </div>
-                                <div class="form-group col-md-8">
+                                <div class="form-group col-md-6">
                                     <label class="float-left text-secondary form-check-label" for="inputGroupSelect`+productcounter+`2">Producto</label>
                                     <div class="input-group" id="inputGroupSelect`+productcounter+`2">
                                         <div class="input-group-prepend">
                                             <button onclick="borrarproducto(`+productcounter+`)" class="btn btn-outline-danger" type="button">Borrar</button>
                                         </div>
-                                        <select required class="form-control" id="productsSelect`+productcounter+`" name="fk_producto[]">
+                                        <select onchange="updateproductdata(`+productcounter+`)" required class="form-control" id="productsSelect`+productcounter+`" name="fk_producto[]">
                                             <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
                                         </select>
                                     </div>
@@ -198,7 +205,16 @@ $(document).ready(function(){
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">#</span>
                                         </div>
-                                        <input required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1" min="0" value="0">
+                                        <input id="compraCantidad`+productcounter+`" required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label class="float-left text-secondary form-check-label" for="inputGroup`+productcounter+`4">Precio</label>
+                                    <div class="input-group" id="inputGroup`+productcounter+`4">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1">$</span>
+                                        </div>
+                                        <input disabled id="compraPrecio`+productcounter+`" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
                                     </div>
                                 </div>
                             </div>
@@ -236,6 +252,59 @@ function borrarproducto(id){
 }
 function reiniciarcompra(){
     $("#listadeproductos").empty();
+}
+function updateproductdata(contador){
+    var select = $('#productsSelect'+contador);
+	var id = select.val();
+	var compraPrecio = $('#compraPrecio'+contador);
+	var compraCantidad = $('#compraCantidad'+contador);
+	var compraImage = $('#ProductoImageOutput'+contador);
+
+    var storagePath = "{!! storage_path() !!}";
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: "{{route('getProduct')}}",
+		method: 'GET',
+		data: {'id': id},
+		beforeSend: function(){
+			// disablesearhbutton();
+			// productoNombre.empty();
+			// productoDescripcion.empty();
+		},
+		success: function(data, textStatus, jqXHR) {
+			renewtoken(data.newtoken);
+			switch (jqXHR['status']) {
+				case 200:
+                    compraPrecio.val(data.producto.ProductoPrecio);
+                    compraCantidad.attr('min', 0);
+                    compraImage.attr('src', data.urlImage);
+					toastr.success(data['message']);
+					break;
+
+				default:
+					toastr.error(data['message']);
+					break;
+			}
+		},
+		error: function(xhr, textStatus, jqXHR){
+			renewtoken(xhr.newtoken);
+			xhr.responseJSON.errors.id.forEach( errormessage => {
+				toastr.error(errormessage);
+			});
+			compraPrecio.val(0);
+			compraCantidad.attr('max', 0);
+			compraImage.attr('src', 'http://rumbabar.test/img/default-image.png');
+		},
+		complete: function(){
+
+		}
+	});
+	// e.preventDefault();
 }
 
 </script>

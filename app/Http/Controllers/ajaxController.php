@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Producto;
 use App\Venta;
 use App\Proveedor;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -30,9 +31,11 @@ class ajaxController extends Controller
             ]);
 
 			$producto = Producto::find($request->input('id'));
+			$urlImage = Storage::url($producto->ProductoImage);
 
 			$Response['newtoken'] = csrf_token();
 			$Response['producto'] = $producto;
+			$Response['urlImage'] = $urlImage;
 			$Response['message'] = 'producto encontrado';
 
 			return response()->json($Response);
