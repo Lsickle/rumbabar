@@ -140,6 +140,8 @@ class CompraController extends Controller
      */
     public function destroy(Compra $compra)
     {
-        //
+        $compra->delete();
+
+        return redirect()->route('compras.index');
     }
 }

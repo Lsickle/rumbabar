@@ -30,117 +30,116 @@ Compra #{{$compra->CompraId}}
 				<i class="fas fa-caret-down"></i> Proveedor: {{$compra->proveedor->ProveedorNombre}}
 			</button>
 		</div>
-		{{-- <div class="col-6 my-2 col-md-3">
-			<button class="float-left btn btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Guardar</b></button>
-		</div>
-		<div class="col-6 my-2 col-md-3">
-			<a href="{{route('productos.create')}}" class="float-right btn btn-primary text-white font-inter-600" style="font-size:12px;"><b>+ Nuevo Producto</b></a>
-	</div> --}}
-
-	<div class="my-2 col-md-6">
-		<div class="form-group w-100">
-			{{-- <label class="float-left text-secondary form-check-label" for="selectProveedor">Producto</label> --}}
-			<select onchange="showProduct()" class="form-control" id="selectProducto">
-				<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
-				@foreach ($compra->proveedor->productos as $producto)
-				<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
-				@endforeach
-			</select>
-		</div>
-		{{-- <div class="input-group">
-			<div class="input-group-prepend">
-				<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+		<div class="my-2 col-md-6">
+			<div class="form-group w-100">
+				{{-- <label class="float-left text-secondary form-check-label" for="selectProveedor">Producto</label> --}}
+				<select onchange="showProduct()" class="form-control" id="selectProducto">
+					<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
+					@foreach ($compra->proveedor->productos as $producto)
+					<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
+					@endforeach
+				</select>
 			</div>
-			<input type="text" class="form-control" placeholder="00174" aria-label="productCode" aria-describedby="basic-addon1">
-		</div> --}}
-	</div>
-</div>
-<div class="row bg-local ">
-	<div class="col">
-		<div class="card my-2">
-			<div class="card-body">
-				<div class="row">
-					<div class="col-md-3"><img id="SetProductoImage" class="card-img" src="https://picsum.photos/300/200?text=Image cap" alt="Card image cap"></div>
-					<div class="col-md-3">
-						<div class="form-group pt-2 pt-sm-0">
-							<div class="input-group">
-								<div class="input-group-prepend">
-									<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-								</div>
-								<input disabled id="SetProductoCodigo" type="number" class="form-control" placeholder="Codigo" aria-label="Codigo" aria-describedby="basic-addon1">
-							</div>
-						</div>
-						<p class="card-tittle text-left"><b id="SetProductoNombre">Jugo 1.5 Lt.</b></p>
-						<p class="card-text text-left" id="SetProductoDescripcion">Botella de 1.5 Lt Sabor Mango</p>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							<div class="input-group">
-								<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
-							</div>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div class="form-group">
-							<div class="input-group">
-								<input disabled id="SetProductoPrecio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
-							</div>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<div>
-							<button class="btn btn-block btn-danger text-white font-inter-600" style="font-size:12px;"><b><i class="fas fa-trash-alt"></i> Reset</b></button>
-						</div>
-						<br>
-						<div>
-							<button onclick="addToCompra()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir a Compra</b></button>
-						</div>
-					</div>
+			{{-- <div class="input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
 				</div>
+				<input type="text" class="form-control" placeholder="00174" aria-label="productCode" aria-describedby="basic-addon1">
+			</div> --}}
+		</div>
+	</div>
+	<div class="row bg-local ">
+		<div class="col">
+			<div class="card my-2">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-3"><img id="SetProductoImage" class="card-img" src="https://picsum.photos/300/200?text=Image cap" alt="Card image cap"></div>
+						<div class="col-md-3">
+							<div class="form-group pt-2 pt-sm-0">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+									</div>
+									<input disabled id="SetProductoCodigo" type="number" class="form-control" placeholder="Codigo" aria-label="Codigo" aria-describedby="basic-addon1">
+								</div>
+							</div>
+							<p class="card-tittle text-left"><b id="SetProductoNombre">Jugo 1.5 Lt.</b></p>
+							<p class="card-text text-left" id="SetProductoDescripcion">Botella de 1.5 Lt Sabor Mango</p>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<div class="input-group">
+									<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<div class="input-group">
+									<input disabled id="SetProductoPrecio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div>
+								<form action="{{route('compras.destroy', ['compra'=>$compra])}}" method="POST">
+									@method('DELETE')
+									@csrf
+									<button type="submit" class="btn btn-block btn-danger text-white font-inter-600" style="font-size:12px;"><b><i class="fas fa-trash-alt"></i> Borrar Compra</b></button>
+								</form>
+							</div>
+							<br>
+							<div>
+								<button onclick="addToCompra()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir Producto</b></button>
+							</div>
+						</div>
+					</div>
 
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
-	<div class="table-responsive">
-		<table id="productsCompraTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
-			<thead class="font-inter-600" style="background-color: #F4F2FF;">
-				<tr>
-					<th id="th-3" scope="col">Producto</th>
-					<th id="th-4" scope="col">Cantidad</th>
-					<th id="th-5" scope="col">Precio unidad</th>
-					<th id="th-6" scope="col">SubTotal</th>
-					<th id="th-9" scope="col">+/-</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach ($compra->productos as $producto)
-				<tr>
-					<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
-						{{$producto->ProductoNombre}}
-					</td>
-					<td id="compraCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
-						{{$producto->pivot->compraCantidad}}
-					</td>
-					<td class="align-middle" scope="col">
-						{{$producto->ProductoPrecio}}
-					</td>
-					<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle" scope="col">
-						{{$producto->pivot->compraSubtotal}}
-					</td>
-					<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
-				</tr>
-				@endforeach
-			</tbody>
-		</table>
+	<div class="row flex-row d-flex p-2">
+		<div class="table-responsive">
+			<table id="productsCompraTable" class="table table-hover table-sm text-left mb-0 w-100" style="color:#6E6893 !important;">
+				<thead class="font-inter-600" style="background-color: #F4F2FF;">
+					<tr>
+						<th id="th-1" scope="col">Producto</th>
+						<th id="th-2" scope="col">Cantidad</th>
+						<th id="th-3" scope="col">Precio unidad</th>
+						<th id="th-4" scope="col">SubTotal</th>
+						<th id="th-5" scope="col">Restar</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach ($compra->productos as $producto)
+					<tr>
+						<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->ProductoNombre}}
+						</td>
+						<td id="compraCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->pivot->compraCantidad}}
+						</td>
+						<td class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->ProductoPrecio}}
+						</td>
+						<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
+							{{$producto->pivot->compraSubtotal}}
+						</td>
+						<td class="align-middle text-dark">
+							<div class="input-group">
+								<input type="number" class="form-control is-invalid" placeholder="0" aria-label="#" aria-describedby="basic-addon2" value="1">
+								<div class="input-group-append">
+									<button onclick="dropToCompra({{$producto->ProductoId}})" class="btn btn-outline-danger" type="button">Restar</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
-<div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
-	<div class="mr-auto">filas por pagina: 10</div>
-	<div>1-10 of 276</div>
-	<div><i class="px-2 fas fa-chevron-left"></i><i class="px-2 fas fa-chevron-right"></i></div>
-</div>
 </div>
 @endsection
 
@@ -319,228 +318,396 @@ Compra #{{$compra->CompraId}}
 </script>
 <script type="text/javascript">
 	$(document).ready(function(){
-    var productcounter = 0;
-    $('#addproduct').on("click", function(e) {
-        var buttonsubmit = $('#addProduct');
-        var proveedor = $('#selectProveedor').val();
+		var productcounter = 0;
+		$('#addproduct').on("click", function(e) {
+			var buttonsubmit = $('#addProduct');
+			var proveedor = $('#selectProveedor').val();
 
-        $.ajax({
-            url: "/filterproducts",
-            method: 'GET',
-            data: {
-                'proveedor': proveedor,
-            },
-            beforeSend: function(){
-                buttonsubmit.disabled = true;
-                buttonsubmit.prop('disabled', true);
-            },
-            success: function(data, textStatus, jqXHR) {
-                renewtoken(data.newtoken);
-                console.log(data);
-                switch (jqXHR['status']) {
-                    case 200:
-                        productcounter=productcounter+1;
-                        toastr.success(data['message']);
-						$('#productTable').prepend(`
-							<tr>
-								<th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-								<td class="align-middle" scope="col">
-									<div class="text-nowrap">
-										<div class="text-dark">`+data.producto.ProductoNombre+`</div>#`+data.producto.ProductoId+`
-									</div>
-								</td>
-								<td class="align-middle" scope="col">
-									<div class="text-nowrap font-inter-600">
-										<span class="badge badge-domicilio" style="font-size: 20px !important;">
-											• `+data.producto.CantidadComprada+`
-										</span>
-									</div>
-								</td>
-								<td class="align-middle text-right" scope="col">
-									<div class="text-nowrap">
-										<div class="text-dark">$`+data.producto.ProductoPrecio+`</div>
-										COP
-									</div>
-								</td>
-								<td class="align-middle text-right" scope="col">
-									<div class="text-nowrap">
-										<div class="text-dark">$`+data.producto.subtotal+`</div>
-										COP
-									</div>
-								</td>
-								<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
-							</tr>
-						`);
-                        break;
+			$.ajax({
+				url: "/filterproducts",
+				method: 'GET',
+				data: {
+					'proveedor': proveedor,
+				},
+				beforeSend: function(){
+					buttonsubmit.disabled = true;
+					buttonsubmit.prop('disabled', true);
+				},
+				success: function(data, textStatus, jqXHR) {
+					renewtoken(data.newtoken);
+					console.log(data);
+					switch (jqXHR['status']) {
+						case 200:
+							productcounter=productcounter+1;
+							toastr.success(data['message']);
+							$('#productTable').prepend(`
+								<tr>
+									<th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
+									<td class="align-middle" scope="col">
+										<div class="text-nowrap">
+											<div class="text-dark">`+data.producto.ProductoNombre+`</div>#`+data.producto.ProductoId+`
+										</div>
+									</td>
+									<td class="align-middle" scope="col">
+										<div class="text-nowrap font-inter-600">
+											<span class="badge badge-domicilio" style="font-size: 20px !important;">
+												• `+data.producto.CantidadComprada+`
+											</span>
+										</div>
+									</td>
+									<td class="align-middle text-right" scope="col">
+										<div class="text-nowrap">
+											<div class="text-dark">$`+data.producto.ProductoPrecio+`</div>
+											COP
+										</div>
+									</td>
+									<td class="align-middle text-right" scope="col">
+										<div class="text-nowrap">
+											<div class="text-dark">$`+data.producto.subtotal+`</div>
+											COP
+										</div>
+									</td>
+									<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
+								</tr>
+							`);
+							break;
 
-                    default:
-                        toastr.error(data['message']);
-                        break;
-                }
-            },
-            error: function(xhr, textStatus, jqXHR){
-                renewtoken(xhr.newtoken);
-                xhr.responseJSON.errors.proveedor.forEach( errormessage => {
-                    toastr.error(errormessage);
-                });
-            },
-            complete: function(){
-                buttonsubmit.disabled = false;
-                buttonsubmit.prop('disabled', false);
-            }
-        });
-        e.preventDefault();
-    });
-});
-
-function borrarproducto(id){
-    $("#products"+id).remove();
-}
-function reiniciarcompra(){
-    $("#listadeproductos").empty();
-}
-
-function showProduct(){
-	var select = $('#selectProducto');
-	var id = select.val();
-
-	var productoNombre = $("#SetProductoNombre");
-	var productoDescripcion = $('#SetProductoDescripcion');
-	var ProductoPrecio = $('#SetProductoPrecio');
-	var ProductoCantidad = $('#SetProductoCantidad');
-	var ProductoCodigo = $('#SetProductoCodigo');
-	var ProductoImage = $('#SetProductoImage');
-
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-	$.ajax({
-		url: "{{route('getProduct')}}",
-		method: 'GET',
-		data: {'id': id},
-		beforeSend: function(){
-			// disablesearhbutton();
-			productoNombre.empty();
-			productoDescripcion.empty();
-		},
-		success: function(data, textStatus, jqXHR) {
-			renewtoken(data.newtoken);
-			switch (jqXHR['status']) {
-				case 200:
-					toastr.success(data['message']);
-					break;
-
-				default:
-					toastr.error(data['message']);
-					break;
-			}
-			productoNombre.html(data.producto.ProductoNombre);
-			productoDescripcion.html(data.producto.ProductoDescripcion);
-			ProductoPrecio.val(data.producto.ProductoPrecio);
-			ProductoCantidad.val(1);
-			ProductoCantidad.attr('min', 0);
-			ProductoCodigo.val(data.producto.ProductoCodigo);
-			if (data.producto.ProductoImage == 'img/default-image.png') {
-				ProductoImage.attr('src', '/img/default-image.png');
-			}else{
-				ProductoImage.attr('src', data.urlImage);
-			}
-			// enablesearhbutton();
-		},
-		error: function(xhr, textStatus, jqXHR){
-			renewtoken(xhr.newtoken);
-			xhr.responseJSON.errors.id.forEach( errormessage => {
-				toastr.error(errormessage);
-			});
-			productoNombre.html('no existe');
-			productoDescripcion.html('producto no encontrado');
-			// enablesearhbutton();
-		},
-		complete: function(){
-
-		}
-	});
-}
-
-function addToCompra(){
-    var select = $('#selectProducto');
-	var id = select.val();
-
-	var productoNombre = $("#SetProductoNombre");
-	var productoDescripcion = $('#SetProductoDescripcion');
-	var ProductoPrecio = $('#SetProductoPrecio');
-	var ProductoCantidad = $('#SetProductoCantidad');
-	var ProductoCodigo = $('#SetProductoCodigo');
-	var ProductoImage = $('#SetProductoImage');
-
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-	$.ajax({
-		url: "{{route('addProductCompra', ['compra' => $compra])}}",
-		method: 'PUT',
-		data: {
-			'id': id,
-			'compraCantidad': ProductoCantidad.val(),
-			},
-		beforeSend: function(){
-			// disablesearhbutton();
-			// productoNombre.empty();
-			// productoDescripcion.empty();
-		},
-		success: function(data, textStatus, jqXHR) {
-			renewtoken(data.newtoken);
-			switch (jqXHR['status']) {
-				case 200:
-					toastr.success(data['message']);
-					if ($( "#productsCompraTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
-
-						$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
-						$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal);
-					}else{
-						$('#productsCompraTable tbody').prepend(`
-							<tr>
-								<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
-									`+data.producto.ProductoNombre+`
-								</td>
-								<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
-									`+data.producto.CantidadComprada+`
-								</td>
-								<td class="align-middle" scope="col">
-									`+data.producto.ProductoPrecio+`
-								</td>
-								<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle" scope="col">
-									`+data.producto.subtotal+`
-								</td>
-								<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
-							</tr>
-						`);
+						default:
+							toastr.error(data['message']);
+							break;
 					}
-					
-					break;
-
-				default:
-					toastr.error(data['message']);
-					break;
-			}
-		},
-		error: function(xhr, textStatus, jqXHR){
-			renewtoken(xhr.newtoken);
-			xhr.responseJSON.errors.id.forEach( errormessage => {
-				toastr.error(errormessage);
+				},
+				error: function(xhr, textStatus, jqXHR){
+					renewtoken(xhr.newtoken);
+					xhr.responseJSON.errors.proveedor.forEach( errormessage => {
+						toastr.error(errormessage);
+					});
+				},
+				complete: function(){
+					buttonsubmit.disabled = false;
+					buttonsubmit.prop('disabled', false);
+				}
 			});
-			productoNombre.html('no existe');
-			productoDescripcion.html('producto no encontrado');
-			// enablesearhbutton();
-		},
-		complete: function(){
+			e.preventDefault();
+		});
+	});
 
+	function borrarproducto(id){
+		$("#products"+id).remove();
+	}
+	function reiniciarcompra(){
+		$("#listadeproductos").empty();
+	}
+
+	function showProduct(){
+		var select = $('#selectProducto');
+		var id = select.val();
+
+		var productoNombre = $("#SetProductoNombre");
+		var productoDescripcion = $('#SetProductoDescripcion');
+		var ProductoPrecio = $('#SetProductoPrecio');
+		var ProductoCantidad = $('#SetProductoCantidad');
+		var ProductoCodigo = $('#SetProductoCodigo');
+		var ProductoImage = $('#SetProductoImage');
+
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: "{{route('getProduct')}}",
+			method: 'GET',
+			data: {'id': id},
+			beforeSend: function(){
+				// disablesearhbutton();
+				productoNombre.empty();
+				productoDescripcion.empty();
+			},
+			success: function(data, textStatus, jqXHR) {
+				renewtoken(data.newtoken);
+				switch (jqXHR['status']) {
+					case 200:
+						toastr.success(data['message']);
+						break;
+
+					default:
+						toastr.error(data['message']);
+						break;
+				}
+				productoNombre.html(data.producto.ProductoNombre);
+				productoDescripcion.html(data.producto.ProductoDescripcion);
+				ProductoPrecio.val(data.producto.ProductoPrecio);
+				ProductoCantidad.val(1);
+				ProductoCantidad.attr('min', 0);
+				ProductoCodigo.val(data.producto.ProductoCodigo);
+				if (data.producto.ProductoImage == 'img/default-image.png') {
+					ProductoImage.attr('src', '/img/default-image.png');
+				}else{
+					ProductoImage.attr('src', data.urlImage);
+				}
+				// enablesearhbutton();
+			},
+			error: function(xhr, textStatus, jqXHR){
+				renewtoken(xhr.newtoken);
+				xhr.responseJSON.errors.id.forEach( errormessage => {
+					toastr.error(errormessage);
+				});
+				productoNombre.html('no existe');
+				productoDescripcion.html('producto no encontrado');
+				// enablesearhbutton();
+			},
+			complete: function(){
+
+			}
+		});
+	}
+
+	function addToCompra(){
+		var select = $('#selectProducto');
+		var id = select.val();
+
+		var productoNombre = $("#SetProductoNombre");
+		var productoDescripcion = $('#SetProductoDescripcion');
+		var ProductoPrecio = $('#SetProductoPrecio');
+		var ProductoCantidad = $('#SetProductoCantidad');
+		var ProductoCodigo = $('#SetProductoCodigo');
+		var ProductoImage = $('#SetProductoImage');
+
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: "{{route('addProductCompra', ['compra' => $compra])}}",
+			method: 'PUT',
+			data: {
+				'id': id,
+				'compraCantidad': ProductoCantidad.val(),
+				},
+			beforeSend: function(){
+				// disablesearhbutton();
+				// productoNombre.empty();
+				// productoDescripcion.empty();
+			},
+			success: function(data, textStatus, jqXHR) {
+				renewtoken(data.newtoken);
+				switch (jqXHR['status']) {
+					case 200:
+						toastr.success(data['message']);
+						if ($( "#productsCompraTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
+
+							$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
+							$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal);
+						}else{
+							$('#productsCompraTable tbody').prepend(`
+								<tr>
+									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+										`+data.producto.ProductoNombre+`
+									</td>
+									<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+										`+data.producto.CantidadComprada+`
+									</td>
+									<td class="align-middle" scope="col">
+										`+data.producto.ProductoPrecio+`
+									</td>
+									<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle" scope="col">
+										`+data.producto.subtotal+`
+									</td>
+									<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
+								</tr>
+							`);
+						}
+						
+						break;
+
+					default:
+						toastr.error(data['message']);
+						break;
+				}
+			},
+			error: function(xhr, textStatus, jqXHR){
+				renewtoken(xhr.newtoken);
+				xhr.responseJSON.errors.id.forEach( errormessage => {
+					toastr.error(errormessage);
+				});
+				productoNombre.html('no existe');
+				productoDescripcion.html('producto no encontrado');
+				// enablesearhbutton();
+			},
+			complete: function(){
+
+			}
+		});
+	}
+
+	function dropToCompra(id){
+		var select = $('#selectProducto');
+		var id = select.val();
+
+		var productoNombre = $("#SetProductoNombre");
+		var productoDescripcion = $('#SetProductoDescripcion');
+		var ProductoPrecio = $('#SetProductoPrecio');
+		var ProductoCantidad = $('#SetProductoCantidad');
+		var ProductoCodigo = $('#SetProductoCodigo');
+		var ProductoImage = $('#SetProductoImage');
+
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: "{{route('addProductCompra', ['compra' => $compra])}}",
+			method: 'PUT',
+			data: {
+				'id': id,
+				'compraCantidad': ProductoCantidad.val(),
+				},
+			beforeSend: function(){
+				// disablesearhbutton();
+				// productoNombre.empty();
+				// productoDescripcion.empty();
+			},
+			success: function(data, textStatus, jqXHR) {
+				renewtoken(data.newtoken);
+				switch (jqXHR['status']) {
+					case 200:
+						toastr.success(data['message']);
+						if ($( "#productsCompraTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
+
+							$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
+							$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal);
+						}else{
+							$('#productsCompraTable tbody').prepend(`
+								<tr>
+									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+										`+data.producto.ProductoNombre+`
+									</td>
+									<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+										`+data.producto.CantidadComprada+`
+									</td>
+									<td class="align-middle" scope="col">
+										`+data.producto.ProductoPrecio+`
+									</td>
+									<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle" scope="col">
+										`+data.producto.subtotal+`
+									</td>
+									<td class="align-middle text-dark">
+										<div class="input-group">
+											<input type="number" class="form-control is-invalid" placeholder="0" aria-label="#" aria-describedby="basic-addon2" value="1">
+											<div class="input-group-append">
+												<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
+											</div>
+										</div>
+									</td>
+								</tr>
+							`);
+						}
+						
+						break;
+
+					default:
+						toastr.error(data['message']);
+						break;
+				}
+			},
+			error: function(xhr, textStatus, jqXHR){
+				renewtoken(xhr.newtoken);
+				xhr.responseJSON.errors.id.forEach( errormessage => {
+					toastr.error(errormessage);
+				});
+				productoNombre.html('no existe');
+				productoDescripcion.html('producto no encontrado');
+				// enablesearhbutton();
+			},
+			complete: function(){
+
+			}
+		});
+	}
+</script>
+
+script src="{{asset('js/jszip.js')}}"></script>
+
+{{-- pdfmake --}}
+<script src="{{asset('js/pdfmake.js')}}"></script>
+
+{{-- datatables --}}
+<script src="{{asset('js/datatables-bs4.js')}}"></script>
+
+<script>
+	$(document).ready(function() {
+		/*var rol defino el rol del usuario*/
+		var rol = "<?php echo Auth::user()->fk_rol; ?>";
+		/*var botoncito define los botones que se usaran si el usuario es programador*/
+		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
+		/*inicializacion de datatable general*/
+		$('#productsCompraTable').DataTable({
+			"dom":"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+				"<'row'<'col-md-12'rt>>" +
+				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
+			"scrollX": false,
+			"serverSide": false,
+			"autoWidth": false,
+			"select": true,
+			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
+			"searchHighlight": true,
+			"responsive": true,
+			"keys": true,
+			"lengthChange": true,
+			"searching": true,
+			"buttons": [
+				botoncito
+			],
+			"language": {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "_MENU_ Filas",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "_START_ al _END_ de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "",
+				"sInfoPostFix":    "",
+				"sSearch":         "_INPUT_",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "->",
+					"sPrevious": "<-"
+				},
+
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+				"colvis": 'Columnas Visibles',
+				// "columnDefs": [
+				// 	{ "width": "15%", "targets": 4 }
+				// ]
+			}
+		});
+	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+		var table = $('#productsCompraTable').DataTable();
+		table.columns.adjust();
+		table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
 		}
 	});
-}
 </script>
 @endpush
