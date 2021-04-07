@@ -6,6 +6,7 @@ use App\Compra;
 use Illuminate\Http\Request;
 use App\Producto;
 use App\Proveedor;
+use Illuminate\Support\Facades\Auth;
 
 class CompraController extends Controller
 {
@@ -51,51 +52,49 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
 
         $validate = $request->validate([
-        'proveedor' => 'exists:proveedores,ProveedorId'
+        'fk_proveedor' => 'exists:proveedores,ProveedorId'
         ],
         [
-            'proveedor.exists' => 'proveedor no existe...',
+            'fk_proveedor.exists' => 'proveedor no existe...',
         ]);
 
         $compra = new Compra();
         $compra->CompraStatus = 'Abierta';
         $compra->CompraSaldo = 0;
         $compra->CompraTotal = 0;
-        
+
         $compra->fk_user = Auth::id();
-        $compra->fk_proveedor = $request->input('proveedor');
+        $compra->fk_proveedor = $request->input('fk_proveedor');
         $compra->save();
-        
+
         $productosdelacompra = $request->input('fk_producto');
-        $compraCantidad  = $request->input('compraCantidads');
+        $compraCantidad  = $request->input('compraCantidad');
 
         $total = 0;
         $saldo = 0;
+        // return $compraCantidad;
+
         foreach ($productosdelacompra as $key => $id) {
-            // $compraCantidad[$key] * 
 
             $producto = Producto::find($id);
             $producto->ProductoCantidad = $producto->ProductoCantidad + $compraCantidad[$key];
             $producto->save();
 
-            $total = $total + $producto->ProductoCantidad * $compraCantidad[$key];
-            $saldo = $total;
+            $subtotal = $producto->ProductoPrecio * $compraCantidad[$key];
+            $total  = $total + $subtotal;
+
+			$compra->productos()->attach($producto->ProductoId, ['compraCantidad' => $compraCantidad[$key], 'compraSubtotal' => $subtotal]);
         }
 
-        $compra->CompraSaldo = 0;
-        $compra->CompraTotal = 0;
-        
-        $compra->fk_user = Auth::id();
-        $compra->fk_proveedor = $request->input('proveedor');
+        $compra->CompraSaldo = $total;
+        $compra->CompraTotal = $total;
         $compra->save();
 
-        $compra->productos->attach($request->input('fk_producto'));
+        return redirect()->route('compras.show', ['compra' => $compra]);
 
-        return redirect()->route('compras.index');
-    
     }
 
     /**
@@ -106,9 +105,8 @@ class CompraController extends Controller
      */
     public function show(Compra $compra)
     {
-		$productos = $compra->productos()->paginate(10);
-
-		return View('Compra.show', compact(['venta', 'productos']));
+		// return $compra->proveedor;
+		return View('Compra.show', compact(['compra']));
     }
 
     /**

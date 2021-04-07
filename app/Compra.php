@@ -47,12 +47,12 @@ class Compra extends Model
      */
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'compra_producto', 'fk_compra', 'fk_producto')->withPivot('compraCantidad')->withTimestamps();
+        return $this->belongsToMany('App\Producto', 'compra_producto', 'fk_compra', 'fk_producto')->withPivot('compraCantidad', 'compraSubtotal')->withTimestamps();
 	}
 
     public function proveedor()
     {
-        return $this->belongsTo('App\Proveedor', 'ProveedorId', 'fk_proveedor');
+        return $this->belongsTo('App\Proveedor', 'fk_proveedor', 'ProveedorId');
 	}
 	/**
      * The roles that belong to the permiso.
