@@ -235,4 +235,62 @@ class ajaxController extends Controller
 
 		}
 	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  \App\Producto  $producto
+	 * @return \Illuminate\Http\Response
+	 */
+	public function dropProductVenta(Request $request, Venta $venta)
+	{
+		if ($request->ajax()) {
+			session()->regenerate();
+
+			$validate = $request->validate([
+                'venta' => 'exists:ventas,VentaId'
+            ],
+            [
+                'venta.exists' => 'número de venta no existe...',
+            ]);
+
+			$productToUpdate = Producto::find($request->input('id'));
+			$productToUpdate->ProductoCantidad = $productToUpdate->ProductoCantidad - $request->input('ventaCantidad');
+			$productToUpdate->save();
+
+			$pivotToUpdate = "";
+			$pivotcantidad = 0;
+			$pivotsubtotal = 0;
+
+			foreach ($venta->productos as $producto) {
+				if ($request->input('id') == $producto->ProductoId) {
+					$pivotToUpdate = $producto->ProductoId;
+					$pivotcantidad = $producto->pivot->ventaCantidad - $request->input('ventaCantidad');
+					$pivotsubtotal = $producto->pivot->ventaSubtotal - ($request->input('ventaCantidad')*$productToUpdate->ProductoPrecio);
+				}
+			}
+
+			if ($pivotcantidad <= 0) {
+				$venta->productos()->detach($productToUpdate->ProductoId);
+				$pivotcantidad = 0;
+				$pivotsubtotal = 0;
+			}else{
+				$venta->productos()->updateExistingPivot($pivotToUpdate, [
+					'ventaCantidad' => $pivotcantidad,
+					'ventaSubtotal' => $pivotsubtotal
+				]);
+			}
+
+			// $producto->subtotal = number_format(($producto->ProductoPrecio * $producto->CantidadVendida), 2, '.', ',');
+			// $producto->precio = number_format($producto->ProductoPrecio, 2, '.', ',');
+			$productToUpdate->CantidadRestada = $pivotcantidad;
+			$productToUpdate->subtotal = $pivotsubtotal;
+			$Response['newtoken'] = csrf_token();
+			$Response['producto'] = $productToUpdate;
+			$Response['message'] = 'producto restado a la venta';
+
+			return response()->json($Response);
+
+		}
+	}
 }

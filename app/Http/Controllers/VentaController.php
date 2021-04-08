@@ -113,7 +113,8 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-		return View('Venta.show', compact(['venta']));
+        $productos = Producto::all();
+		return View('Venta.show', compact(['venta', 'productos']));
     }
 
     /**

@@ -17,6 +17,11 @@ $('input[type="file"]').change(function () {
     readURL(this);
 });
 
+function activarSelec2() {
+    $('.select2').select2({
+        theme: 'bootstrap4',
+    });
+}
 $(document).ready(function () {
-    $('.select2').select2();
+    activarSelec2();
 });

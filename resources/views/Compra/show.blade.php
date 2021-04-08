@@ -33,7 +33,7 @@ Compra #{{$compra->CompraId}}
 		<div class="my-2 col-md-6">
 			<div class="form-group w-100">
 				{{-- <label class="float-left text-secondary form-check-label" for="selectProveedor">Producto</label> --}}
-				<select onchange="showProduct()" class="form-control" id="selectProducto">
+				<select onchange="showProduct()" class="form-control select2" id="selectProducto">
 					<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
 					@foreach ($compra->proveedor->productos as $producto)
 					<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
@@ -153,8 +153,13 @@ Compra #{{$compra->CompraId}}
 {{-- pdfmake --}}
 <script src="{{asset('js/pdfmake.js')}}"></script>
 
+{{-- select2 --}}
+<script src="{{asset('js/select2.js')}}"></script>
+
 {{-- datatables --}}
 <script src="{{asset('js/datatables-bs4.js')}}"></script>
+
+
 
 <script>
 	$(document).ready(function() {
@@ -209,7 +214,13 @@ Compra #{{$compra->CompraId}}
 				"colvis": 'Columnas Visibles',
 				"columnDefs": [
 					{ "width": "20%", "targets": 4 }
-				]
+				],
+			},
+			"drawCallback": function(settings) {
+				console.log("draw() callback; initializing Select2's.");
+				$('.select2').select2({
+					theme: 'bootstrap4',
+				});
 			}
 		});
 	});
