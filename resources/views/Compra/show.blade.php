@@ -113,22 +113,22 @@ Compra #{{$compra->CompraId}}
 				</thead>
 				<tbody>
 					@foreach ($compra->productos as $producto)
-					<tr>
-						<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
+					<tr id="productRow{{$producto->ProductoId}}">
+						<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="row">
 							{{$producto->ProductoNombre}}
 						</td>
-						<td id="compraCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
+						<td id="compraCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
 							{{$producto->pivot->compraCantidad}}
 						</td>
-						<td class="align-middle text-nowrap text-dark" scope="col">
-							{{$producto->ProductoPrecio}}
+						<td class="align-middle text-nowrap text-dark">
+							{{number_format($producto->ProductoPrecio, 2)}}
 						</td>
-						<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="col">
-							{{$producto->pivot->compraSubtotal}}
+						<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
+							{{number_format($producto->pivot->compraSubtotal, 2)}}
 						</td>
-						<td class="align-middle text-dark">
+						<td class="align-middle text-dark" style="width: 15%;">
 							<div class="input-group">
-								<input type="number" class="form-control is-invalid" placeholder="0" aria-label="#" aria-describedby="basic-addon2" value="1">
+								<input id="restarCantidad{{$producto->ProductoId}}" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
 								<div class="input-group-append">
 									<button onclick="dropToCompra({{$producto->ProductoId}})" class="btn btn-outline-danger" type="button">Restar</button>
 								</div>
@@ -163,24 +163,10 @@ Compra #{{$compra->CompraId}}
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
 		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
 		/*inicializacion de datatable general*/
-		$('#comprasTable').DataTable({
-			"dom":"<'row collapse'<'col-md-8'P><'col-md-4'<'card my-1'<'card-body'Q>>>>" +
-				"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+		$('#productsCompraTable').DataTable({
+			"dom":"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
 				"<'row'<'col-md-12'rt>>" +
 				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
-			"searchPanes": {
-				cascadePanes: true,
-				layout: 'columns-2',
-				columns: [1,4],
-				count: '{total}',
-				countFiltered: '{shown} / {total}',
-				viewTotal: true,
-				dtOpts: {
-					select: {
-						style: 'multi'
-					}
-				}
-			},
 			"scrollX": false,
 			"serverSide": false,
 			"autoWidth": false,
@@ -220,48 +206,18 @@ Compra #{{$compra->CompraId}}
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				},
-				"colvis": 'Columnas Visibles'
-			},
-			"columnDefs": [
-				{ "type": "num-fmt", "targets": [0,2,3]},
-				{ "type": "date", "targets": [4,5]},
-				{ "type": "html", "targets": '_all'},
-				{ "orderable": false, "targets": [6] },
-				// { "className": "text-right", "targets": [2,3,5]},
-				// { "className": "text-left", "targets": [1]},
-				// { "visible": false, "targets": [4]}
-			],
-            // "rowGroup": {
-            //     endRender: null,
-            //     startRender: function ( rows, group ) {
-
-			// 		var totalcantidad = rows
-            //             .data()
-            //             .pluck(3)
-            //             .reduce( function (a, b) {
-            //                 return a + parseFloat(b);
-            //             }, 0);
-
-            //         var provedor = rows
-            //             .data()
-            //             .pluck(4)
-            //             .reduce( function (a, b) {
-            //                 return b;
-            //             }, 0);
-
-            //         return $('<tr/>')
-            //             .append( '<td class="text-left" colspan="7">'+provedor+'</td>' )
-			// 			.append( '<td>'+totalcantidad+' Unidades.</td>' );;
-            //     },
-            //     dataSrc: [ 4 ]
-            // }
+				"colvis": 'Columnas Visibles',
+				"columnDefs": [
+					{ "width": "20%", "targets": 4 }
+				]
+			}
 		});
 	});
 	/*funcion para actualizar elplugin responsive in chrome*/
 	function recalcularwitdth() {
-	var table = $('#comprasTable').DataTable();
-	table.columns.adjust();
-	table.responsive.recalc();
+		var table = $('#productsCompraTable').DataTable();
+		table.columns.adjust();
+		table.responsive.recalc();
 	// console.log('tabla recalculada');
 	}
 	$(document).ready(function () {
@@ -273,6 +229,7 @@ Compra #{{$compra->CompraId}}
 		}
 	});
 </script>
+
 <script type="text/javascript">
 	toastr.options = {
         "closeButton": true,
@@ -341,33 +298,38 @@ Compra #{{$compra->CompraId}}
 							productcounter=productcounter+1;
 							toastr.success(data['message']);
 							$('#productTable').prepend(`
-								<tr>
+								<tr id="productRow`+data.producto.ProductoId+`">
 									<th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-									<td class="align-middle" scope="col">
+									<td class="align-middle">
 										<div class="text-nowrap">
 											<div class="text-dark">`+data.producto.ProductoNombre+`</div>#`+data.producto.ProductoId+`
 										</div>
 									</td>
-									<td class="align-middle" scope="col">
+									<td class="align-middle">
 										<div class="text-nowrap font-inter-600">
 											<span class="badge badge-domicilio" style="font-size: 20px !important;">
 												• `+data.producto.CantidadComprada+`
 											</span>
 										</div>
 									</td>
-									<td class="align-middle text-right" scope="col">
+									<td class="align-middle text-right">
 										<div class="text-nowrap">
-											<div class="text-dark">$`+data.producto.ProductoPrecio+`</div>
-											COP
+											<div class="text-dark">$`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`</div>
 										</div>
 									</td>
-									<td class="align-middle text-right" scope="col">
+									<td class="align-middle text-right">
 										<div class="text-nowrap">
-											<div class="text-dark">$`+data.producto.subtotal+`</div>
-											COP
+											<div class="text-dark">$`+data.producto.subtotaltoLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`</div>
 										</div>
 									</td>
-									<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
+									<td class="align-middle text-dark" style="width: 15%;">
+										<div class="input-group">
+											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
+											<div class="input-group-append">
+												<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
+											</div>
+										</div>
+									</td>
 								</tr>
 							`);
 							break;
@@ -437,7 +399,7 @@ Compra #{{$compra->CompraId}}
 				}
 				productoNombre.html(data.producto.ProductoNombre);
 				productoDescripcion.html(data.producto.ProductoDescripcion);
-				ProductoPrecio.val(data.producto.ProductoPrecio);
+				ProductoPrecio.val(data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 				ProductoCantidad.val(1);
 				ProductoCantidad.attr('min', 0);
 				ProductoCodigo.val(data.producto.ProductoCodigo);
@@ -499,27 +461,34 @@ Compra #{{$compra->CompraId}}
 						if ($( "#productsCompraTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
 
 							$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
-							$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal);
+							$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
 							$('#productsCompraTable tbody').prepend(`
 								<tr>
-									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
 										`+data.producto.ProductoNombre+`
 									</td>
-									<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
+									<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
 										`+data.producto.CantidadComprada+`
 									</td>
-									<td class="align-middle" scope="col">
-										`+data.producto.ProductoPrecio+`
+									<td class="align-middle">
+										`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
 									</td>
-									<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle" scope="col">
-										`+data.producto.subtotal+`
+									<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle">
+										`+data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
 									</td>
-									<td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
+									<td class="align-middle text-dark" style="width: 15%;">
+										<div class="input-group">
+											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
+											<div class="input-group-append">
+												<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
+											</div>
+										</div>
+									</td>
 								</tr>
 							`);
 						}
-						
+
 						break;
 
 					default:
@@ -543,15 +512,10 @@ Compra #{{$compra->CompraId}}
 	}
 
 	function dropToCompra(id){
-		var select = $('#selectProducto');
-		var id = select.val();
-
-		var productoNombre = $("#SetProductoNombre");
-		var productoDescripcion = $('#SetProductoDescripcion');
-		var ProductoPrecio = $('#SetProductoPrecio');
-		var ProductoCantidad = $('#SetProductoCantidad');
-		var ProductoCodigo = $('#SetProductoCodigo');
-		var ProductoImage = $('#SetProductoImage');
+		var ProductoCantidad = $('#compraCantidad'+id);
+		var restarCantidad = $('#restarCantidad'+id);
+		var compraSubtotal = $('#compraSubtotal'+id);
+		var productRow = $('#productRow'+id);
 
 		$.ajaxSetup({
 			headers: {
@@ -559,53 +523,27 @@ Compra #{{$compra->CompraId}}
 			}
 		});
 		$.ajax({
-			url: "{{route('addProductCompra', ['compra' => $compra])}}",
+			url: "{{route('dropProductCompra', ['compra' => $compra])}}",
 			method: 'PUT',
 			data: {
 				'id': id,
-				'compraCantidad': ProductoCantidad.val(),
+				'compraCantidad': restarCantidad.val(),
 				},
 			beforeSend: function(){
-				// disablesearhbutton();
-				// productoNombre.empty();
-				// productoDescripcion.empty();
+
 			},
 			success: function(data, textStatus, jqXHR) {
 				renewtoken(data.newtoken);
 				switch (jqXHR['status']) {
 					case 200:
 						toastr.success(data['message']);
-						if ($( "#productsCompraTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
 
-							$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
-							$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal);
+						if (data.producto.CantidadComprada > 0) {
+							ProductoCantidad.text(data.producto.CantidadComprada);
+							compraSubtotal.text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
-							$('#productsCompraTable tbody').prepend(`
-								<tr>
-									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
-										`+data.producto.ProductoNombre+`
-									</td>
-									<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark" scope="col">
-										`+data.producto.CantidadComprada+`
-									</td>
-									<td class="align-middle" scope="col">
-										`+data.producto.ProductoPrecio+`
-									</td>
-									<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle" scope="col">
-										`+data.producto.subtotal+`
-									</td>
-									<td class="align-middle text-dark">
-										<div class="input-group">
-											<input type="number" class="form-control is-invalid" placeholder="0" aria-label="#" aria-describedby="basic-addon2" value="1">
-											<div class="input-group-append">
-												<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-							`);
+							productRow.remove()
 						}
-						
 						break;
 
 					default:
@@ -618,96 +556,11 @@ Compra #{{$compra->CompraId}}
 				xhr.responseJSON.errors.id.forEach( errormessage => {
 					toastr.error(errormessage);
 				});
-				productoNombre.html('no existe');
-				productoDescripcion.html('producto no encontrado');
-				// enablesearhbutton();
 			},
 			complete: function(){
 
 			}
 		});
 	}
-</script>
-
-script src="{{asset('js/jszip.js')}}"></script>
-
-{{-- pdfmake --}}
-<script src="{{asset('js/pdfmake.js')}}"></script>
-
-{{-- datatables --}}
-<script src="{{asset('js/datatables-bs4.js')}}"></script>
-
-<script>
-	$(document).ready(function() {
-		/*var rol defino el rol del usuario*/
-		var rol = "<?php echo Auth::user()->fk_rol; ?>";
-		/*var botoncito define los botones que se usaran si el usuario es programador*/
-		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
-		/*inicializacion de datatable general*/
-		$('#productsCompraTable').DataTable({
-			"dom":"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
-				"<'row'<'col-md-12'rt>>" +
-				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
-			"scrollX": false,
-			"serverSide": false,
-			"autoWidth": false,
-			"select": true,
-			"colReorder": true,
-			"ordering": true,
-			"order": [0, 'desc'],
-			"searchHighlight": true,
-			"responsive": true,
-			"keys": true,
-			"lengthChange": true,
-			"searching": true,
-			"buttons": [
-				botoncito
-			],
-			"language": {
-				"sProcessing":     "Procesando...",
-				"sLengthMenu":     "_MENU_ Filas",
-				"sZeroRecords":    "No se encontraron resultados",
-				"sEmptyTable":     "Ningún dato disponible en esta tabla",
-				"sInfo":           "_START_ al _END_ de _TOTAL_",
-				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-				"sInfoFiltered":   "",
-				"sInfoPostFix":    "",
-				"sSearch":         "_INPUT_",
-				"sUrl":            "",
-				"sInfoThousands":  ",",
-				"sLoadingRecords": "Cargando...",
-				"oPaginate": {
-					"sFirst":    "Primero",
-					"sLast":     "Último",
-					"sNext":     "->",
-					"sPrevious": "<-"
-				},
-
-				"oAria": {
-					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-				},
-				"colvis": 'Columnas Visibles',
-				// "columnDefs": [
-				// 	{ "width": "15%", "targets": 4 }
-				// ]
-			}
-		});
-	});
-	/*funcion para actualizar elplugin responsive in chrome*/
-	function recalcularwitdth() {
-		var table = $('#productsCompraTable').DataTable();
-		table.columns.adjust();
-		table.responsive.recalc();
-	// console.log('tabla recalculada');
-	}
-	$(document).ready(function () {
-		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-		// la funcion se ejecuta unicaente en chrome
-		if(is_chrome)
-		{
-			setTimeout(recalcularwitdth, 100);
-		}
-	});
 </script>
 @endpush
