@@ -76,7 +76,7 @@ Compra #{{$compra->CompraId}}
 						<div class="col-md-2">
 							<div class="form-group">
 								<div class="input-group">
-									<input disabled id="SetProductoPrecio" type="number" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+									<input disabled id="SetProductoPrecio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
 								</div>
 							</div>
 						</div>
