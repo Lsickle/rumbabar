@@ -16,6 +16,9 @@
 
 	<!-- Styles -->
 	<link rel="stylesheet" href="{{asset('css/app.css')}}">
+	<link rel="stylesheet" href="{{asset('css/fontawesome.css')}}">
+	<link rel="stylesheet" href="{{asset('css/datatables.css')}}">
+	<link rel="stylesheet" href="{{asset('css/select2.css')}}">
 
 	@yield('styles')
 

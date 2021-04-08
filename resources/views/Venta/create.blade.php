@@ -42,7 +42,7 @@ Nueva Venta
                                 <label class="text-left text-secondary form-check-label w-100" for="selectCliente">
                                 Clientes
                                 <select required onchange="reiniciarventa()" class="form-control select2" id="selectCliente" name="fk_cliente">
-                                    <option class="text-nowrap bd-highlight" selected value="">Seleccion el Cliente...</option>
+                                    <option disabled class="text-nowrap bd-highlight" selected value="">Seleccione el Cliente...</option>
                                     @foreach ($clientes as $cliente)
                                     <option class="text-nowrap bd-highlight" value="{{$cliente->ClienteId}}">{{$cliente->ClienteNombre}}</option>
                                     @endforeach
@@ -52,10 +52,10 @@ Nueva Venta
                             <div class="form-group col-md-4">
                                 <label class="text-left text-secondary form-check-label w-100" for="selectMesa">
                                 Mesas
-                                <select required onchange="reiniciarventa()" class="form-control select2" id="selectMesa" name="fk_mesa">
-                                    <option class="text-nowrap bd-highlight" selected value="">Seleccion la Mesa...</option>
+                                <select required class="form-control select2" id="selectMesa" name="fk_mesa">
+                                    <option disabled class="text-nowrap bd-highlight" selected value="">Seleccione la Mesa..</option>
                                     @foreach ($mesas as $mesa)
-                                    <option class="text-nowrap bd-highlight" value="{{$mesa->MesaId}}">{{$mesa->MesaNombre}}</option>
+                                    <option class="text-nowrap bd-highlight" value="{{$mesa->MesaId}}">{{$mesa->MesaId}}</option>
                                     @endforeach
                                 </select>
                                 </label>
@@ -82,8 +82,8 @@ Nueva Venta
                                         <div class="input-group-prepend">
                                             <button onclick="borrarproducto(0)" class="btn btn-outline-danger" type="button">Borrar</button>
                                         </div>
-                                        <select onchange="updateproductdata(0)" required class="form-control" id="productsSelect0" name="fk_producto[]">
-                                            <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
+                                        <select onchange="updateproductdata(0)" required class="select2 form-control" id="productsSelect0" name="fk_producto[]">
+                                            <option disabled class="text-nowrap bd-highlight" value="" selected>Seleccione el Producto...</option>
                                             @foreach ($productos as $producto)
                                             <option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
                                             @endforeach
@@ -96,7 +96,7 @@ Nueva Venta
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">#</span>
                                         </div>
-                                        <input required name="compraCantidad[]" id="compraCantidad0" type="number" class="form-control" />
+                                        <input required name="compraCantidad[]" id="compraCantidad0" type="number" min="1" class="form-control" max="{{$producto->ProductoCantidad}}"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -105,7 +105,7 @@ Nueva Venta
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">$</span>
                                         </div>
-                                        <input id="compraPrecio0" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1" min="0" value="0">
+                                        <input disabled id="compraPrecio0" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1" min="0" value="0">
                                     </div>
                                 </div>
                             </div>
@@ -180,88 +180,56 @@ Nueva Venta
             var buttonsubmit = $('#addProduct');
             var proveedor = $('#selectProveedor').val();
 
-            $.ajax({
-                url: "/filterproducts",
-                method: 'GET',
-                data: {
-                    'proveedor': proveedor,
-                },
-                beforeSend: function(){
-                    buttonsubmit.disabled = true;
-                    buttonsubmit.prop('disabled', true);
-                },
-                success: function(data, textStatus, jqXHR) {
-                    renewtoken(data.newtoken);
-                    switch (jqXHR['status']) {
-                        case 200:
-                            productcounter=productcounter+1;
-                            toastr.success(data['message']);
-                            $('#listadeproductos').prepend(`
-                                <div class="row" id="products`+productcounter+`">
-                                    <div class="form-group col-md-2">
-                                        <img width="100%" id="ProductoImageOutput`+productcounter+`" class="card-img p-2 d-none d-md-block" src="{{asset('img/default-image.png')}}" alt="Card image cap">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label class="float-left text-secondary form-check-label" for="inputGroupSelect`+productcounter+`2">Producto</label>
-                                        <div class="input-group" id="inputGroupSelect`+productcounter+`2">
-                                            <div class="input-group-prepend">
-                                                <button onclick="borrarproducto(`+productcounter+`)" class="btn btn-outline-danger" type="button">Borrar</button>
-                                            </div>
-                                            <select onchange="updateproductdata(`+productcounter+`)" required class="form-control" id="productsSelect`+productcounter+`" name="fk_producto[]">
-                                                <option class="text-nowrap bd-highlight" value="" selected>Producto...</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="float-left text-secondary form-check-label" for="inputGroup`+productcounter+`3">Cantidad</label>
-                                        <div class="input-group" id="inputGroup`+productcounter+`3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">#</span>
-                                            </div>
-                                            <input id="compraCantidad`+productcounter+`" required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="float-left text-secondary form-check-label" for="inputGroup`+productcounter+`4">Precio</label>
-                                        <div class="input-group" id="inputGroup`+productcounter+`4">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="basic-addon1">$</span>
-                                            </div>
-                                            <input disabled id="compraPrecio`+productcounter+`" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
-                                        </div>
-                                    </div>
-                                </div>
-                            `);
-                            data.productos.forEach(element => {
-                                $('#productsSelect'+productcounter).append(`
-                                    <option class="text-nowrap bd-highlight" value="`+element.ProductoId+`">`+element.ProductoNombre+`</option>
-                                `);
-                            });
+            productcounter = ++productcounter;
 
-                            break;
-
-                        default:
-                            toastr.error(data['message']);
-                            break;
-                    }
-                },
-                error: function(xhr, textStatus, jqXHR){
-                    renewtoken(xhr.newtoken);
-                    xhr.responseJSON.errors.proveedor.forEach( errormessage => {
-                        toastr.error(errormessage);
-                    });
-                },
-                complete: function(){
-                    buttonsubmit.disabled = false;
-                    buttonsubmit.prop('disabled', false);
-                }
-            });
+            $('#listadeproductos').prepend(`
+                <div class="row" id="products`+productcounter+`">
+                    <div class="form-group col-md-2">
+                        <img width="100%" id="ProductoImageOutput`+productcounter+`" class="card-img p-2 d-none d-md-block" src="{{asset('img/default-image.png')}}" alt="Card image cap">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="float-left text-secondary form-check-label" for="inputGroupSelect`+productcounter+`2">Producto</label>
+                        <div class="input-group" id="inputGroupSelect`+productcounter+`2">
+                            <div class="input-group-prepend">
+                                <button onclick="borrarproducto(`+productcounter+`)" class="btn btn-outline-danger" type="button">Borrar</button>
+                            </div>
+                            <select onchange="updateproductdata(`+productcounter+`)" required class="form-control select2" id="productsSelect`+productcounter+`" name="fk_producto[]">
+                                <option class="text-nowrap bd-highlight" value="" selected>Seleccione el Producto...</option>
+                                @foreach ($productos as $producto)
+                                <option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="float-left text-secondary form-check-label" for="inputGroup`+productcounter+`3">Cantidad</label>
+                        <div class="input-group" id="inputGroup`+productcounter+`3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">#</span>
+                            </div>
+                            <input id="compraCantidad`+productcounter+`" required name="compraCantidad[]" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label class="float-left text-secondary form-check-label" for="inputGroup`+productcounter+`4">Precio</label>
+                        <div class="input-group" id="inputGroup`+productcounter+`4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">$</span>
+                            </div>
+                            <input disabled id="compraPrecio`+productcounter+`" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                </div>
+            `);
+            activarSelec2();
             e.preventDefault();
         });
     });
 
     function borrarproducto(id){
-        $("#products"+id).remove();
+        $("#products"+id).slideUp( "slow", function() {
+            $("#products"+id).remove();
+        });
     }
     function reiniciarcompra(){
         $("#listadeproductos").empty();
@@ -292,7 +260,9 @@ Nueva Venta
                 switch (jqXHR['status']) {
                     case 200:
                         compraPrecio.val(data.producto.ProductoPrecio);
-                        compraCantidad.attr('min', 0);
+                        compraCantidad.attr('min', 1);
+                        compraCantidad.attr('max', data.producto.ProductoCantidad);
+                        // compraCantidad.attr('placeholder', data.producto.ProductoCantidad);
                         if (data.producto.ProductoImage == 'img/default-image.png') {
                         compraImage.attr('src', '/img/default-image.png');
                         }else{
@@ -321,11 +291,13 @@ Nueva Venta
         });
         // e.preventDefault();
     }
-
-    $(document).ready(function () {
+    function activarSelec2(){
         $('.select2').select2({
             theme: 'bootstrap4',
         });
+    }
+    $(document).ready(function () {
+        activarSelec2();
     });
 
 </script>

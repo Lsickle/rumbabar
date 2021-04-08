@@ -57,7 +57,51 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
+
+        $validate = $request->validate([
+        'fk_cliente' => 'exists:clientes,ClienteId',
+        'fk_mesa' => 'exists:mesas,MesaId'
+        ],
+        [
+            'fk_cliente.exists' => 'cliente no existe...',
+            'fk_mesa.exists' => 'mesa no existe...',
+        ]);
+
+        $venta = new Venta();
+        $venta->VentaStatus = 'Abierta';
+        $venta->VentaSaldo = 0;
+        $venta->VentaTotal = 0;
+
+        $venta->fk_user = Auth::id();
+        $venta->fk_cliente = $request->input('fk_cliente');
+        $venta->fk_mesa = $request->input('fk_mesa');
+        $venta->save();
+
+        $productosdelacompra = $request->input('fk_producto');
+        $ventaCantidad  = $request->input('ventaCantidad');
+
+        $total = 0;
+        $saldo = 0;
+        // return $ventaCantidad;
+
+        foreach ($productosdelacompra as $key => $id) {
+
+            $producto = Producto::find($id);
+            $producto->ProductoCantidad = $producto->ProductoCantidad + $ventaCantidad[$key];
+            $producto->save();
+
+            $subtotal = $producto->ProductoPrecio * $ventaCantidad[$key];
+            $total  = $total + $subtotal;
+
+			$venta->productos()->attach($producto->ProductoId, ['ventaCantidad' => $ventaCantidad[$key], 'ventaSubtotal' => $subtotal]);
+        }
+
+        $venta->VentaSaldo = $total;
+        $venta->VentaTotal = $total;
+        $venta->save();
+
+        return redirect()->route('ventas.show', ['venta' => $venta]);
     }
 
     /**

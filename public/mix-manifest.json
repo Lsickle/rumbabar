@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
+    "/css/fontawesome.css": "/css/fontawesome.css",
+    "/css/datatables.css": "/css/datatables.css",
+    "/css/select2.css": "/css/select2.css",
     "/js/datatables-bs4.js": "/js/datatables-bs4.js",
     "/js/jszip.js": "/js/jszip.js",
     "/js/pdfmake.js": "/js/pdfmake.js",

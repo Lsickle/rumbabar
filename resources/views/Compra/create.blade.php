@@ -248,7 +248,9 @@ Nueva Compra
 });
 
 function borrarproducto(id){
-    $("#products"+id).remove();
+	$("#products"+id).slideUp( "slow", function() {
+		$("#products"+id).remove();
+	});
 }
 function reiniciarcompra(){
     $("#listadeproductos").empty();
