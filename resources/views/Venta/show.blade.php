@@ -193,75 +193,19 @@ Registro de venta
                             </td>
                             <td class="align-middle text-right" scope="col">
                                 <div class="text-nowrap">
-                                    <div class="text-dark">${{number_format($producto->ProductoPrecio, 2, '.', ',')}}</div>
+                                    <div class="text-dark">$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}</div>
                                     COP
                                 </div>
                             </td>
                             <td class="align-middle text-right" scope="col">
                                 <div class="text-nowrap">
-                                    <div class="text-dark">${{number_format(($producto->ProductoPrecio * $producto->pivot->ventaCantidad), 2, '.', ',')}}</div>
+                                    <div class="text-dark">$ {{number_format(($producto->ProductoPrecio * $producto->pivot->ventaCantidad), 2, ',', '.')}}</div>
                                     COP
                                 </div>
                             </td>
                             <td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
                         </tr>
                         @endforeach
-                        {{-- <tr>
-                                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap">
-                                                                <div class="text-dark">Cocacola 1.5 Lt</div>#00175
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap font-inter-600">
-                                                                <span class="badge badge-domicilio" style="font-size: 20px !important;">
-                                                                    • 02
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap">
-                                                                <div class="text-dark">$2000</div>
-                                                                COP
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap">
-                                                                <div class="text-dark">$4000</div>
-                                                                COP
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap">
-                                                                <div class="text-dark">Cocacola 1.5 Lt</div>#00175
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap font-inter-600">
-                                                                <span class="badge badge-domicilio" style="font-size: 20px !important;">
-                                                                    • 05
-                                                                </span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap">
-                                                                <div class="text-dark">$2000</div>
-                                                                COP
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col">
-                                                            <div class="text-nowrap">
-                                                                <div class="text-dark">$4000</div>
-                                                                COP
-                                                            </div>
-                                                        </td>
-                                                        <td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
-                                                    </tr> --}}
                     </tbody>
                 </table>
             </div>
@@ -288,7 +232,7 @@ Registro de venta
 </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script>
     $(document).ready(function(){
         // $("button").click(function(){
@@ -484,4 +428,4 @@ Registro de venta
                 e.preventDefault();
             });
 </script>
-@endsection
+@endpush
