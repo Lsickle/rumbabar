@@ -81,21 +81,13 @@ Lista de Ventas
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
     <div class="row justify-content-between py-2 my-2" id='ventasHeader'>
-        <div class="col-12 col-sm-2 d-flex justify-content-between">
+        <div class="col-12 d-flex justify-content-between">
             <button class="btn btn-outline-secondary dropdown mr-md-2" type="button" data-toggle="collapse" data-target=".collapse" aria-expanded="false" aria-controls="collapseExample">
                 <div class="text-nowrap bd-highlight">
                     <i class="fas fa-filter"></i> Filtros
                 </div>
             </button>
-            <button class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>COBROS</b></button>
-        </div>
-        <div class="col-12 col-sm-5 my-sm-0 my-2">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                </div>
-                <input type="text" class="form-control" placeholder="Buscar" aria-label="Username" aria-describedby="basic-addon1">
-            </div>
+            <a href="{{route('ventas.create')}}" class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>Crear</b></a>
         </div>
     </div>
     <div class="row">
@@ -108,7 +100,7 @@ Lista de Ventas
                         <th id="th-3" scope="col">STATUS</th>
                         <th id="th-2" scope="col">Fecha</th>
                         <th id="th-4" scope="col" class="text-right">CANTIDAD</th>
-                        <th id="th-5" scope="col" class="text-right">VER</th>
+                        <th id="th-5" scope="col">VER</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,9 +128,8 @@ Lista de Ventas
                             @endphp
                             @endforeach
                             <div class="text-dark">$ {{number_format($subtotal, 2, ',', '.')}}</div>
-                            COP
                         </td>
-                        <td class="align-middle text-nowrap text-right" scope="col">
+                        <td class="align-middle text-nowrap" scope="col">
                             <a href="{{route('ventas.show', ['venta' => $venta])}}" class="btn btn-sm btn-info text-white">
                                 <div class="text-nowrap">Ver Mas</div>
                             </a>

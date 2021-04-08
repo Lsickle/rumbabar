@@ -4,7 +4,7 @@ function readURL(input) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            var output = $('#'+input.id+'Output');
+            var output = $('#' + input.id + 'Output');
             output.attr('src', e.target.result);
             output.attr('class', 'd-block');
         }
@@ -13,6 +13,10 @@ function readURL(input) {
     }
 }
 
-$('input[type="file"]').change(function(){
+$('input[type="file"]').change(function () {
     readURL(this);
+});
+
+$(document).ready(function () {
+    $('.select2').select2();
 });

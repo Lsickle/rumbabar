@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use App\Producto;
+use App\Proveedor;
+use App\Mesa;
+use App\Cliente;
+
 
 class VentaController extends Controller
 {
@@ -35,7 +40,13 @@ class VentaController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        $mesas = Mesa::all();
+        $productos = Producto::with('proveedor')->get();
+
+        $ultimaventa = Venta::all()->last();
+
+		return View('Venta.create', compact(['productos', 'mesas', 'clientes', 'ultimaventa']));
     }
 
     /**
