@@ -1,11 +1,11 @@
 @extends('layouts.adminApp')
 
 @section('pagename')
-Registro de venta
+Venta {{$venta->VentaId}}
 @endsection
 
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{{asset('css/toastr.css')}}" />
 @endsection
 
 @section('header')
@@ -176,7 +176,7 @@ Registro de venta
                         </tr>
                     </thead>
                     <tbody id="productTable">
-                        @foreach ($productos as $producto)
+                        @foreach ($venta->productos as $producto)
                         <tr>
                             <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
                             <td class="align-middle" scope="col">
@@ -210,7 +210,7 @@ Registro de venta
                 </table>
             </div>
         </div>
-        <div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
+        {{-- <div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
             <div class="col my-auto">
                 <div class="text-left">filas por página: {{$productos->count()}}</div>
             </div>
@@ -227,7 +227,7 @@ Registro de venta
                     <a href="{{$productos->url($productos->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </form>
 </div>
 @endsection

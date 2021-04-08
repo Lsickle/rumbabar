@@ -5,7 +5,7 @@ Nueva Venta
 @endsection
 
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" />
+<link rel="stylesheet" href="{{asset('css/toastr.css')}}" />
 @endsection
 
 @section('header')
@@ -96,7 +96,7 @@ Nueva Venta
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="basic-addon1">#</span>
                                         </div>
-                                        <input required name="compraCantidad[]" id="compraCantidad0" type="number" min="1" class="form-control" max="{{$producto->ProductoCantidad}}"/>
+                                        <input required name="compraCantidad[]" id="compraCantidad0" type="number" min="1" class="form-control"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -125,7 +125,7 @@ Nueva Venta
 
 @push('scripts')
 {{-- toastr --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
+<script src="{{asset('js/toastr.js')}}"></script>
 
 {{-- select2 --}}
 <script src="{{asset('js/select2.js')}}"></script>
@@ -231,7 +231,7 @@ Nueva Venta
             $("#products"+id).remove();
         });
     }
-    function reiniciarcompra(){
+    function reiniciarventa(){
         $("#listadeproductos").empty();
     }
     function updateproductdata(contador){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 use App\Producto;
 use App\Proveedor;
 use App\Mesa;
@@ -57,7 +58,7 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
 
         $validate = $request->validate([
         'fk_cliente' => 'exists:clientes,ClienteId',
@@ -79,7 +80,7 @@ class VentaController extends Controller
         $venta->save();
 
         $productosdelacompra = $request->input('fk_producto');
-        $ventaCantidad  = $request->input('ventaCantidad');
+        $ventaCantidad  = $request->input('compraCantidad');
 
         $total = 0;
         $saldo = 0;
@@ -112,9 +113,7 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-		$productos = $venta->productos()->paginate(10);
-
-		return View('Venta.show', compact(['venta', 'productos']));
+		return View('Venta.show', compact(['venta']));
     }
 
     /**

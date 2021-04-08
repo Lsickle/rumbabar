@@ -39507,10 +39507,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/sass/toastr.scss":
+/*!************************************!*\
+  !*** ./resources/sass/toastr.scss ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ 0:
-/*!**************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/fontawesome.scss ./resources/sass/datatables.scss ./resources/sass/select2.scss ***!
-  \**************************************************************************************************************************************************************/
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/app.scss ./resources/sass/fontawesome.scss ./resources/sass/datatables.scss ./resources/sass/select2.scss ./resources/sass/toastr.scss ***!
+  \*******************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -39518,7 +39529,8 @@ __webpack_require__(/*! C:\laragon\www\rumbabar\resources\js\app.js */"./resourc
 __webpack_require__(/*! C:\laragon\www\rumbabar\resources\sass\app.scss */"./resources/sass/app.scss");
 __webpack_require__(/*! C:\laragon\www\rumbabar\resources\sass\fontawesome.scss */"./resources/sass/fontawesome.scss");
 __webpack_require__(/*! C:\laragon\www\rumbabar\resources\sass\datatables.scss */"./resources/sass/datatables.scss");
-module.exports = __webpack_require__(/*! C:\laragon\www\rumbabar\resources\sass\select2.scss */"./resources/sass/select2.scss");
+__webpack_require__(/*! C:\laragon\www\rumbabar\resources\sass\select2.scss */"./resources/sass/select2.scss");
+module.exports = __webpack_require__(/*! C:\laragon\www\rumbabar\resources\sass\toastr.scss */"./resources/sass/toastr.scss");
 
 
 /***/ })
