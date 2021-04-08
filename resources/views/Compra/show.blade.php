@@ -121,10 +121,10 @@ Compra #{{$compra->CompraId}}
 							{{$producto->pivot->compraCantidad}}
 						</td>
 						<td class="align-middle text-nowrap text-dark">
-							{{number_format($producto->ProductoPrecio, 2)}}
+							$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}
 						</td>
 						<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
-							{{number_format($producto->pivot->compraSubtotal, 2)}}
+							$ {{number_format($producto->pivot->compraSubtotal, 2, ',', '.')}}
 						</td>
 						<td class="align-middle text-dark" style="width: 15%;">
 							<div class="input-group">
