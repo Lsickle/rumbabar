@@ -58,4 +58,12 @@ class Venta extends Model
     {
         return $this->belongsTo('App\Cliente', 'fk_cliente', 'ClienteId');
     }
+
+    	/**
+     * The roles that belong to the permiso.
+     */
+    public function mesa()
+    {
+        return $this->belongsTo('App\Mesa', 'fk_mesa', 'MesaId');
+    }
 }

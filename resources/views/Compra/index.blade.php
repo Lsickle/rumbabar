@@ -99,7 +99,7 @@ Lista de Compras
         </div>
     </div>
     <div class="row">
-        <div class="col table-responsive">
+        <div class="table-responsive mx-md-3">
             <table id="comprasTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
                 <thead class="font-inter-600" style="background-color: #F4F2FF;">
                     <tr>

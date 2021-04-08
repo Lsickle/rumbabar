@@ -15,7 +15,7 @@ class VentaController extends Controller
      */
     public function index()
     {
-		$ventas = Venta::with(['cliente', 'productos'])->paginate(10);
+		$ventas = Venta::with(['cliente', 'productos'])->get();
 		$ventasgeneral = Venta::with(['cliente', 'productos'])->get();
 		$totalgeneral = 0;
 
@@ -93,6 +93,8 @@ class VentaController extends Controller
      */
     public function destroy(Venta $venta)
     {
-        //
+        $venta->delete();
+
+        return redirect()->route('ventas.index');
     }
 }

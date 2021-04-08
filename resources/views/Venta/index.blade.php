@@ -1,7 +1,7 @@
 @extends('layouts.adminApp')
 
 @section('pagename')
-Nombre de la pagina
+Lista de Ventas
 @endsection
 
 @section('styles')
@@ -18,7 +18,7 @@ Nombre de la pagina
             <a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
         </div>
     </div>
-    <div class="row bg-light mb-2">
+    {{-- <div class="row bg-light mb-2">
         <div class="col">
             <ul class="nav d-flex flex-wrap-reverse flex-md-row border-bottom">
                 <li class="nav-item dropdown">
@@ -74,7 +74,7 @@ Nombre de la pagina
                 </li>
             </ul>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection
 
@@ -82,9 +82,9 @@ Nombre de la pagina
 <div class="container shadow rounded border border-3 h-90 bg-white">
     <div class="row justify-content-between py-2 my-2" id='ventasHeader'>
         <div class="col-12 col-sm-2 d-flex justify-content-between">
-            <button class="btn btn-outline-secondary dropdown">
+            <button class="btn btn-outline-secondary dropdown mr-md-2" type="button" data-toggle="collapse" data-target=".collapse" aria-expanded="false" aria-controls="collapseExample">
                 <div class="text-nowrap bd-highlight">
-                    <i class="fas fa-filter"></i> Filtro
+                    <i class="fas fa-filter"></i> Filtros
                 </div>
             </button>
             <button class="btn text-white font-inter-600" style="background-color:#6D5BD0; font-size:12px;"><b>COBROS</b></button>
@@ -99,474 +99,185 @@ Nombre de la pagina
         </div>
     </div>
     <div class="row">
-        <div class="table-responsive">
-            <table class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
+        <div class="table-responsive mx-md-3">
+            <table id="ventasTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
                 <thead class="font-inter-600" style="background-color: #F4F2FF;">
                     <tr>
-                        <th id="th-1" scope="col">#</th>
-                        <th id="th-3" scope="col">CLIENTE</th>
-                        <th id="th-4" scope="col">FECHA</th>
-                        <th id="th-5" scope="col">METODO DE PAGO</th>
-                        <th class="text-right" id="th-6" scope="col">CANTIDAD</th>
-                        <th class="text-right" id="th-7" scope="col">VER</th>
-                        <th id="th-8" scope="col"></th>
-                        <th id="th-9" scope="col"><i class="fas fa-ellipsis-v"></i></th>
+                        <th id="th-1" scope="col">CLIENTE</th>
+                        <th id="th-1" scope="col">MESA</th>
+                        <th id="th-3" scope="col">STATUS</th>
+                        <th id="th-2" scope="col">Fecha</th>
+                        <th id="th-4" scope="col" class="text-right">CANTIDAD</th>
+                        <th id="th-5" scope="col" class="text-right">VER</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($ventas as $venta)
                     <tr>
-                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                <div class="text-dark">{{$venta->cliente->ClienteNombre}}</div>Mesa 2
-                            </div>
+                        <td class="align-middle text-nowrap" scope="col">
+                            {{$venta->cliente->ClienteNombre}}
                         </td>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                Fecha : {{$venta->created_at}}
-                                <br>
-                                <span class="badge badge-pill badge-local">
-                                    • Local
-                                </span>
-                            </div>
+                        <td class="align-middle text-nowrap" scope="col">
+                            Mesa {{$venta->mesa->MesaId}}
                         </td>
-                        <td class="align-middle" scope="col">
-                            <div class="text-nowrap">
-                                Paid on {{$venta->updated_at}}
-                                <br>
-                                <span class="badge badge-pill badge-efectivo">
-                                    • Efectivo
-                                </span>
-    
-                            </div>
+                        <td class="align-middle text-nowrap" scope="col">
+                            {{$venta->VentaStatus}}
                         </td>
-                        <td class="align-middle px-3" scope="col">
-                            <div class="text-nowrap text-right">
-                                @php
-                                $subtotal = 0
-                                @endphp
-                                @foreach ($venta->productos as $producto)
-                                @php
-                                $subtotal = $producto->pivot->ventaCantidad * $producto->ProductoPrecio;
-                                @endphp
-                                @endforeach
-                                <div class="text-dark">${{number_format($subtotal, 2, '.', ',')}}</div>
-                                COP
-                            </div>
+                        <td class="align-middle text-nowrap" scope="col">
+                            {{$venta->updated_at}}
                         </td>
-                        <td class="align-middle text-right" scope="col">
+                        <td class="align-middle text-nowrap px-3 text-right" scope="col">
+                            @php
+                            $subtotal = 0
+                            @endphp
+                            @foreach ($venta->productos as $producto)
+                            @php
+                            $subtotal = $producto->pivot->ventaCantidad * $producto->ProductoPrecio;
+                            @endphp
+                            @endforeach
+                            <div class="text-dark">$ {{number_format($subtotal, 2, ',', '.')}}</div>
+                            COP
+                        </td>
+                        <td class="align-middle text-nowrap text-right" scope="col">
                             <a href="{{route('ventas.show', ['venta' => $venta])}}" class="btn btn-sm btn-info text-white">
                                 <div class="text-nowrap">Ver Mas</div>
                             </a>
                         </td>
-                        <td class="align-middle" scope="col">
-                        </td>
-                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
                     </tr>
                     @endforeach
-                    {{-- <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 4
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-domicilio">
-                                                    • Domicilio
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-credito">
-                                                    • Credito
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-debito">
-                                                    • Debito
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 5
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="align-middle" scope="row"><i class="far fa-square"></i></th>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">Pepito Perez</div>Mesa 1
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Fecha : 14/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-primary">
-                                                    • Local
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                Paid on 15/APR/2020
-                                                <br>
-                                                <span class="badge badge-pill badge-success">
-                                                    • Local
-                                                </span>
-    
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <div class="text-nowrap">
-                                                <div class="text-dark">$1200,50</div>
-                                                COP
-                                            </div>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                            <a href="#" class="btn btn-sm btn-info text-white">
-                                                <div class="text-nowrap">Ver Mas</div>
-                                            </a>
-                                        </td>
-                                        <td class="align-middle" scope="col">
-                                        </td>
-                                        <td class="align-middle" scope="col"><i class="fas fa-ellipsis-v"></i></td>
-                                    </tr> --}}
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="row flex-row d-flex" style="background-color: #F4F2FF; color:#6E6893 !important;">
-        <div class="col my-auto">
-            <div class="text-left">filas por página: {{$ventas->count()}}</div>
-        </div>
-    
-        <div class="col">
-            <div class="text-right">
-                <div class="mx-3">{{$ventas->firstItem()}}-{{$ventas->lastItem()}} of {{$ventas->total()}}</div>
-                <a href="{{$ventas->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
-                <a href="{{$ventas->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
-                <a href="{{$ventas->previousPageUrl()}}"><i class="px-1">{{$ventas->currentPage() > 1 ? $ventas->currentPage() - 1 : ''}}</i></a>
-                <i class="px-0">{{$ventas->currentPage()}}</i>
-                <a href="{{$ventas->nextPageUrl()}}"><i class="px-1">{{$ventas->currentPage() + 1}}</i></a>
-                <a href="{{$ventas->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
-                <a href="{{$ventas->url($ventas->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
-            </div>
         </div>
     </div>
 </div>
 @endsection
 
-@section('scripts')
-<script>
-    $(document).ready(function(){
-        // $("button").click(function(){
-        //     $("p").slideToggle();
-        // });
-        console.log('hola');
-    });
-</script>
+@push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous"></script>
-@endsection
+{{-- jszip --}}
+<script src="{{asset('js/jszip.js')}}"></script>
+
+{{-- pdfmake --}}
+<script src="{{asset('js/pdfmake.js')}}"></script>
+
+{{-- datatables --}}
+<script src="{{asset('js/datatables-bs4.js')}}"></script>
+
+<script>
+    $(document).ready(function() {
+		/*var rol defino el rol del usuario*/
+		var rol = "<?php echo Auth::user()->fk_rol; ?>";
+		/*var botoncito define los botones que se usaran si el usuario es programador*/
+		var botoncito = (rol == 1) ? [{extend: 'colvis', text: 'Columnas'}, {extend: 'copy', text: 'Copiar'}, {extend: 'excel', text: 'Excel'}, {extend: 'pdf', text: 'Pdf'}, {extend: 'collection', text: 'Selector', buttons: ['selectRows', 'selectCells']}] : [{extend: 'colvis', text: 'Columnas'}, {extend: 'excel', text: 'Excel'}];
+		/*inicializacion de datatable general*/
+		$('#ventasTable').DataTable({
+			"dom":"<'row collapse'<'col-md-8'P><'col-md-4'<'card my-1'<'card-body'Q>>>>" +
+				"<'row justify-content-between pt-3 pb-0'<l><'text-center d-none d-md-block'B><f>>" +
+				"<'row'<'col-md-12'rt>>" +
+				"<'row pt-0 pb-3 justify-content-center justify-content-md-between'<'align-self-center'i><''p>>",
+			"searchPanes": {
+				cascadePanes: true,
+				layout: 'columns-2',
+				// columns: [1,4],
+				count: '{total}',
+				countFiltered: '{shown} / {total}',
+				viewTotal: true,
+				dtOpts: {
+					select: {
+						style: 'multi'
+					}
+				}
+			},
+			"scrollX": false,
+			"serverSide": false,
+			"autoWidth": false,
+			"select": true,
+			"colReorder": true,
+			"ordering": true,
+			"order": [0, 'desc'],
+			"searchHighlight": true,
+			"responsive": true,
+			"keys": true,
+			"lengthChange": true,
+			"searching": true,
+			"buttons": [
+				botoncito
+			],
+			"language": {
+				"sProcessing":     "Procesando...",
+				"sLengthMenu":     "_MENU_ Filas",
+				"sZeroRecords":    "No se encontraron resultados",
+				"sEmptyTable":     "Ningún dato disponible en esta tabla",
+				"sInfo":           "_START_ al _END_ de _TOTAL_",
+				"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+				"sInfoFiltered":   "",
+				"sInfoPostFix":    "",
+				"sSearch":         "_INPUT_",
+				"sUrl":            "",
+				"sInfoThousands":  ",",
+				"sLoadingRecords": "Cargando...",
+				"oPaginate": {
+					"sFirst":    "Primero",
+					"sLast":     "Último",
+					"sNext":     "->",
+					"sPrevious": "<-"
+				},
+
+				"oAria": {
+					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+				},
+				"colvis": 'Columnas Visibles'
+			},
+			// "columnDefs": [
+			// 	{ "type": "num-fmt", "targets": [0,2,3]},
+			// 	{ "type": "date", "targets": [4,5]},
+			// 	{ "type": "html", "targets": '_all'},
+			// 	{ "orderable": false, "targets": [6] },
+			// 	// { "className": "text-right", "targets": [2,3,5]},
+			// 	// { "className": "text-left", "targets": [1]},
+			// 	// { "visible": false, "targets": [4]}
+			// ],
+            // "rowGroup": {
+            //     endRender: null,
+            //     startRender: function ( rows, group ) {
+
+			// 		var totalcantidad = rows
+            //             .data()
+            //             .pluck(3)
+            //             .reduce( function (a, b) {
+            //                 return a + parseFloat(b);
+            //             }, 0);
+
+            //         var provedor = rows
+            //             .data()
+            //             .pluck(4)
+            //             .reduce( function (a, b) {
+            //                 return b;
+            //             }, 0);
+
+            //         return $('<tr/>')
+            //             .append( '<td class="text-left" colspan="7">'+provedor+'</td>' )
+			// 			.append( '<td>'+totalcantidad+' Unidades.</td>' );;
+            //     },
+            //     dataSrc: [ 4 ]
+            // }
+		});
+	});
+	/*funcion para actualizar elplugin responsive in chrome*/
+	function recalcularwitdth() {
+	var table = $('#comprasTable').DataTable();
+	table.columns.adjust();
+	table.responsive.recalc();
+	// console.log('tabla recalculada');
+	}
+	$(document).ready(function () {
+		var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+		// la funcion se ejecuta unicaente en chrome
+		if(is_chrome)
+		{
+			setTimeout(recalcularwitdth, 100);
+		}
+	});
+</script>
+@endpush
