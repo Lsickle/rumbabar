@@ -66,9 +66,10 @@ class ajaxController extends Controller
 			$producto->ProductoCantidad = $producto->ProductoCantidad - $request->input('ventaCantidad');
 			$producto->save();
 
-			$venta = Venta::find($venta);
+			// chequear si la pivot existe
 
-			$venta->productos()->attach($producto->ProductoId, ['ventaCantidad' => $request->input('ventaCantidad'), 'ventaSubtotal' => $request->input('ventaCantidad') * $producto->ProductoPrecio ]);
+
+			$venta->productos()->updateExistingPivot($producto->ProductoId, ['ventaCantidad' => $request->input('ventaCantidad'), 'ventaSubtotal' => $request->input('ventaCantidad') * $producto->ProductoPrecio ]);
 
 			$producto->CantidadVendida = $request->input('ventaCantidad');
 			$producto->subtotal = number_format(($producto->ProductoPrecio * $producto->CantidadVendida), 2, '.', ',');
@@ -153,7 +154,7 @@ class ajaxController extends Controller
 
 			if ($pivotToUpdate == "") {
 				$compra->productos()->attach($productToUpdate->ProductoId, [
-					'compraCantidad' => $request->input('compraCantidad'), 
+					'compraCantidad' => $request->input('compraCantidad'),
 					'compraSubtotal' => $request->input('compraCantidad')*$productToUpdate->ProductoPrecio
 				]);
 				$pivotcantidad = $request->input('compraCantidad');
@@ -255,7 +256,11 @@ class ajaxController extends Controller
             ]);
 
 			$productToUpdate = Producto::find($request->input('id'));
-			$productToUpdate->ProductoCantidad = $productToUpdate->ProductoCantidad - $request->input('ventaCantidad');
+			if (($productToUpdate->ProductoCantidad - $request->input('ventaCantidad')) < 0) {
+				$productToUpdate->ProductoCantidad = 0;
+			}else{
+				$productToUpdate->ProductoCantidad = $productToUpdate->ProductoCantidad - $request->input('ventaCantidad');
+			}
 			$productToUpdate->save();
 
 			$pivotToUpdate = "";
@@ -270,7 +275,7 @@ class ajaxController extends Controller
 				}
 			}
 
-			if ($pivotcantidad <= 0) {
+			if ($pivotcantidad < 0) {
 				$venta->productos()->detach($productToUpdate->ProductoId);
 				$pivotcantidad = 0;
 				$pivotsubtotal = 0;
