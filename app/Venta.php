@@ -48,7 +48,7 @@ class Venta extends Model
      */
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'producto_venta', 'fk_venta', 'fk_producto')->withPivot('ventaCantidad');
+        return $this->belongsToMany('App\Producto', 'producto_venta', 'fk_venta', 'fk_producto')->withPivot(['ventaCantidad', 'ventaSubtotal']);
 	}
 
 	/**

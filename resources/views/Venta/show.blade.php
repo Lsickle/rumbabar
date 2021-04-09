@@ -10,15 +10,15 @@ Venta {{$venta->VentaId}}
 
 @section('header')
 <div class="sticky-top px-3 mt-2">
-    <div class="row bg-light">
-        <div class="col">
-            <p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'Registro de venta'}}</p>
-        </div>
-        <div class="col">
-            <a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
-        </div>
-    </div>
-    {{-- <div class="row bg-light mb-2">
+	<div class="row bg-light">
+		<div class="col">
+			<p class="float-left text-secondary text-uppercase font-inter-700" style="font-size:13px;">{{'Registro de venta'}}</p>
+		</div>
+		<div class="col">
+			<a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
+		</div>
+	</div>
+	{{-- <div class="row bg-light mb-2">
         <div class="col">
             <ul class="nav d-flex flex-wrap-reverse flex-md-row border-bottom">
                 <li class="nav-item dropdown">
@@ -71,163 +71,157 @@ Venta {{$venta->VentaId}}
                 </li>
                 <li class="flex-grow-1 nav-item">
                     <a class="text-secondary float-right">Cantidad total: $<span style="color: #6D5BD0"><b>{{'37.600,24'}}</b></span> COP</a>
-                </li>
-            </ul>
-        </div>
-    </div> --}}
+	</li>
+	</ul>
+</div>
+</div> --}}
 </div>
 @endsection
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
-    <form action="{{route('ventas.store')}}" method="POST">
-        @csrf
-        <div class="row justify-content-between py-2 my-2" id='ventasHeader'>
-            <div class="col-6 col-md-2 d-flex justify-content-between">
-                <div class="dropdown">
-                    <button disabled class="btn btn-secondary" type="button" id="dropdownMenuButton">
-                        <div class="text-nowrap bd-highlight">
-                            <i class="fas fa-caret-down"></i> Mesa {{$venta->fk_mesa}}
-                        </div>
-                    </button>
-                </div>
-            </div>
-            <div class="col-6 col-md-3">
-                <button class="float-right btn btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Facturar</b></button>
-            </div>
-            <div class="col-md-3 my-sm-0 my-2">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-primary" type="button"><i class="fas fa-user"></i></button>
-                    </div>
-                    <input disabled type="text" class="form-control" aria-describedby="basic-addon1" value="{{$venta->cliente->ClienteNombre}}">
-                </div>
-            </div>
-        </div>
-        <div class="row bg-local">
-            <div class="col">
-                <div class="card my-2">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3"><img id="SetProductoImage" class="card-img" src="https://picsum.photos/300/200?text=Image cap" alt="Card image cap"></div>
-                            <div class="col-md-3">
-                                <div class="form-group pt-2 pt-sm-0">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-                                        </div>
-                                        {{-- <input disabled id="SetProductoCodigo" type="number" class="form-control" placeholder="Codigo" aria-label="Codigo" aria-describedby="basic-addon1"> --}}
-                                        <select onchange="showProduct()" class="form-control select2" id="selectProducto">
-                                            <option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
-                                            @foreach ($productos as $producto)
-                                            <option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <p class="card-tittle text-left"><b id="SetProductoNombre">Jugo 1.5 Lt.</b></p>
-                                <p class="card-text text-left" id="SetProductoDescripcion">Botella de 1.5 Lt Sabor Mango</p>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input disabled id="SetProductoPrecio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div>
-                                    <form action="{{route('ventas.destroy', ['venta'=>$venta])}}" method="POST">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="btn btn-block btn-danger text-white font-inter-600" style="font-size:12px;"><b><i class="fas fa-trash-alt"></i> Borrar Venta</b></button>
-                                    </form>
-                                </div>
-                                <br>
-                                <div>
-                                    <button onclick="addToVenta()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir Producto</b></button>
-                                </div>
-                            </div>
-                        </div>
-                
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="table-responsive">
-                <table id="productsVentaTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
-                    <thead class="font-inter-600" style="background-color: #F4F2FF;">
-                        <tr>
-                            <th id="th-1" scope="col">#</th>
-                            <th id="th-3" scope="col">Producto</th>
-                            <th id="th-4" scope="col">Cantidad</th>
-                            <th class="text-right" id="th-5" scope="col">Precio unidad</th>
-                            <th class="text-right" id="th-6" scope="col">SubTotal</th>
-                            <th id="th-9" scope="col">+</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($venta->productos as $producto)
-                        <tr>
-                            <th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-                            <td class="align-middle" scope="col">
-                                <div class="text-nowrap">
-                                    <div class="text-dark">{{$producto->ProductoNombre}}</div>#{{$producto->ProductoId}}
-                                </div>
-                            </td>
-                            <td class="align-middle" scope="col">
-                                <div class="text-nowrap font-inter-600">
-                                    <span class="badge badge-domicilio" style="font-size: 20px !important;">
-                                        • {{$producto->pivot->ventaCantidad}}
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-right" scope="col">
-                                <div class="text-nowrap">
-                                    <div class="text-dark">$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}</div>
-                                    COP
-                                </div>
-                            </td>
-                            <td class="align-middle text-right" scope="col">
-                                <div class="text-nowrap">
-                                    <div class="text-dark">$ {{number_format(($producto->ProductoPrecio * $producto->pivot->ventaCantidad), 2, ',', '.')}}</div>
-                                    COP
-                                </div>
-                            </td>
-                            <td class="align-middle" scope="col"><i class="fas fa-caret-square-up"></i><br><i class="fas fa-caret-square-down"></i></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        {{-- <div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
-            <div class="col my-auto">
-                <div class="text-left">filas por página: {{$productos->count()}}</div>
-            </div>
+	<form action="{{route('ventas.store')}}" method="POST">
+		@csrf
+		<div class="row justify-content-between py-2 my-2" id='ventasHeader'>
+			<div class="col-6 col-md-2 d-flex justify-content-between">
+				<div class="dropdown">
+					<button disabled class="btn btn-secondary" type="button" id="dropdownMenuButton">
+						<div class="text-nowrap bd-highlight">
+							<i class="fas fa-caret-down"></i> Mesa {{$venta->fk_mesa}}
+						</div>
+					</button>
+				</div>
+			</div>
+			<div class="col-6 col-md-3">
+				<button class="float-right btn btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Facturar</b></button>
+			</div>
+			<div class="col-md-3 my-sm-0 my-2">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<button class="btn btn-primary" type="button"><i class="fas fa-user"></i></button>
+					</div>
+					<input disabled type="text" class="form-control" aria-describedby="basic-addon1" value="{{$venta->cliente->ClienteNombre}}">
+				</div>
+			</div>
+		</div>
+		<div class="row bg-local">
+			<div class="col">
+				<div class="card my-2">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-3"><img id="SetProductoImage" class="card-img" src="https://picsum.photos/300/200?text=Image cap" alt="Card image cap"></div>
+							<div class="col-md-3">
+								<div class="form-group pt-2 pt-sm-0">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+										</div>
+										{{-- <input disabled id="SetProductoCodigo" type="number" class="form-control" placeholder="Codigo" aria-label="Codigo" aria-describedby="basic-addon1"> --}}
+										<select onchange="showProduct()" class="form-control select2" id="selectProducto">
+											<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
+											@foreach ($productos as $producto)
+											<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+								<p class="card-tittle text-left"><b id="SetProductoNombre">Jugo 1.5 Lt.</b></p>
+								<p class="card-text text-left" id="SetProductoDescripcion">Botella de 1.5 Lt Sabor Mango</p>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<div class="input-group">
+										<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<div class="input-group">
+										<input disabled id="SetProductoPrecio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+									</div>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div>
+									<form action="{{route('ventas.destroy', ['venta'=>$venta])}}" method="POST">
+										@method('DELETE')
+										@csrf
+										<button type="submit" class="btn btn-block btn-danger text-white font-inter-600" style="font-size:12px;"><b><i class="fas fa-trash-alt"></i> Borrar Venta</b></button>
+									</form>
+								</div>
+								<br>
+								<div>
+									<button onclick="addToVenta()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir Producto</b></button>
+								</div>
+							</div>
+						</div>
 
-            <div class="col">
-                <div class="text-right">
-                    <div class="mx-3">{{$productos->firstItem()}}-{{$productos->lastItem()}} of {{$productos->total()}}</div>
-                    <a href="{{$productos->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
-                    <a href="{{$productos->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
-                    <a href="{{$productos->previousPageUrl()}}"><i class="px-1">{{$productos->currentPage() > 1 ? $productos->currentPage() - 1 : ''}}</i></a>
-                    <i class="px-0">{{$productos->currentPage()}}</i>
-                    <a href="{{$productos->nextPageUrl()}}"><i class="px-1">{{$productos->currentPage() + 1}}</i></a>
-                    <a href="{{$productos->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
-                    <a href="{{$productos->url($productos->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
-                </div>
-            </div>
-        </div> --}}
-    </form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="table-responsive">
+				<table id="productsVentaTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
+					<thead class="font-inter-600" style="background-color: #F4F2FF;">
+						<tr>
+							<th id="th-1" scope="col">Producto</th>
+							<th id="th-2" scope="col">Cantidad</th>
+							<th id="th-3" scope="col">Precio unidad</th>
+							<th id="th-4" scope="col">SubTotal</th>
+							<th id="th-5" scope="col">Restar</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach ($venta->productos as $producto)
+						<tr id="productRow{{$producto->ProductoId}}">
+							<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="row">
+								{{$producto->ProductoNombre}}
+							</td>
+							<td id="ventaCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
+								{{$producto->pivot->ventaCantidad}}
+							</td>
+							<td class="align-middle text-nowrap text-dark">
+								$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}
+							</td>
+							<td id="ventaSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
+								$ {{number_format($producto->pivot->ventaSubtotal, 2, ',', '.')}}
+							</td>
+							<td class="align-middle text-dark" style="width: 15%;">
+								<div class="input-group">
+									<input id="restarCantidad{{$producto->ProductoId}}" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
+									<div class="input-group-append">
+										<button onclick="dropToVenta({{$producto->ProductoId}})" class="btn btn-outline-danger" type="button">Restar</button>
+									</div>
+								</div>
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+				</table>
+			</div>
+		</div>
+		{{-- <div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
+            <div class="col my-auto">
+                <div class="text-left">filas por página: {{$productos->count()}}
+</div>
+</div>
+
+<div class="col">
+	<div class="text-right">
+		<div class="mx-3">{{$productos->firstItem()}}-{{$productos->lastItem()}} of {{$productos->total()}}</div>
+		<a href="{{$productos->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
+		<a href="{{$productos->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
+		<a href="{{$productos->previousPageUrl()}}"><i class="px-1">{{$productos->currentPage() > 1 ? $productos->currentPage() - 1 : ''}}</i></a>
+		<i class="px-0">{{$productos->currentPage()}}</i>
+		<a href="{{$productos->nextPageUrl()}}"><i class="px-1">{{$productos->currentPage() + 1}}</i></a>
+		<a href="{{$productos->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
+		<a href="{{$productos->url($productos->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
+	</div>
+</div>
+</div> --}}
+</form>
 </div>
 @endsection
 
@@ -250,7 +244,7 @@ Venta {{$venta->VentaId}}
 
 
 <script type="text/javascript">
-    toastr.options = {
+	toastr.options = {
         "closeButton": true,
         "debug": false,
         "newestOnTop": false,
@@ -276,7 +270,7 @@ Venta {{$venta->VentaId}}
         }
 </script>
 <script>
-    $(document).ready(function() {
+	$(document).ready(function() {
 		/*var rol defino el rol del usuario*/
 		var rol = "<?php echo Auth::user()->fk_rol; ?>";
 		/*var botoncito define los botones que se usaran si el usuario es programador*/
@@ -349,7 +343,7 @@ Venta {{$venta->VentaId}}
 	});
 </script>
 <script>
-    var buttonsubmit = $('#searchproductButton');
+	var buttonsubmit = $('#searchproductButton');
         function enablesearhbutton(Mensaje) {
             buttonsubmit.disabled = false;
             buttonsubmit.prop('disabled', false);
@@ -370,7 +364,7 @@ Venta {{$venta->VentaId}}
         }
 </script>
 <script type="text/javascript">
-    $('#searchproductButton').on( "click", function(e) {
+	$('#searchproductButton').on( "click", function(e) {
             var id = $('#ProductoId').val();
             var productoNombre = $("#ProductoNombre");
             var productoDescripcion = $('#ProductoDescripcion');
@@ -422,7 +416,7 @@ Venta {{$venta->VentaId}}
         });
 </script>
 <script type="text/javascript">
-    $('#despachar').on( "click", function(e) {
+	$('#despachar').on( "click", function(e) {
         var buttonsubmit = $('#despachar');
         var id = $('#ProductoId').val();
         var productoNombre = $("#ProductoNombre");
