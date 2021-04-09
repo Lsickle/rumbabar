@@ -190,7 +190,7 @@ Venta {{$venta->VentaId}}
 							</td>
 							<td class="align-middle text-dark" style="width: 15%;">
 								<div class="input-group">
-									<input id="restarCantidad{{$producto->ProductoId}}" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
+									<input id="restarCantidad{{$producto->ProductoId}}" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
 									<div class="input-group-append">
 										<button onclick="dropToVenta({{$producto->ProductoId}})" class="btn btn-outline-danger" type="button">Restar</button>
 									</div>
@@ -629,7 +629,7 @@ Venta {{$venta->VentaId}}
 									</td>
 									<td class="align-middle text-dark" style="width: 15%;">
 										<div class="input-group">
-											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
+											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
 											<div class="input-group-append">
 												<button onclick="dropToVenta(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
 											</div>

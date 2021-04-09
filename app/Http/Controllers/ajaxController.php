@@ -254,12 +254,19 @@ class ajaxController extends Controller
             [
                 'venta.exists' => 'número de venta no existe...',
             ]);
-
+			
+			if ($request->input('ventaCantidad') < 0) {
+				$valor = 0 - $request->input('ventaCantidad');
+			}else{
+				$valor = $request->input('ventaCantidad');
+			}
 			$productToUpdate = Producto::find($request->input('id'));
-			if (($productToUpdate->ProductoCantidad - $request->input('ventaCantidad')) < 0) {
+
+
+			if (($productToUpdate->ProductoCantidad - $valor) < 0) {
 				$productToUpdate->ProductoCantidad = 0;
 			}else{
-				$productToUpdate->ProductoCantidad = $productToUpdate->ProductoCantidad - $request->input('ventaCantidad');
+				$productToUpdate->ProductoCantidad = $productToUpdate->ProductoCantidad - $valor;
 			}
 			$productToUpdate->save();
 
@@ -270,8 +277,8 @@ class ajaxController extends Controller
 			foreach ($venta->productos as $producto) {
 				if ($request->input('id') == $producto->ProductoId) {
 					$pivotToUpdate = $producto->ProductoId;
-					$pivotcantidad = $producto->pivot->ventaCantidad - $request->input('ventaCantidad');
-					$pivotsubtotal = $producto->pivot->ventaSubtotal - ($request->input('ventaCantidad')*$productToUpdate->ProductoPrecio);
+					$pivotcantidad = $producto->pivot->ventaCantidad - $valor;
+					$pivotsubtotal = $producto->pivot->ventaSubtotal - ($valor*$productToUpdate->ProductoPrecio);
 				}
 			}
 
