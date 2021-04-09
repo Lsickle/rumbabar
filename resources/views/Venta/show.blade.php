@@ -664,7 +664,7 @@ Venta {{$venta->VentaId}}
 	function dropToVenta(id){
 		var ProductoCantidad = $('#ventaCantidad'+id);
 		var restarCantidad = $('#restarCantidad'+id);
-		var VentaSubtotal = $('#ventaSubtotal'+id);
+		var ventaSubtotal = $('#ventaSubtotal'+id);
 		var productRow = $('#productRow'+id);
 
 		$.ajaxSetup({
