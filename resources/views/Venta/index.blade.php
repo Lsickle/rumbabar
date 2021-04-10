@@ -18,63 +18,6 @@ Lista de Ventas
 			<a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
 		</div>
 	</div>
-	{{-- <div class="row bg-light mb-2">
-        <div class="col">
-            <ul class="nav d-flex flex-wrap-reverse flex-md-row border-bottom">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle py-0 px-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">07/11/2020-07/11/1984</a>
-                    <div class="dropdown-menu dropdown-menu-left">
-                        <h6 class="dropdown-header">Seleccione el Mes o Rango.</h6>
-                        <a class="dropdown-item px-3" href="#">Agosto</a>
-                        <a class="dropdown-item px-3" href="#">Septiembre</a>
-                        <a class="dropdown-item px-3" href="#">Octubre</a>
-                        <a class="dropdown-item px-3 active" href="#">Noviembre</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item px-3" href="#">Ultimo Año </a>
-                        <a class="dropdown-item px-3" href="#">Ultimo mes</a>
-                        <a class="dropdown-item px-3" href="#">Ultimo Semana</a>
-                        <div class="dropdown-divider"></div>
-                        <form class="form">
-                            <a class="dropdown-item px-3" href="#">
-                                <label class="my-0" for="inlineFormInputGroupDate1">Desde</label>
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text px-2">
-                                            <i class="fas fa-calendar-day"></i>
-                                        </div>
-                                    </div>
-                                    <input type="date" class="form-control" id="inlineFormInputGroupDate1" placeholder="Desde" describedby="inputGroupPrepend" required>
-                                    <div class="invalid-feedback">
-                                        escoge una fecha valida.
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item px-3" href="#">
-                                <label class="my-0" for="inlineFormInputGroupDate2">Hasta</label>
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text px-2">
-                                            <i class="fas fa-calendar-day"></i>
-                                        </div>
-                                    </div>
-                                    <input type="date" class="form-control" id="inlineFormInputGroupDate2" placeholder="Desde" describedby="inputGroupPrepend" required>
-                                    <div class="invalid-feedback">
-                                        escoge una fecha valida.
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item px-3" href="#">
-                                <button type="submit" class="btn btn-block btn-primary">Buscar</button>
-                            </a>
-                        </form>
-                    </div>
-                </li>
-                <li class="flex-grow-1 nav-item">
-                    <a class="text-secondary float-right">$ <span style="color: #6D5BD0"><b>{{number_format($totalgeneral, 2, '.', ',')}}</b></span> COP</a>
-	</li>
-	</ul>
-</div>
-</div> --}}
 </div>
 @endsection
 
@@ -223,40 +166,7 @@ Lista de Ventas
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				},
 				"colvis": 'Columnas Visibles'
-			},
-			// "columnDefs": [
-			// 	{ "type": "num-fmt", "targets": [0,2,3]},
-			// 	{ "type": "date", "targets": [4,5]},
-			// 	{ "type": "html", "targets": '_all'},
-			// 	{ "orderable": false, "targets": [6] },
-			// 	// { "className": "text-right", "targets": [2,3,5]},
-			// 	// { "className": "text-left", "targets": [1]},
-			// 	// { "visible": false, "targets": [4]}
-			// ],
-            // "rowGroup": {
-            //     endRender: null,
-            //     startRender: function ( rows, group ) {
-
-			// 		var totalcantidad = rows
-            //             .data()
-            //             .pluck(3)
-            //             .reduce( function (a, b) {
-            //                 return a + parseFloat(b);
-            //             }, 0);
-
-            //         var provedor = rows
-            //             .data()
-            //             .pluck(4)
-            //             .reduce( function (a, b) {
-            //                 return b;
-            //             }, 0);
-
-            //         return $('<tr/>')
-            //             .append( '<td class="text-left" colspan="7">'+provedor+'</td>' )
-			// 			.append( '<td>'+totalcantidad+' Unidades.</td>' );;
-            //     },
-            //     dataSrc: [ 4 ]
-            // }
+			}
 		});
 	});
 	/*funcion para actualizar elplugin responsive in chrome*/

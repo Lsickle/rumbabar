@@ -32,7 +32,6 @@ Compra #{{$compra->CompraId}}
 		</div>
 		<div class="my-2 col-md-6">
 			<div class="form-group w-100">
-				{{-- <label class="float-left text-secondary form-check-label" for="selectProveedor">Producto</label> --}}
 				<select onchange="showProduct()" class="form-control select2" id="selectProducto">
 					<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
 					@foreach ($compra->proveedor->productos as $producto)
@@ -40,12 +39,6 @@ Compra #{{$compra->CompraId}}
 					@endforeach
 				</select>
 			</div>
-			{{-- <div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-				</div>
-				<input type="text" class="form-control" placeholder="00174" aria-label="productCode" aria-describedby="basic-addon1">
-			</div> --}}
 		</div>
 	</div>
 	<div class="row bg-local ">
@@ -153,9 +146,6 @@ Compra #{{$compra->CompraId}}
 {{-- pdfmake --}}
 <script src="{{asset('js/pdfmake.js')}}"></script>
 
-{{-- select2 --}}
-<script src="{{asset('js/select2.js')}}"></script>
-
 {{-- datatables --}}
 <script src="{{asset('js/datatables-bs4.js')}}"></script>
 
@@ -215,12 +205,6 @@ Compra #{{$compra->CompraId}}
 				"columnDefs": [
 					{ "width": "20%", "targets": 4 }
 				],
-			},
-			"drawCallback": function(settings) {
-				console.log("draw() callback; initializing Select2's.");
-				$('.select2').select2({
-					theme: 'bootstrap4',
-				});
 			}
 		});
 	});

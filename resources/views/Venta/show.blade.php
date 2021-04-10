@@ -18,210 +18,129 @@ Venta {{$venta->VentaId}}
 			<a class="float-right font-inter-700 text-secondary" href="{{route('home')}}"><i loading="lazy" width="30" height="30" class="d-inline-block align-center fab fa-rockrms fa-lg"></i>umbaBar</a>
 		</div>
 	</div>
-	{{-- <div class="row bg-light mb-2">
-        <div class="col">
-            <ul class="nav d-flex flex-wrap-reverse flex-md-row border-bottom">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle py-0 px-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">All</a>
-                    <div class="dropdown-menu dropdown-menu-left">
-                        <h6 class="dropdown-header">Seleccione el Mes o Rango.</h6>
-                        <a class="dropdown-item px-3" href="#">Agosto</a>
-                        <a class="dropdown-item px-3" href="#">Septiembre</a>
-                        <a class="dropdown-item px-3" href="#">Octubre</a>
-                        <a class="dropdown-item px-3 active" href="#">Noviembre</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item px-3" href="#">Ultimo Año </a>
-                        <a class="dropdown-item px-3" href="#">Ultimo mes</a>
-                        <a class="dropdown-item px-3" href="#">Ultimo Semana</a>
-                        <div class="dropdown-divider"></div>
-                        <form class="form">
-                            <a class="dropdown-item px-3" href="#">
-                                <label class="my-0" for="inlineFormInputGroupDate1">Desde</label>
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text px-2">
-                                            <i class="fas fa-calendar-day"></i>
-                                        </div>
-                                    </div>
-                                    <input type="date" class="form-control" id="inlineFormInputGroupDate1" placeholder="Desde" describedby="inputGroupPrepend" required>
-                                    <div class="invalid-feedback">
-                                        escoge una fecha valida.
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item px-3" href="#">
-                                <label class="my-0" for="inlineFormInputGroupDate2">Hasta</label>
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text px-2">
-                                            <i class="fas fa-calendar-day"></i>
-                                        </div>
-                                    </div>
-                                    <input type="date" class="form-control" id="inlineFormInputGroupDate2" placeholder="Desde" describedby="inputGroupPrepend" required>
-                                    <div class="invalid-feedback">
-                                        escoge una fecha valida.
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="dropdown-item px-3" href="#">
-                                <button type="submit" class="btn btn-block btn-primary">Buscar</button>
-                            </a>
-                        </form>
-                    </div>
-                </li>
-                <li class="flex-grow-1 nav-item">
-                    <a class="text-secondary float-right">Cantidad total: $<span style="color: #6D5BD0"><b>{{'37.600,24'}}</b></span> COP</a>
-	</li>
-	</ul>
-</div>
-</div> --}}
 </div>
 @endsection
 
 @section('container')
 <div class="container shadow rounded border border-3 h-90 bg-white">
-	<form action="{{route('ventas.store')}}" method="POST">
-		@csrf
-		<div class="row justify-content-between py-2 my-2" id='ventasHeader'>
-			<div class="col-6 col-md-2 d-flex justify-content-between">
-				<div class="dropdown">
-					<button disabled class="btn btn-secondary" type="button" id="dropdownMenuButton">
-						<div class="text-nowrap bd-highlight">
-							<i class="fas fa-caret-down"></i> Mesa {{$venta->fk_mesa}}
-						</div>
-					</button>
-				</div>
-			</div>
-			<div class="col-6 col-md-3">
-				<button class="float-right btn btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Facturar</b></button>
-			</div>
-			<div class="col-md-3 my-sm-0 my-2">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<button class="btn btn-primary" type="button"><i class="fas fa-user"></i></button>
+	<div class="row justify-content-between py-2 my-2" id='ventasHeader'>
+		<div class="col-6 col-md-2 d-flex justify-content-between">
+			<div class="dropdown">
+				<button disabled class="btn btn-secondary" type="button" id="dropdownMenuButton">
+					<div class="text-nowrap bd-highlight">
+						<i class="fas fa-caret-down"></i> Mesa {{$venta->fk_mesa}}
 					</div>
-					<input disabled type="text" class="form-control" aria-describedby="basic-addon1" value="{{$venta->cliente->ClienteNombre}}">
+				</button>
+			</div>
+		</div>
+		<div class="col-6 col-md-3">
+			<button class="float-right btn btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Facturar</b></button>
+		</div>
+		<div class="col-md-3 my-sm-0 my-2">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<button class="btn btn-primary" type="button"><i class="fas fa-user"></i></button>
 				</div>
+				<input disabled type="text" class="form-control" aria-describedby="basic-addon1" value="{{$venta->cliente->ClienteNombre}}">
 			</div>
 		</div>
-		<div class="row bg-local">
-			<div class="col">
-				<div class="card my-2">
-					<div class="card-body">
-						<div class="row">
-							<div class="col-md-3"><img id="SetProductoImage" class="card-img" src="https://picsum.photos/300/200?text=Image cap" alt="Card image cap"></div>
-							<div class="col-md-3">
-								<div class="form-group pt-2 pt-sm-0">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
-										</div>
-										{{-- <input disabled id="SetProductoCodigo" type="number" class="form-control" placeholder="Codigo" aria-label="Codigo" aria-describedby="basic-addon1"> --}}
-										<select onchange="showProduct()" class="form-control select2" id="selectProducto">
-											<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
-											@foreach ($productos as $producto)
-											<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
-											@endforeach
-										</select>
-									</div>
-								</div>
-								<p class="card-tittle text-left"><b id="SetProductoNombre">Jugo 1.5 Lt.</b></p>
-								<p class="card-text text-left" id="SetProductoDescripcion">Botella de 1.5 Lt Sabor Mango</p>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="input-group">
-										<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<div class="input-group">
-										<input disabled id="SetProductoPrecio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
-									</div>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div>
-									<form action="{{route('ventas.destroy', ['venta'=>$venta])}}" method="POST">
-										@method('DELETE')
-										@csrf
-										<button type="submit" class="btn btn-block btn-danger text-white font-inter-600" style="font-size:12px;"><b><i class="fas fa-trash-alt"></i> Borrar Venta</b></button>
-									</form>
-								</div>
-								<br>
-								<div>
-									<button onclick="addToVenta()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir Producto</b></button>
-								</div>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="table-responsive">
-				<table id="productsVentaTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
-					<thead class="font-inter-600" style="background-color: #F4F2FF;">
-						<tr>
-							<th id="th-1" scope="col">Producto</th>
-							<th id="th-2" scope="col">Cantidad</th>
-							<th id="th-3" scope="col">Precio unidad</th>
-							<th id="th-4" scope="col">SubTotal</th>
-							<th id="th-5" scope="col">Restar</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach ($venta->productos as $producto)
-						<tr id="productRow{{$producto->ProductoId}}">
-							<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="row">
-								{{$producto->ProductoNombre}}
-							</td>
-							<td id="ventaCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
-								{{$producto->pivot->ventaCantidad}}
-							</td>
-							<td class="align-middle text-nowrap text-dark">
-								$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}
-							</td>
-							<td id="ventaSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
-								$ {{number_format($producto->pivot->ventaSubtotal, 2, ',', '.')}}
-							</td>
-							<td class="align-middle text-dark" style="width: 15%;">
-								<div class="input-group">
-									<input id="restarCantidad{{$producto->ProductoId}}" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
-									<div class="input-group-append">
-										<button onclick="dropToVenta({{$producto->ProductoId}})" class="btn btn-outline-danger" type="button">Restar</button>
-									</div>
-								</div>
-							</td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
-		</div>
-		{{-- <div class="row flex-row d-flex p-2" style="background-color: #F4F2FF; color:#6E6893 !important;">
-            <div class="col my-auto">
-                <div class="text-left">filas por página: {{$productos->count()}}
-</div>
-</div>
-
-<div class="col">
-	<div class="text-right">
-		<div class="mx-3">{{$productos->firstItem()}}-{{$productos->lastItem()}} of {{$productos->total()}}</div>
-		<a href="{{$productos->url(1)}}"><i class="px-0 fas fa-angle-double-left"></i></a>
-		<a href="{{$productos->previousPageUrl()}}"><i class="px-1 fas fa-chevron-left"></i></a>
-		<a href="{{$productos->previousPageUrl()}}"><i class="px-1">{{$productos->currentPage() > 1 ? $productos->currentPage() - 1 : ''}}</i></a>
-		<i class="px-0">{{$productos->currentPage()}}</i>
-		<a href="{{$productos->nextPageUrl()}}"><i class="px-1">{{$productos->currentPage() + 1}}</i></a>
-		<a href="{{$productos->nextPageUrl()}}"><i class="px-1 fas fa-chevron-right"></i></a>
-		<a href="{{$productos->url($productos->lastPage())}}"><i class="px-0 fas fa-angle-double-right"></i></a>
 	</div>
-</div>
-</div> --}}
-</form>
+	<div class="row bg-local">
+		<div class="col">
+			<div class="card my-2">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-3"><img id="SetProductoImage" class="card-img" src="https://picsum.photos/300/200?text=Image cap" alt="Card image cap"></div>
+						<div class="col-md-3">
+							<div class="form-group pt-2 pt-sm-0">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+									</div>
+									<select onchange="showProduct()" class="form-control select2" id="selectProducto">
+										<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
+										@foreach ($productos as $producto)
+										<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<p class="card-tittle text-left"><b id="SetProductoNombre">Jugo 1.5 Lt.</b></p>
+							<p class="card-text text-left" id="SetProductoDescripcion">Botella de 1.5 Lt Sabor Mango</p>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<div class="input-group">
+									<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class="form-group">
+								<div class="input-group">
+									<input disabled id="SetProductoPrecio" type="text" class="form-control" placeholder="Precio" aria-label="Precio" aria-describedby="basic-addon1">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div>
+								<form action="{{route('ventas.destroy', ['venta'=>$venta])}}" method="POST">
+									@method('DELETE')
+									@csrf
+									<button type="submit" class="btn btn-block btn-danger text-white font-inter-600" style="font-size:12px;"><b><i class="fas fa-trash-alt"></i> Borrar Venta</b></button>
+								</form>
+							</div>
+							<br>
+							<div>
+								<button onclick="addToVenta()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir Producto</b></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="table-responsive">
+			<table id="productsVentaTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
+				<thead class="font-inter-600" style="background-color: #F4F2FF;">
+					<tr>
+						<th id="th-1" scope="col">Producto</th>
+						<th id="th-2" scope="col">Cantidad</th>
+						<th id="th-3" scope="col">Precio unidad</th>
+						<th id="th-4" scope="col">SubTotal</th>
+						<th id="th-5" scope="col">Restar</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach ($venta->productos as $producto)
+					<tr id="productRow{{$producto->ProductoId}}">
+						<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="row">
+							{{$producto->ProductoNombre}}
+						</td>
+						<td id="ventaCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
+							{{$producto->pivot->ventaCantidad}}
+						</td>
+						<td class="align-middle text-nowrap text-dark">
+							$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}
+						</td>
+						<td id="ventaSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
+							$ {{number_format($producto->pivot->ventaSubtotal, 2, ',', '.')}}
+						</td>
+						<td class="align-middle text-dark" style="width: 15%;">
+							<div class="input-group">
+								<input id="restarCantidad{{$producto->ProductoId}}" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
+								<div class="input-group-append">
+									<button onclick="dropToVenta({{$producto->ProductoId}})" class="btn btn-outline-danger" type="button">Restar</button>
+								</div>
+							</div>
+						</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 @endsection
 
