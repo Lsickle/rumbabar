@@ -50,7 +50,7 @@ class ajaxController extends Controller
 	 * @param  \App\Producto  $producto
 	 * @return \Illuminate\Http\Response
 	 */
-	public function addProductVenta(Request $request, $venta)
+	public function addProductVenta(Request $request, Venta $venta)
 	{
 		if ($request->ajax()) {
 			session()->regenerate();
@@ -62,16 +62,26 @@ class ajaxController extends Controller
                 'venta.exists' => 'número de venta no existe...',
             ]);
 
+			if ($request->input('ventaCantidad') < 0) {
+				$cantidad = 0 - $request->input('ventaCantidad');
+			}else{
+				$cantidad = $request->input('ventaCantidad');
+			}
+
 			$producto = Producto::find($request->input('id'));
-			$producto->ProductoCantidad = $producto->ProductoCantidad - $request->input('ventaCantidad');
+			$producto->ProductoCantidad = $producto->ProductoCantidad - $cantidad;
 			$producto->save();
 
-			// chequear si la pivot existe
+			$pivotToUpdate =  $venta->productos()->where('ProductoId', $request->input('id'))->first();
 
+			if ($pivotToUpdate) {
+				$venta->productos()->updateExistingPivot($producto->ProductoId, ['ventaCantidad' => ($cantidad + $pivotToUpdate->pivot->ventaCantidad), 'ventaSubtotal' => (($cantidad * $producto->ProductoPrecio)+$pivotToUpdate->pivot->ventaSubtotal) ]);
+			}else{
+				$venta->productos()->attach($producto->ProductoId, ['ventaCantidad' => $cantidad, 'ventaSubtotal' => $cantidad * $producto->ProductoPrecio ]);
+				$pivotToUpdate =  $venta->productos()->where('ProductoId', $request->input('id'))->first();
+			}
 
-			$venta->productos()->updateExistingPivot($producto->ProductoId, ['ventaCantidad' => $request->input('ventaCantidad'), 'ventaSubtotal' => $request->input('ventaCantidad') * $producto->ProductoPrecio ]);
-
-			$producto->CantidadVendida = $request->input('ventaCantidad');
+			$producto->CantidadVendida = $cantidad + $pivotToUpdate->pivot->ventaCantidad;
 			$producto->subtotal = number_format(($producto->ProductoPrecio * $producto->CantidadVendida), 2, '.', ',');
 			$producto->precio = number_format($producto->ProductoPrecio, 2, '.', ',');
 
@@ -264,14 +274,14 @@ class ajaxController extends Controller
             [
                 'venta.exists' => 'número de venta no existe...',
             ]);
-			
+
 			if ($request->input('ventaCantidad') < 0) {
 				$valor = 0 - $request->input('ventaCantidad');
 			}else{
 				$valor = $request->input('ventaCantidad');
 			}
 
-		
+
 			$productToUpdate = Producto::find($request->input('id'));
 
 			if (($productToUpdate->ProductoCantidad - $valor) < 0) {

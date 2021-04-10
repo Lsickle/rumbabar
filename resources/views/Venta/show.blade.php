@@ -429,7 +429,7 @@ Venta {{$venta->VentaId}}
             }
         });
         $.ajax({
-            url: "{{route('addProductVenta', ['venta' => $venta->VentaId])}}",
+            url: "{{route('addProductVenta', ['venta' => $venta])}}",
             method: 'PUT',
             data: {
                 'id': id,
@@ -610,7 +610,7 @@ Venta {{$venta->VentaId}}
 						toastr.success(data['message']);
 						if ($( "#productsVentaTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
 
-							$('#ventaCantidad'+data.producto.ProductoId).text(data.producto.CantidadRestada);
+							$('#ventaCantidad'+data.producto.ProductoId).text(data.producto.CantidadVendida);
 							$('#ventaSubtotal'+data.producto.ProductoId).text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
 							$('#productsVentaTable tbody').prepend(`
