@@ -98,9 +98,9 @@ Compra #{{$compra->CompraId}}
 				<thead class="font-inter-600" style="background-color: #F4F2FF;">
 					<tr>
 						<th id="th-1" scope="col">Producto</th>
-						<th id="th-2" scope="col">Cantidad</th>
-						<th id="th-3" scope="col">Precio unidad</th>
-						<th id="th-4" scope="col">SubTotal</th>
+						<th id="th-2" scope="col" class="text-center">Cantidad</th>
+						<th id="th-3" scope="col" class="text-center">Precio unidad</th>
+						<th id="th-4" scope="col" class="text-center">SubTotal</th>
 						<th id="th-5" scope="col">Restar</th>
 					</tr>
 				</thead>
@@ -114,10 +114,10 @@ Compra #{{$compra->CompraId}}
 							{{$producto->pivot->compraCantidad}}
 						</td>
 						<td class="align-middle text-nowrap text-dark">
-							$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}
+							$ {{number_format($producto->ProductoPrecio, 2, '.', ',')}}
 						</td>
 						<td id="compraSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
-							$ {{number_format($producto->pivot->compraSubtotal, 2, ',', '.')}}
+							$ {{number_format($producto->pivot->compraSubtotal, 2, '.', ',')}}
 						</td>
 						<td class="align-middle text-dark" style="width: 15%;">
 							<div class="input-group">
@@ -130,6 +130,15 @@ Compra #{{$compra->CompraId}}
 					</tr>
 					@endforeach
 				</tbody>
+				<tfoot>
+					<tr>
+						<th id="th-1" scope="col">Producto</th>
+						<th id="th-2" scope="col">Cantidad</th>
+						<th id="th-3" scope="col">Precio unidad</th>
+						<th id="th-4" scope="col">SubTotal</th>
+						<th id="th-5" scope="col">Restar</th>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -148,6 +157,7 @@ Compra #{{$compra->CompraId}}
 
 {{-- datatables --}}
 <script src="{{asset('js/datatables-bs4.js')}}"></script>
+<script src="{{asset('//cdn.datatables.net/plug-ins/1.10.24/api/sum().js')}}"></script>
 
 
 
@@ -205,6 +215,22 @@ Compra #{{$compra->CompraId}}
 				"columnDefs": [
 					{ "width": "20%", "targets": 4 }
 				],
+			},
+			"createdRow": function (row, data, index) {
+				$('td', row).eq(0).addClass('align-middle text-nowrap text-dark');//add style to cell in third column
+				$('td', row).eq(1).addClass('align-middle text-nowrap px-3 text-right text-dark');
+				$('td', row).eq(2).addClass('align-middle text-nowrap px-3 text-right text-dark');
+				$('td', row).eq(3).addClass('align-middle text-nowrap px-3 text-right text-dark');
+				$('td', row).eq(4).addClass('align-middle text-dark');
+				$('td', row).eq(4).css('width', '15%');
+			},
+			"drawCallback": function () {
+				var api = this.api();
+				$( api.table().footer() ).html(
+					`<th  scope="col" colspan="3">TOTAL</th>
+					<th  scope="col" class="pr-3 text-right">`+formatter.format(api.column( 3, {filter:'applied'} ).data().sum())+`</th>
+					<th  scope="col" colspan="2"></th>`
+				);
 			}
 		});
 	});
@@ -380,13 +406,9 @@ Compra #{{$compra->CompraId}}
 						}else{
 							var table = $('#productsCompraTable').DataTable();
 
-							table.row.add([
-								`<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-									`+data.producto.ProductoNombre+`
-								</td>`,
-								`<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
-									`+data.producto.CantidadComprada+`
-								</td>`,
+							var rowAdded = table.row.add([
+								data.producto.ProductoNombre,
+								data.producto.CantidadComprada,
 								"$ "+data.producto.ProductoPrecio,
 								"$ "+data.producto.subtotal,
 								`<div class="input-group">
@@ -395,7 +417,13 @@ Compra #{{$compra->CompraId}}
 										<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
 									</div>
 								</div>`,
-							]).draw();
+							]).node();
+							rowAdded.id = "productRow"+data.producto.ProductoId;
+							rowAdded.children[0].id="ProductoId"+data.producto.ProductoId;
+							rowAdded.children[1].id="compraCantidad"+data.producto.ProductoId;
+							rowAdded.children[3].id="compraSubtotal"+data.producto.ProductoId;
+							rowAdded.children[0].style.background = "#a1ffeb";
+							table.draw(false);
 						}
 
 						break;
@@ -474,5 +502,11 @@ Compra #{{$compra->CompraId}}
 			}
 		});
 	}
+	var formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+	maximumFractionDigits: 2,
+	//maximumFractionDigits: 0,
+	});
 </script>
 @endpush
