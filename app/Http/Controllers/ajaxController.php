@@ -68,25 +68,38 @@ class ajaxController extends Controller
 				$cantidad = $request->input('ventaCantidad');
 			}
 
-			$producto = Producto::find($request->input('id'));
-			$producto->ProductoCantidad = $producto->ProductoCantidad - $cantidad;
-			$producto->save();
+			$productoToUpdate = Producto::find($request->input('id'));
+			$productoToUpdate->ProductoCantidad = $productoToUpdate->ProductoCantidad - $cantidad;
+			$productoToUpdate->save();
 
-			$pivotToUpdate =  $venta->productos()->where('ProductoId', $request->input('id'))->first();
+			$pivotToUpdate = "";
+			$pivotcantidad = 0;
+			$pivotsubtotal = 0;
 
-			if ($pivotToUpdate) {
-				$venta->productos()->updateExistingPivot($producto->ProductoId, ['ventaCantidad' => ($cantidad + $pivotToUpdate->pivot->ventaCantidad), 'ventaSubtotal' => (($cantidad * $producto->ProductoPrecio)+$pivotToUpdate->pivot->ventaSubtotal) ]);
+			foreach ($venta->productos as $producto) {
+				if ($request->input('id') == $productoToUpdate->ProductoId) {
+					$pivotToUpdate = $producto->ProductoId;
+					$pivotcantidad = $producto->pivot->ventaCantidad + $request->input('ventaCantidad');
+					$pivotsubtotal = $producto->pivot->ventaSubtotal + ($request->input('ventaCantidad')*$productoToUpdate->ProductoPrecio);
+				}
+			}
+
+			$pivotToUpdate = $venta->productos()->where('ProductoId', $request->input('id'))->first();
+
+			if (isset($pivotToUpdate->pivot->ventaCantidad)) {
+				$venta->productos()->updateExistingPivot($productoToUpdate->ProductoId, ['ventaCantidad' => ($cantidad + $pivotToUpdate->pivot->ventaCantidad), 'ventaSubtotal' => (($cantidad * $productoToUpdate->ProductoPrecio)+$pivotToUpdate->pivot->ventaSubtotal) ]);
 			}else{
-				$venta->productos()->attach($producto->ProductoId, ['ventaCantidad' => $cantidad, 'ventaSubtotal' => $cantidad * $producto->ProductoPrecio ]);
+				$venta->productos()->attach($productoToUpdate->ProductoId, ['ventaCantidad' => $cantidad, 'ventaSubtotal' => $cantidad * $productoToUpdate->ProductoPrecio ]);
 				$pivotToUpdate =  $venta->productos()->where('ProductoId', $request->input('id'))->first();
 			}
 
-			$producto->CantidadVendida = $cantidad + $pivotToUpdate->pivot->ventaCantidad;
-			$producto->subtotal = number_format(($producto->ProductoPrecio * $producto->CantidadVendida), 2, '.', ',');
-			$producto->precio = number_format($producto->ProductoPrecio, 2, '.', ',');
+			$productoToUpdate->CantidadVendida = $venta->productos()->where('ProductoId', $request->input('id'))->first()->pivot->ventaCantidad;
+
+			$productoToUpdate->subtotal = number_format(($productoToUpdate->ProductoPrecio * $productoToUpdate->CantidadVendida), 2, '.', ',');
+			$productoToUpdate->precio = number_format($productoToUpdate->ProductoPrecio, 2, '.', ',');
 
 			$Response['newtoken'] = csrf_token();
-			$Response['producto'] = $producto;
+			$Response['producto'] = $productoToUpdate;
 			$Response['message'] = 'producto agregado a la venta';
 
 			return response()->json($Response);
@@ -178,7 +191,7 @@ class ajaxController extends Controller
 
 			// $producto->subtotal = number_format(($producto->ProductoPrecio * $producto->CantidadVendida), 2, '.', ',');
 			// $producto->precio = number_format($producto->ProductoPrecio, 2, '.', ',');
-			$productToUpdate->CantidadComprada = $pivotcantidad;
+			$productToUpdate->CantidadComprada = $compra->productos()->where('ProductoId', $request->input('id'))->first()->pivot->compraCantidad;
 			$productToUpdate->subtotal = $pivotsubtotal;
 			$Response['newtoken'] = csrf_token();
 			$Response['producto'] = $productToUpdate;

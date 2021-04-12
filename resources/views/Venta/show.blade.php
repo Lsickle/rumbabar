@@ -92,7 +92,7 @@ Venta {{$venta->VentaId}}
 							</div>
 							<br>
 							<div>
-								<button onclick="addToVenta()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><b>$ Añadir Producto</b></button>
+								<button disabled id="addButton" onclick="addToVenta()" type="button" class="btn btn-block btn-success text-white font-inter-600" style="font-size:12px;"><i id="addIcon" class="fas fa-plus"></i> <b> Añadir Producto</b></button>
 							</div>
 						</div>
 					</div>
@@ -462,6 +462,7 @@ Venta {{$venta->VentaId}}
 	function showProduct(){
 		var select = $('#selectProducto');
 		var id = select.val();
+		var button = $('#addButton');
 
 		var productoNombre = $("#SetProductoNombre");
 		var productoDescripcion = $('#SetProductoDescripcion');
@@ -489,6 +490,7 @@ Venta {{$venta->VentaId}}
 				switch (jqXHR['status']) {
 					case 200:
 						toastr.success(data['message']);
+						button.attr('disabled', false);
 						break;
 
 					default:
@@ -534,6 +536,8 @@ Venta {{$venta->VentaId}}
 		var ProductoCantidad = $('#SetProductoCantidad');
 		var ProductoCodigo = $('#SetProductoCodigo');
 		var ProductoImage = $('#SetProductoImage');
+		var button = $('#addButton');
+		var icon = $('#addIcon');
 
 		$.ajaxSetup({
 			headers: {
@@ -551,50 +555,27 @@ Venta {{$venta->VentaId}}
 				// disablesearhbutton();
 				// productoNombre.empty();
 				// productoDescripcion.empty();
+				icon.toggleClass( "fa-sync fa-spin fa-plus" );
+				button.attr('disabled', true);
 			},
 			success: function(data, textStatus, jqXHR) {
 				renewtoken(data.newtoken);
 				switch (jqXHR['status']) {
 					case 200:
+						console.log(data)
 						toastr.success(data['message']);
 						if ($( "#productsVentaTable" ).has( "tbody tr #ProductoId"+data.producto.ProductoId ).length) {
-
+							var table = $('#productsVentaTable').DataTable();
 							$('#ventaCantidad'+data.producto.ProductoId).text(data.producto.CantidadVendida);
 							$('#ventaSubtotal'+data.producto.ProductoId).text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
+
+							table.draw();
 						}else{
-							// $('#productsVentaTable tbody').prepend(`
-							// 	<tr>
-							// 		<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-							// 			`+data.producto.ProductoNombre+`
-							// 		</td>
-							// 		<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
-							// 			`+data.producto.CantidadVendida+`
-							// 		</td>
-							// 		<td id="ventaSubtotal`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
-							// 			`+data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
-							// 		</td>
-							// 		<td class="align-middle text-nowrap px-3 text-right text-dark">
-							// 			`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
-							// 		</td>
-							// 		<td class="align-middle text-dark" style="width: 15%;">
-							// 			<div class="input-group">
-							// 				<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
-							// 				<div class="input-group-append">
-							// 					<button onclick="dropToVenta(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
-							// 				</div>
-							// 			</div>
-							// 		</td>
-							// 	</tr>
-							// `);
 							var table = $('#productsVentaTable').DataTable();
 
-							table.row.add([
-								`<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-									`+data.producto.ProductoNombre+`
-								</td>`,
-								`<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
-									`+data.producto.CantidadVendida+`
-								</td>`,
+							var rowAdded = table.row.add([
+								data.producto.ProductoNombre,
+								data.producto.CantidadVendida,
 								"$ "+data.producto.subtotal,
 								"$ "+data.producto.ProductoPrecio,
 								`<div class="input-group">
@@ -603,7 +584,13 @@ Venta {{$venta->VentaId}}
 										<button onclick="dropToVenta(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
 									</div>
 								</div>`,
-							]).draw();
+							]).node();
+							rowAdded.id = "productRow"+data.producto.ProductoId;
+							rowAdded.children[0].id="ProductoId"+data.producto.ProductoId;
+							rowAdded.children[1].id="ventaCantidad"+data.producto.ProductoId;
+							rowAdded.children[2].id="ventaSubtotal"+data.producto.ProductoId;
+							rowAdded.children[0].style.background = "#a1ffeb";
+							table.draw(false);
 						}
 
 						break;
@@ -618,12 +605,10 @@ Venta {{$venta->VentaId}}
 				xhr.responseJSON.errors.id.forEach( errormessage => {
 					toastr.error(errormessage);
 				});
-				productoNombre.html('no existe');
-				productoDescripcion.html('producto no encontrado');
-				// enablesearhbutton();
 			},
 			complete: function(){
-
+				icon.toggleClass( "fa-sync fa-spin fa-plus" );
+				button.attr('disabled', false);
 			}
 		});
 	}
