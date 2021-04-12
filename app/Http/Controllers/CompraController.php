@@ -17,9 +17,16 @@ class CompraController extends Controller
      */
     public function index()
     {
-		$compras = Compra::with(['productos.proveedor', 'comprador'])->get();
-		$comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->get();
-		$totalgeneral = 0;
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $compras = Compra::with(['productos.proveedor', 'comprador'])->get();
+		    $comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->get();
+		    $totalgeneral = 0;
+        } else {
+            $compras = Compra::with(['productos.proveedor', 'comprador'])->where('fk_user', Auth::id())->get();
+		    $comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->where('fk_user', Auth::id())->get();
+		    $totalgeneral = 0;
+        }
+		
 
 		foreach ($comprasgeneral as $key => $compra) {
 			foreach ($compra->productos as $key => $producto) {
@@ -105,8 +112,15 @@ class CompraController extends Controller
      */
     public function show(Compra $compra)
     {
-		// return $compra->proveedor;
-		return View('Compra.show', compact(['compra']));
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            return View('Compra.show', compact(['compra']));
+        } else {
+            if ($compra->fk_user == Auth::id()) {
+                return View('Compra.show', compact(['compra']));
+            }else{
+                abort(401, 'No Tiene permiso de acceder a los detalles de esta compra');
+            }
+        }
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mesa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class MesaController extends Controller
 {
@@ -26,7 +28,11 @@ class MesaController extends Controller
      */
     public function create()
     {
-        return View('Mesa.create');
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            return View('Mesa.create');
+        } else {
+            abort(401, 'No Tiene permiso de crear Mesas');
+        }
     }
 
     /**
@@ -97,8 +103,12 @@ class MesaController extends Controller
      */
     public function destroy(Mesa $mesa)
     {
-        $mesa->delete();
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $mesa->delete();
 
-        return redirect()->route('mesas.index');
+            return redirect()->route('mesas.index');
+        } else {
+            abort(401, 'No Tiene permiso de eliminar clientes');
+        }
     }
 }

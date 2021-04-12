@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Rol;
 use App\User;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -13,6 +14,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 5)->create();
+        $roles = Role::all('name')->pluck('name');
+        factory(User::class, 5)->create()->each(function ($user) use ($roles) {
+            $user->assignRole($roles->random(1));
+        });
     }
 }

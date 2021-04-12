@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedBigInteger('fk_rol')->dafault(3);
-            $table->foreign('fk_rol')->references('RolId')->on('roles');
+            $table->foreign('fk_rol')->references('RolId')->on('rols');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes('deleted_at');

@@ -30,7 +30,7 @@ class Rol extends Model
      *
      * @var string
      */
-    protected $table = 'roles';
+    protected $table = 'rols';
     /**
      * Indicates if the model should be timestamped.
      *

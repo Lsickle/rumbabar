@@ -6,10 +6,12 @@ use App\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
 use App\Producto;
 use App\Proveedor;
 use App\Mesa;
 use App\Cliente;
+
 
 
 class VentaController extends Controller
@@ -21,9 +23,15 @@ class VentaController extends Controller
      */
     public function index()
     {
-		$ventas = Venta::with(['cliente', 'productos'])->get();
-		$ventasgeneral = Venta::with(['cliente', 'productos'])->get();
-		$totalgeneral = 0;
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $ventas = Venta::with(['cliente', 'productos'])->get();
+		    $ventasgeneral = Venta::with(['cliente', 'productos'])->get();
+		    $totalgeneral = 0;
+        } else {
+            $ventas = Venta::with(['cliente', 'productos'])->where('fk_user', Auth::id())->get();
+		    $ventasgeneral = Venta::with(['cliente', 'productos'])->where('fk_user', Auth::id())->get();
+		    $totalgeneral = 0;
+        }
 
 		foreach ($ventasgeneral as $key => $venta) {
 			foreach ($venta->productos as $key => $producto) {
@@ -113,8 +121,18 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-        $productos = Producto::all();
-		return View('Venta.show', compact(['venta', 'productos']));
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $productos = Producto::all();
+		    return View('Venta.show', compact(['venta', 'productos']));
+        } else {
+            if ($venta->fk_user == Auth::id()) {
+                $productos = Producto::all();
+		        return View('Venta.show', compact(['venta', 'productos']));
+            }else{
+                abort(401, 'No Tiene permiso de acceder a los detalles de esta venta');
+            }
+        }
+        
     }
 
     /**
@@ -148,8 +166,19 @@ class VentaController extends Controller
      */
     public function destroy(Venta $venta)
     {
-        $venta->delete();
+        
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $venta->delete();
 
-        return redirect()->route('ventas.index');
+            return redirect()->route('ventas.index');
+        } else {
+            if ($venta->fk_user == Auth::id()) {
+                $venta->delete();
+
+                return redirect()->route('ventas.index');
+            }else{
+                abort(401, 'No Tiene permiso de eliminar esta venta');
+            }
+        }
     }
 }

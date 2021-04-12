@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ClienteController extends Controller
 {
@@ -105,8 +107,12 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        $cliente->delete();
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $cliente->delete();
 
-        return redirect()->route('clientes.index');
+            return redirect()->route('clientes.index');
+        } else {
+            abort(401, 'No Tiene permiso de eliminar clientes');
+        }
     }
 }

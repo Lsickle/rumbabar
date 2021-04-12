@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Proveedor;
 use App\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProveedorController extends Controller
 {
@@ -80,7 +82,11 @@ class ProveedorController extends Controller
     public function edit(Proveedor $proveedor)
     {
         //
-        return View('Proveedor.edit', compact('proveedor'));
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            return View('Proveedor.edit', compact('proveedor'));
+        } else {
+            abort(401, 'No Tiene permiso de editar  Proveedores');
+        }
 
     }
 
@@ -113,8 +119,12 @@ class ProveedorController extends Controller
     public function destroy(Proveedor $proveedor)
     {
         //
-        $proveedor->delete();
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $proveedor->delete();
 
-        return redirect()->route('proveedors.index');
+            return redirect()->route('proveedors.index');
+        } else {
+            abort(401, 'No Tiene permiso de eliminar Proveedores');
+        }
     }
 }

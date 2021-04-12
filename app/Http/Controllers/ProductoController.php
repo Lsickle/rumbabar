@@ -95,12 +95,13 @@ class ProductoController extends Controller
     public function edit(Producto $producto)
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $proveedores = Proveedor::all();
 
-		// $visibility = Storage::getVisibility($producto->ProductoImage);
-		// return $visibility;
-		$proveedores = Proveedor::all();
-
-        return View('Producto.edit', compact(['proveedores', 'producto']));
+            return View('Producto.edit', compact(['proveedores', 'producto']));
+        } else {
+            abort(401, 'No Tiene permiso de editar Productos');
+        }
 
     }
 
@@ -150,8 +151,13 @@ class ProductoController extends Controller
     public function destroy(Producto $producto)
     {
         //
-        $producto->delete();
+        
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $producto->delete();
 
-        return redirect()->route('productos.index');
+            return redirect()->route('productos.index');
+        } else {
+            abort(401, 'No Tiene permiso de editar Productos');
+        }
     }
 }

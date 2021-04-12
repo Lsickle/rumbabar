@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Permiso;
+use Spatie\Permission\Models\Permission;
 use Faker\Generator as Faker;
 
 /*
@@ -36,8 +37,10 @@ $array=[];
 foreach ($modelos as $key => $value) {
     foreach ($funciones as $key2 => $value2) {
         $array == array_push($array, $value.$value2);
+        $permission = Permission::create(['name' => $value.$value2]);
     }
 }
+
 $factory->define(Permiso::class, function (Faker $faker) use ($array) {
     return [
         'PermisoNombre' => $faker->randomElement($array),
