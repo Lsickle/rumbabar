@@ -62,7 +62,7 @@ Compra #{{$compra->CompraId}}
 						<div class="col-md-2">
 							<div class="form-group">
 								<div class="input-group">
-									<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1">
+									<input id="SetProductoCantidad" type="number" class="form-control" placeholder="Cantidad" aria-label="Cantidad" aria-describedby="basic-addon1" min="1">
 								</div>
 							</div>
 						</div>
@@ -269,86 +269,6 @@ Compra #{{$compra->CompraId}}
     }
 </script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		var productcounter = 0;
-		$('#addproduct').on("click", function(e) {
-			var buttonsubmit = $('#addProduct');
-			var proveedor = $('#selectProveedor').val();
-
-			$.ajax({
-				url: "/filterproducts",
-				method: 'GET',
-				data: {
-					'proveedor': proveedor,
-				},
-				beforeSend: function(){
-					buttonsubmit.disabled = true;
-					buttonsubmit.prop('disabled', true);
-				},
-				success: function(data, textStatus, jqXHR) {
-					renewtoken(data.newtoken);
-					console.log(data);
-					switch (jqXHR['status']) {
-						case 200:
-							productcounter=productcounter+1;
-							toastr.success(data['message']);
-							$('#productTable').prepend(`
-								<tr id="productRow`+data.producto.ProductoId+`">
-									<th class="align-middle" scope="row"><i class="far fa-check-square"></i></th>
-									<td class="align-middle">
-										<div class="text-nowrap">
-											<div class="text-dark">`+data.producto.ProductoNombre+`</div>#`+data.producto.ProductoId+`
-										</div>
-									</td>
-									<td class="align-middle">
-										<div class="text-nowrap font-inter-600">
-											<span class="badge badge-domicilio" style="font-size: 20px !important;">
-												• `+data.producto.CantidadComprada+`
-											</span>
-										</div>
-									</td>
-									<td class="align-middle text-right">
-										<div class="text-nowrap">
-											<div class="text-dark">$`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`</div>
-										</div>
-									</td>
-									<td class="align-middle text-right">
-										<div class="text-nowrap">
-											<div class="text-dark">$`+data.producto.subtotaltoLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`</div>
-										</div>
-									</td>
-									<td class="align-middle text-dark" style="width: 15%;">
-										<div class="input-group">
-											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
-											<div class="input-group-append">
-												<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-							`);
-							break;
-
-						default:
-							toastr.error(data['message']);
-							break;
-					}
-				},
-				error: function(xhr, textStatus, jqXHR){
-					renewtoken(xhr.newtoken);
-					xhr.responseJSON.errors.proveedor.forEach( errormessage => {
-						toastr.error(errormessage);
-					});
-				},
-				complete: function(){
-					buttonsubmit.disabled = false;
-					buttonsubmit.prop('disabled', false);
-				}
-			});
-			e.preventDefault();
-		});
-	});
-
 	function borrarproducto(id){
 		$("#products"+id).remove();
 	}
@@ -458,30 +378,24 @@ Compra #{{$compra->CompraId}}
 							$('#compraCantidad'+data.producto.ProductoId).text(data.producto.CantidadComprada);
 							$('#compraSubtotal'+data.producto.ProductoId).text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
-							$('#productsCompraTable tbody').prepend(`
-								<tr>
-									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-										`+data.producto.ProductoNombre+`
-									</td>
-									<td id="compraCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-										`+data.producto.CantidadComprada+`
-									</td>
-									<td class="align-middle">
-										`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
-									</td>
-									<td id="compraSubtotal`+data.producto.ProductoId+`" class="align-middle">
-										`+data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
-									</td>
-									<td class="align-middle text-dark" style="width: 15%;">
-										<div class="input-group">
-											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
-											<div class="input-group-append">
-												<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-							`);
+							var table = $('#productsCompraTable').DataTable();
+
+							table.row.add([
+								`<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
+									`+data.producto.ProductoNombre+`
+								</td>`,
+								`<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
+									`+data.producto.CantidadComprada+`
+								</td>`,
+								"$ "+data.producto.ProductoPrecio,
+								"$ "+data.producto.subtotal,
+								`<div class="input-group">
+									<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1">
+									<div class="input-group-append">
+										<button onclick="dropToCompra(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
+									</div>
+								</div>`,
+							]).draw();
 						}
 
 						break;
@@ -537,6 +451,9 @@ Compra #{{$compra->CompraId}}
 							ProductoCantidad.text(data.producto.CantidadComprada);
 							compraSubtotal.text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
+							var table = $('#productsCompraTable').DataTable();
+							var row = table.row('#productRow'+id);
+							row.remove();
 							productRow.remove()
 						}
 						break;

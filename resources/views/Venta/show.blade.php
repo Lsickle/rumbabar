@@ -57,7 +57,7 @@ Venta {{$venta->VentaId}}
 									<div class="input-group-prepend">
 										<span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
 									</div>
-									<select onchange="showProduct()" class="form-control select2" id="selectProducto">
+									<select onchange="showProduct()" class="form-control" id="selectProducto">
 										<option class="text-nowrap bd-highlight" selected value="">Seleccion el Producto...</option>
 										@foreach ($productos as $producto)
 										<option class="text-nowrap bd-highlight" value="{{$producto->ProductoId}}">{{$producto->ProductoNombre}}</option>
@@ -105,11 +105,11 @@ Venta {{$venta->VentaId}}
 			<table id="productsVentaTable" class="table table-hover table-sm text-left mb-0" style="color:#6E6893 !important;">
 				<thead class="font-inter-600" style="background-color: #F4F2FF;">
 					<tr>
-						<th id="th-1" scope="col">Producto</th>
-						<th id="th-2" scope="col">Cantidad</th>
-						<th id="th-3" scope="col">Precio unidad</th>
-						<th id="th-4" scope="col">SubTotal</th>
-						<th id="th-5" scope="col">Restar</th>
+						<th id="th-1" scope="col" class="">Producto</th>
+						<th id="th-2" scope="col" class="text-center">Cantidad</th>
+						<th id="th-4" scope="col" class="text-center">SubTotal</th>
+						<th id="th-3" scope="col" class="text-center">Precio unidad</th>
+						<th id="th-5" scope="col" class="text-center">Restar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -118,14 +118,14 @@ Venta {{$venta->VentaId}}
 						<td id="ProductoId{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark" scope="row">
 							{{$producto->ProductoNombre}}
 						</td>
-						<td id="ventaCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
+						<td id="ventaCantidad{{$producto->ProductoId}}" class="align-middle text-nowrap px-3 text-right text-dark">
 							{{$producto->pivot->ventaCantidad}}
 						</td>
-						<td class="align-middle text-nowrap text-dark">
-							$ {{number_format($producto->ProductoPrecio, 2, ',', '.')}}
+						<td id="ventaSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap px-3 text-right text-dark">
+							$ {{number_format($producto->pivot->ventaSubtotal, 2, '.', ',')}}
 						</td>
-						<td id="ventaSubtotal{{$producto->ProductoId}}" class="align-middle text-nowrap text-dark">
-							$ {{number_format($producto->pivot->ventaSubtotal, 2, ',', '.')}}
+						<td class="align-middle text-nowrap px-3 text-right text-dark">
+							$ {{number_format($producto->ProductoPrecio, 2, '.', ',')}}
 						</td>
 						<td class="align-middle text-dark" style="width: 15%;">
 							<div class="input-group">
@@ -138,6 +138,15 @@ Venta {{$venta->VentaId}}
 					</tr>
 					@endforeach
 				</tbody>
+				<tfoot>
+					<tr>
+						<th id="tf-1" scope="col">Producto</th>
+						<th id="tf-2" scope="col">Cantidad</th>
+						<th id="tf-4" scope="col">SubTotal</th>
+						<th id="tf-3" scope="col">Precio unidad</th>
+						<th id="tf-5" scope="col">Restar</th>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -160,6 +169,7 @@ Venta {{$venta->VentaId}}
 
 {{-- datatables --}}
 <script src="{{asset('js/datatables-bs4.js')}}"></script>
+<script src="{{asset('//cdn.datatables.net/plug-ins/1.10.24/api/sum().js')}}"></script>
 
 
 <script type="text/javascript">
@@ -231,19 +241,39 @@ Venta {{$venta->VentaId}}
 					"sFirst":    "Primero",
 					"sLast":     "Último",
 					"sNext":     "->",
-					"sPrevious": "<-"
+					"sPrevious": "<-",
 				},
-
 				"oAria": {
 					"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				},
-				"colvis": 'Columnas Visibles',
-				"columnDefs": [
-					{ "width": "20%", "targets": 4 }
-				]
+				"colvis": 'Columnas Visibles'
+
+			},
+			"createdRow": function (row, data, index) {
+				$('td', row).eq(0).addClass('align-middle text-nowrap text-dark');//add style to cell in third column
+				$('td', row).eq(1).addClass('align-middle text-nowrap px-3 text-right text-dark');
+				$('td', row).eq(2).addClass('align-middle text-nowrap px-3 text-right text-dark');
+				$('td', row).eq(3).addClass('align-middle text-nowrap px-3 text-right text-dark');
+				$('td', row).eq(4).addClass('align-middle text-dark');
+				$('td', row).eq(4).css('width', '15%');
+			},
+			"drawCallback": function () {
+				var api = this.api();
+				$( api.table().footer() ).html(
+					`<th  scope="col" colspan="2">TOTAL</th>
+					<th  scope="col" class="text-right pr-3">`+formatter.format(api.column( 2, {filter:'applied'} ).data().sum())+`</th>
+					<th  scope="col" colspan="3"></th>`
+				);
 			}
 		});
+	});
+
+	var formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+	maximumFractionDigits: 2,
+	//maximumFractionDigits: 0,
 	});
 	/*funcion para actualizar elplugin responsive in chrome*/
 	function recalcularwitdth() {
@@ -532,30 +562,48 @@ Venta {{$venta->VentaId}}
 							$('#ventaCantidad'+data.producto.ProductoId).text(data.producto.CantidadVendida);
 							$('#ventaSubtotal'+data.producto.ProductoId).text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
-							$('#productsVentaTable tbody').prepend(`
-								<tr>
-									<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-										`+data.producto.ProductoNombre+`
-									</td>
-									<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
-										`+data.producto.CantidadRestada+`
-									</td>
-									<td class="align-middle">
-										`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
-									</td>
-									<td id="ventaSubtotal`+data.producto.ProductoId+`" class="align-middle">
-										`+data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
-									</td>
-									<td class="align-middle text-dark" style="width: 15%;">
-										<div class="input-group">
-											<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
-											<div class="input-group-append">
-												<button onclick="dropToVenta(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
-											</div>
-										</div>
-									</td>
-								</tr>
-							`);
+							// $('#productsVentaTable tbody').prepend(`
+							// 	<tr>
+							// 		<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
+							// 			`+data.producto.ProductoNombre+`
+							// 		</td>
+							// 		<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
+							// 			`+data.producto.CantidadVendida+`
+							// 		</td>
+							// 		<td id="ventaSubtotal`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
+							// 			`+data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
+							// 		</td>
+							// 		<td class="align-middle text-nowrap px-3 text-right text-dark">
+							// 			`+data.producto.ProductoPrecio.toLocaleString('es-CO', { style: 'currency', currency: 'COP' })+`
+							// 		</td>
+							// 		<td class="align-middle text-dark" style="width: 15%;">
+							// 			<div class="input-group">
+							// 				<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
+							// 				<div class="input-group-append">
+							// 					<button onclick="dropToVenta(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
+							// 				</div>
+							// 			</div>
+							// 		</td>
+							// 	</tr>
+							// `);
+							var table = $('#productsVentaTable').DataTable();
+
+							table.row.add([
+								`<td id="ProductoId`+data.producto.ProductoId+`" class="align-middle text-nowrap text-dark">
+									`+data.producto.ProductoNombre+`
+								</td>`,
+								`<td id="ventaCantidad`+data.producto.ProductoId+`" class="align-middle text-nowrap px-3 text-right text-dark">
+									`+data.producto.CantidadVendida+`
+								</td>`,
+								"$ "+data.producto.subtotal,
+								"$ "+data.producto.ProductoPrecio,
+								`<div class="input-group">
+									<input id="restarCantidad`+data.producto.ProductoId+`" type="number" step="1" class="form-control" placeholder="0" aria-label="#" value="1" min="1">
+									<div class="input-group-append">
+										<button onclick="dropToVenta(`+data.producto.ProductoId+`)" class="btn btn-outline-danger" type="button">Restar</button>
+									</div>
+								</div>`,
+							]).draw();
 						}
 
 						break;
@@ -611,7 +659,10 @@ Venta {{$venta->VentaId}}
 							ProductoCantidad.text(data.producto.CantidadRestada);
 							ventaSubtotal.text(data.producto.subtotal.toLocaleString('es-CO', { style: 'currency', currency: 'COP' }));
 						}else{
-							productRow.remove()
+							var table = $('#productsVentaTable').DataTable();
+							var row = table.row('#productRow'+id);
+							row.remove();
+							productRow.remove();
 						}
 						break;
 
@@ -631,5 +682,11 @@ Venta {{$venta->VentaId}}
 			}
 		});
 	}
+	var formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+	maximumFractionDigits: 2,
+	//maximumFractionDigits: 0,
+	});
 </script>
 @endpush

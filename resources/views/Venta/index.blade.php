@@ -39,12 +39,13 @@ Lista de Ventas
 				<thead class="font-inter-600" style="background-color: #F4F2FF;">
 					<tr>
 						<th id="th-1" scope="col">#</th>
-						<th id="th-1" scope="col">CLIENTE</th>
-						<th id="th-1" scope="col">MESA</th>
-						<th id="th-3" scope="col">STATUS</th>
-						<th id="th-2" scope="col">Fecha</th>
+						<th id="th-2" scope="col">CLIENTE</th>
+						<th id="th-3" scope="col">MESA</th>
 						<th id="th-4" scope="col" class="text-right">CANTIDAD</th>
-						<th id="th-5" scope="col">VER</th>
+						<th id="th-5" scope="col">STATUS</th>
+						<th id="th-6" scope="col">USUARIO</th>
+						<th id="th-7" scope="col">Fecha</th>
+						<th id="th-8" scope="col">VER</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -59,13 +60,7 @@ Lista de Ventas
 						<td class="align-middle text-nowrap" scope="col">
 							Mesa {{$venta->mesa->MesaId}}
 						</td>
-						<td class="align-middle text-nowrap" scope="col">
-							{{$venta->VentaStatus}}
-						</td>
-						<td class="align-middle text-nowrap" scope="col">
-							{{$venta->updated_at}}
-						</td>
-						<td class="align-middle text-nowrap px-3 text-right" scope="col">
+						<td class="align-middle text-nowrap px-3 text-right text-dark" scope="col">
 							@php
 							$subtotal = 0
 							@endphp
@@ -74,7 +69,17 @@ Lista de Ventas
 							$subtotal = $producto->pivot->ventaCantidad * $producto->ProductoPrecio;
 							@endphp
 							@endforeach
-							<div class="text-dark">$ {{number_format($subtotal, 2, ',', '.')}}</div>
+							$ {{number_format($subtotal, 2, '.', ',')}}
+							{{-- {{$subtotal}} --}}
+						</td>
+						<td class="align-middle text-nowrap" scope="col">
+							{{$venta->VentaStatus}}
+						</td>
+						<td class="align-middle text-nowrap" scope="col">
+							{{$venta->usuario->name}}
+						</td>
+						<td class="align-middle text-nowrap" scope="col">
+							{{$venta->updated_at}}
 						</td>
 						<td class="align-middle text-nowrap" scope="col">
 							<a href="{{route('ventas.show', ['venta' => $venta])}}" class="btn btn-sm btn-info text-white">
@@ -84,6 +89,18 @@ Lista de Ventas
 					</tr>
 					@endforeach
 				</tbody>
+				<tfoot>
+					<tr class="total">
+						<th id="tf-1" scope="col">#</th>
+						<th id="tf-2" scope="col">CLIENTE</th>
+						<th id="tf-3" scope="col">MESA</th>
+						<th id="tf-4" scope="col" class="text-right">CANTIDAD</th>
+						<th id="tf-5" scope="col">STATUS</th>
+						<th id="tf-6" scope="col">USUARIO</th>
+						<th id="tf-7" scope="col">Fecha</th>
+						<th id="tf-8" scope="col">VER</th>
+					</tr>
+				</tfoot>
 			</table>
 		</div>
 	</div>
@@ -100,6 +117,7 @@ Lista de Ventas
 
 {{-- datatables --}}
 <script src="{{asset('js/datatables-bs4.js')}}"></script>
+<script src="{{asset('//cdn.datatables.net/plug-ins/1.10.24/api/sum().js')}}"></script>
 
 <script>
 	$(document).ready(function() {
@@ -158,7 +176,7 @@ Lista de Ventas
 					"sFirst":    "Primero",
 					"sLast":     "Último",
 					"sNext":     "->",
-					"sPrevious": "<-"
+					"sPrevious": "<-",
 				},
 
 				"oAria": {
@@ -166,9 +184,24 @@ Lista de Ventas
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				},
 				"colvis": 'Columnas Visibles'
+			},
+			"drawCallback": function () {
+				var api = this.api();
+				$( api.table().footer() ).html(
+					`<th  scope="col" colspan="3">TOTAL</th>
+					<th  scope="col" class="text-right pr-3">`+formatter.format(api.column( 3, {filter:'applied'} ).data().sum())+`</th>
+					<th  scope="col" colspan="4"></th>`
+				);
 			}
 		});
 	});
+	var formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+	maximumFractionDigits: 2,
+	//maximumFractionDigits: 0,
+	});
+
 	/*funcion para actualizar elplugin responsive in chrome*/
 	function recalcularwitdth() {
 	var table = $('#comprasTable').DataTable();

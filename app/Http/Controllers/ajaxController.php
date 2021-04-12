@@ -303,7 +303,7 @@ class ajaxController extends Controller
 				}
 			}
 
-			if ($pivotcantidad < 0) {
+			if ($pivotcantidad <= 0) {
 				$venta->productos()->detach($productToUpdate->ProductoId);
 				$pivotcantidad = 0;
 				$pivotsubtotal = 0;
