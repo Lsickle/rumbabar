@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mesa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class MesaController extends Controller
 {
@@ -14,7 +16,9 @@ class MesaController extends Controller
      */
     public function index()
     {
-        //
+        $mesas  = Mesa::paginate(10);
+
+		return View('Mesa.index', compact(['mesas']));
     }
 
     /**
@@ -24,7 +28,11 @@ class MesaController extends Controller
      */
     public function create()
     {
-        //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            return View('Mesa.create');
+        } else {
+            abort(401, 'No Tiene permiso de crear Mesas');
+        }
     }
 
     /**
@@ -35,7 +43,15 @@ class MesaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'MesaPuestos' => 'required|numeric|min:0'
+        ]);
+
+        $mesa = new Mesa();
+		$mesa->MesaPuestos = $request->input('MesaPuestos');
+		$mesa->save();
+
+        return redirect()->route('mesas.index');
     }
 
     /**
@@ -46,7 +62,7 @@ class MesaController extends Controller
      */
     public function show(Mesa $mesa)
     {
-        //
+        return View('Mesa.show', compact('mesa'));
     }
 
     /**
@@ -57,7 +73,7 @@ class MesaController extends Controller
      */
     public function edit(Mesa $mesa)
     {
-        //
+        return View('Mesa.edit', compact('mesa'));
     }
 
     /**
@@ -69,7 +85,14 @@ class MesaController extends Controller
      */
     public function update(Request $request, Mesa $mesa)
     {
-        //
+        $validate = $request->validate([
+            'MesaPuestos' => 'required|numeric|min:0'
+        ]);
+
+		$mesa->MesaPuestos = $request->input('MesaPuestos');
+		$mesa->save();
+
+        return redirect()->route('mesas.index');
     }
 
     /**
@@ -80,6 +103,12 @@ class MesaController extends Controller
      */
     public function destroy(Mesa $mesa)
     {
-        //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $mesa->delete();
+
+            return redirect()->route('mesas.index');
+        } else {
+            abort(401, 'No Tiene permiso de eliminar clientes');
+        }
     }
 }

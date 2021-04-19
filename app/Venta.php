@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Venta extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -19,6 +22,7 @@ class Venta extends Model
      * @var array
      */
     protected $fillable = [
+        'VentaStatus',
         'VentaSaldo',
         'VentaTotal',
         'fk_user',
@@ -37,14 +41,14 @@ class Venta extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The roles that belong to the permiso.
      */
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'producto_venta', 'fk_venta', 'fk_producto')->withPivot('ventaCantidad');
+        return $this->belongsToMany('App\Producto', 'producto_venta', 'fk_venta', 'fk_producto')->withPivot(['ventaCantidad', 'ventaSubtotal']);
 	}
 
 	/**
@@ -53,5 +57,21 @@ class Venta extends Model
     public function cliente()
     {
         return $this->belongsTo('App\Cliente', 'fk_cliente', 'ClienteId');
+    }
+
+    	/**
+     * The roles that belong to the permiso.
+     */
+    public function mesa()
+    {
+        return $this->belongsTo('App\Mesa', 'fk_mesa', 'MesaId');
+    }
+
+	    	/**
+     * The roles that belong to the permiso.
+     */
+    public function usuario()
+    {
+        return $this->belongsTo('App\User', 'fk_user', 'id');
     }
 }

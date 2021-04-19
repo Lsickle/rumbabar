@@ -22,12 +22,13 @@ $factory->define(Venta::class, function (Faker $faker) {
     $clientes = App\Cliente::all('ClienteId');
     $total = $faker->numberBetween($min = 0, $max = 99999);
     return [
+        'VentaStatus' => ($faker->randomElement($array = array ('Abierta','Facturada','Pagada', 'Cancelada', 'Pendiente')) ),
         'VentaSaldo' => ($total/$faker->numberBetween($min = 1, $max = 10)),
         'VentaTotal' => $total,
         'fk_user' => $users->random(),
         'fk_mesa' => $mesas->random(),
         'fk_cliente' => $clientes->random(),
-        'created_at' => $faker->dateTimeBetween('2020-08-15', '2020-09-01')->format('Y-m-d H:i:s'),
-        'updated_at' => $faker->dateTimeBetween('2020-09-01', '2020-10-07')->format('Y-m-d H:i:s'),
+        'created_at' => $faker->dateTimeBetween('2021-01-15', '2021-02-01')->format('Y-m-d H:i:s'),
+        'updated_at' => $faker->dateTimeBetween('2021-02-01', '2021-03-24')->format('Y-m-d H:i:s'),
     ];
 });

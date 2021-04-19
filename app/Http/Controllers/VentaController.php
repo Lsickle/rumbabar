@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use App\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Role;
+use App\Producto;
+use App\Proveedor;
+use App\Mesa;
+use App\Cliente;
+
+
 
 class VentaController extends Controller
 {
@@ -15,9 +23,15 @@ class VentaController extends Controller
      */
     public function index()
     {
-		$ventas = Venta::with(['cliente', 'productos'])->paginate(10);
-		$ventasgeneral = Venta::with(['cliente', 'productos'])->get();
-		$totalgeneral = 0;
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $ventas = Venta::with(['cliente', 'productos'])->get();
+		    $ventasgeneral = Venta::with(['cliente', 'productos'])->get();
+		    $totalgeneral = 0;
+        } else {
+            $ventas = Venta::with(['cliente', 'productos'])->where('fk_user', Auth::id())->get();
+		    $ventasgeneral = Venta::with(['cliente', 'productos'])->where('fk_user', Auth::id())->get();
+		    $totalgeneral = 0;
+        }
 
 		foreach ($ventasgeneral as $key => $venta) {
 			foreach ($venta->productos as $key => $producto) {
@@ -25,7 +39,7 @@ class VentaController extends Controller
 			}
 		}
 
-		return View('ventas', compact(['ventas', 'totalgeneral']));
+		return View('Venta.index', compact(['ventas', 'totalgeneral']));
     }
 
     /**
@@ -35,7 +49,13 @@ class VentaController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        $mesas = Mesa::all();
+        $productos = Producto::with('proveedor')->get();
+
+        $ultimaventa = Venta::all()->last();
+
+		return View('Venta.create', compact(['productos', 'mesas', 'clientes', 'ultimaventa']));
     }
 
     /**
@@ -46,7 +66,51 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+
+        $validate = $request->validate([
+        'fk_cliente' => 'exists:clientes,ClienteId',
+        'fk_mesa' => 'exists:mesas,MesaId'
+        ],
+        [
+            'fk_cliente.exists' => 'cliente no existe...',
+            'fk_mesa.exists' => 'mesa no existe...',
+        ]);
+
+        $venta = new Venta();
+        $venta->VentaStatus = 'Abierta';
+        $venta->VentaSaldo = 0;
+        $venta->VentaTotal = 0;
+
+        $venta->fk_user = Auth::id();
+        $venta->fk_cliente = $request->input('fk_cliente');
+        $venta->fk_mesa = $request->input('fk_mesa');
+        $venta->save();
+
+        $productosdelacompra = $request->input('fk_producto');
+        $ventaCantidad  = $request->input('compraCantidad');
+
+        $total = 0;
+        $saldo = 0;
+        // return $ventaCantidad;
+
+        foreach ($productosdelacompra as $key => $id) {
+
+            $producto = Producto::find($id);
+            $producto->ProductoCantidad = $producto->ProductoCantidad + $ventaCantidad[$key];
+            $producto->save();
+
+            $subtotal = $producto->ProductoPrecio * $ventaCantidad[$key];
+            $total  = $total + $subtotal;
+
+			$venta->productos()->attach($producto->ProductoId, ['ventaCantidad' => $ventaCantidad[$key], 'ventaSubtotal' => $subtotal]);
+        }
+
+        $venta->VentaSaldo = $total;
+        $venta->VentaTotal = $total;
+        $venta->save();
+
+        return redirect()->route('ventas.show', ['venta' => $venta]);
     }
 
     /**
@@ -57,9 +121,18 @@ class VentaController extends Controller
      */
     public function show(Venta $venta)
     {
-		$productos = $venta->productos()->paginate(10);
-
-		return View('nuevaventa', compact(['venta', 'productos']));
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $productos = Producto::all();
+		    return View('Venta.show', compact(['venta', 'productos']));
+        } else {
+            if ($venta->fk_user == Auth::id()) {
+                $productos = Producto::all();
+		        return View('Venta.show', compact(['venta', 'productos']));
+            }else{
+                abort(401, 'No Tiene permiso de acceder a los detalles de esta venta');
+            }
+        }
+        
     }
 
     /**
@@ -93,6 +166,19 @@ class VentaController extends Controller
      */
     public function destroy(Venta $venta)
     {
-        //
+        
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $venta->delete();
+
+            return redirect()->route('ventas.index');
+        } else {
+            if ($venta->fk_user == Auth::id()) {
+                $venta->delete();
+
+                return redirect()->route('ventas.index');
+            }else{
+                abort(401, 'No Tiene permiso de eliminar esta venta');
+            }
+        }
     }
 }

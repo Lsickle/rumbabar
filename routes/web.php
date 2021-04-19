@@ -28,7 +28,16 @@ Route::middleware(['web', 'auth', 'verified', 'bindings'])->group(function () {
     Route::resource('/ventas','VentaController');
     Route::resource('/productos','ProductoController');
     Route::resource('/proveedors','ProveedorController');
+    Route::resource('/mesas','MesaController');
+    Route::resource('/clientes','ClienteController');
+    Route::resource('/usuarios','UsuarioController');
+    Route::resource('/roles','RolController');
+    Route::get('/reportes','ReporteController@dashboard')->name('reportes.dashboard');
 	Route::get('/getProduct','ajaxController@getProduct')->name('getProduct');
 	Route::put('/addProductVenta/{venta}','ajaxController@addProductVenta')->name('addProductVenta');
+	Route::put('/dropproductventa/{venta}','ajaxController@dropProductVenta')->name('dropProductVenta');
+	Route::get('/filterproducts','ajaxController@filterProducts')->name('filterProducts');
+	Route::put('/addproductcompra/{compra}','ajaxController@addProductCompra')->name('addProductCompra');
+	Route::put('/dropproductcompra/{compra}','ajaxController@dropProductCompra')->name('dropProductCompra');
 
 });

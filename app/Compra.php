@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Compra extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -20,6 +23,7 @@ class Compra extends Model
      * @var array
      */
     protected $fillable = [
+        'CompraStatus',
         'CompraSaldo',
         'CompraTotal',
         'fk_user',
@@ -36,16 +40,20 @@ class Compra extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The roles that belong to the permiso.
      */
     public function productos()
     {
-        return $this->belongsToMany('App\Producto', 'compra_producto', 'fk_compra', 'fk_producto')->withPivot('compraCantidad')->withTimestamps();
+        return $this->belongsToMany('App\Producto', 'compra_producto', 'fk_compra', 'fk_producto')->withPivot('compraCantidad', 'compraSubtotal')->withTimestamps();
 	}
 
+    public function proveedor()
+    {
+        return $this->belongsTo('App\Proveedor', 'fk_proveedor', 'ProveedorId');
+	}
 	/**
      * The roles that belong to the permiso.
      */

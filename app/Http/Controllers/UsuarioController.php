@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Usuario;
+use App\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class UsuarioController extends Controller
 {
@@ -15,6 +20,13 @@ class UsuarioController extends Controller
     public function index()
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $usuarios  = Usuario::paginate(10);
+        } else {
+            $usuarios  = Usuario::where('id', Auth::id())->paginate(10);
+        }
+
+		return View('Usuario.index', compact(['usuarios']));
     }
 
     /**
@@ -25,6 +37,14 @@ class UsuarioController extends Controller
     public function create()
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $roles = Rol::all();
+
+            return View('Usuario.create', compact(['roles']));
+        } else {
+            abort(401, 'No Tiene permiso de acceder a la creacion de Usuarios');
+        }
+
     }
 
     /**
@@ -36,6 +56,20 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+        $usuarios = new Usuario();
+		$usuarios->name = $request->input('name');
+		$usuarios->email = $request->input('email');
+		$usuarios->password = Hash::make($request->input('password'));
+		$usuarios->fk_rol = $request->input('fk_rol');
+		$usuarios->save();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -47,6 +81,19 @@ class UsuarioController extends Controller
     public function show(Usuario $usuario)
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $roles = Rol::all();
+            return View('Usuario.show', compact(['usuario', 'roles']));
+        } else {
+            if ($usuario->id == Auth::id()) {
+                $roles = Rol::all();
+                return View('Usuario.show', compact(['usuario', 'roles']));
+            }else{
+                abort(401, 'No Tiene permiso de acceder a los detalles de este usuario');
+            }
+        }
+        
+
     }
 
     /**
@@ -58,6 +105,17 @@ class UsuarioController extends Controller
     public function edit(Usuario $usuario)
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $roles = Rol::all();
+            return View('Usuario.edit', compact(['usuario', 'roles']));
+        } else {
+            if ($usuario->id == Auth::id()) {
+                $roles = Rol::all();
+                return View('Usuario.edit', compact(['usuario', 'roles']));
+            }else{
+                abort(401, 'No Tiene permiso de editar este usuario');
+            }
+        }
     }
 
     /**
@@ -70,6 +128,19 @@ class UsuarioController extends Controller
     public function update(Request $request, Usuario $usuario)
     {
         //
+        $validate = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed'
+        ]);
+
+		$usuarios->name = $request->input('name');
+		$usuarios->email = $request->input('email');
+		$usuarios->password = $request->input('password');
+		$usuarios->fk_rol = $request->input('fk_rol');
+		$usuarios->save();
+
+        return redirect()->route('usuarios.index');
     }
 
     /**
@@ -80,6 +151,19 @@ class UsuarioController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $usuario->delete();
+
+            return redirect()->route('usuarios.index');
+        } else {
+            if ($usuario->id == Auth::id()) {
+                $usuario->delete();
+
+                return redirect()->route('usuarios.index');
+            }else{
+                abort(401, 'No Tiene permiso de eliminar este usuario');
+            }
+        }
     }
 }

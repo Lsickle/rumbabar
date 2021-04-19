@@ -68,7 +68,7 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="#">
+						<a class="card bg-dark text-white shadow" href="{{route('mesas.index')}}">
 							<img src="{{asset('img\mesa.jpg')}}" class="card-img-top" alt="ventas">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
@@ -83,7 +83,7 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="{{route('productos.create')}}">
+						<a class="card bg-dark text-white shadow" href="{{route('productos.index')}}">
 							<img src="{{asset('img\products.jpg')}}" class="card-img-top" alt="ventas">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
@@ -100,7 +100,7 @@
 
 					</div>
 					<div class="card-deck mb-4">
-						<a class="card bg-dark text-white shadow" href="#">
+						<a class="card bg-dark text-white shadow" href="{{route('clientes.index')}}">
 							<img src="{{asset('img\customers2.jpg')}}" class="card-img-top" alt="clientes">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
@@ -115,7 +115,7 @@
 							</div>
 						</a>
 
-						<a class="card bg-dark text-white shadow" href="#">
+						<a class="card bg-dark text-white shadow" href="{{route('usuarios.index')}}">
 							<img src="{{asset('img\Users.jpg')}}" class="card-img-top" alt="clientes">
 							<div class="card-img-overlay shadow">
 								<table class="h-100">
@@ -123,6 +123,37 @@
 										<tr>
 											<td class="align-bottom">
 												<h1 class="font-weight-bold mb-3">USUARIOS</h2>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+					</div>
+					<div class="card-deck mb-4">
+						<a class="card bg-dark text-white shadow" href="{{route('proveedors.index')}}">
+							<img src="{{asset('img\customers2.jpg')}}" class="card-img-top" alt="proveedores">
+							<div class="card-img-overlay shadow">
+								<table class="h-100">
+									<tbody>
+										<tr>
+											<td class="align-bottom">
+												<h1 class="font-weight-bold mb-3">PROVEEDORES</h2>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</a>
+
+						<a class="card bg-dark text-white shadow" href="{{route('reportes.dashboard')}}">
+							<img src="{{asset('img\Users.jpg')}}" class="card-img-top" alt="clientes">
+							<div class="card-img-overlay shadow">
+								<table class="h-100">
+									<tbody>
+										<tr>
+											<td class="align-bottom">
+												<h1 class="font-weight-bold mb-3">REPORTES/INVENTARIO</h2>
 											</td>
 										</tr>
 									</tbody>

@@ -16,6 +16,7 @@ class CreateClientesTable extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->id('ClienteId');
             $table->string('ClienteNombre');
+            $table->string('ClienteTipoDoc');
             $table->string('ClienteDocumento');
             $table->timestamps();
             $table->softDeletes('deleted_at');

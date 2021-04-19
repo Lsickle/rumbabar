@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Compra;
 use Illuminate\Http\Request;
+use App\Producto;
+use App\Proveedor;
+use Illuminate\Support\Facades\Auth;
 
 class CompraController extends Controller
 {
@@ -14,9 +17,16 @@ class CompraController extends Controller
      */
     public function index()
     {
-		$compras = Compra::with(['productos.proveedor', 'comprador'])->paginate(10);
-		$comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->get();
-		$totalgeneral = 0;
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $compras = Compra::with(['productos.proveedor', 'comprador'])->get();
+		    $comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->get();
+		    $totalgeneral = 0;
+        } else {
+            $compras = Compra::with(['productos.proveedor', 'comprador'])->where('fk_user', Auth::id())->get();
+		    $comprasgeneral = Compra::with(['productos.proveedor', 'comprador'])->where('fk_user', Auth::id())->get();
+		    $totalgeneral = 0;
+        }
+		
 
 		foreach ($comprasgeneral as $key => $compra) {
 			foreach ($compra->productos as $key => $producto) {
@@ -24,7 +34,7 @@ class CompraController extends Controller
 			}
 		}
 
-		return View('compras', compact(['compras', 'totalgeneral']));
+		return View('Compra.index', compact(['compras', 'totalgeneral']));
     }
 
     /**
@@ -34,7 +44,11 @@ class CompraController extends Controller
      */
     public function create()
     {
-        //
+        $productos = Producto::all();
+		$proveedores = Proveedor::all();
+
+
+		return View('Compra.create', compact(['productos', 'proveedores']));
     }
 
     /**
@@ -45,7 +59,49 @@ class CompraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+
+        $validate = $request->validate([
+        'fk_proveedor' => 'exists:proveedores,ProveedorId'
+        ],
+        [
+            'fk_proveedor.exists' => 'proveedor no existe...',
+        ]);
+
+        $compra = new Compra();
+        $compra->CompraStatus = 'Abierta';
+        $compra->CompraSaldo = 0;
+        $compra->CompraTotal = 0;
+
+        $compra->fk_user = Auth::id();
+        $compra->fk_proveedor = $request->input('fk_proveedor');
+        $compra->save();
+
+        $productosdelacompra = $request->input('fk_producto');
+        $compraCantidad  = $request->input('compraCantidad');
+
+        $total = 0;
+        $saldo = 0;
+        // return $compraCantidad;
+
+        foreach ($productosdelacompra as $key => $id) {
+
+            $producto = Producto::find($id);
+            $producto->ProductoCantidad = $producto->ProductoCantidad + $compraCantidad[$key];
+            $producto->save();
+
+            $subtotal = $producto->ProductoPrecio * $compraCantidad[$key];
+            $total  = $total + $subtotal;
+
+			$compra->productos()->attach($producto->ProductoId, ['compraCantidad' => $compraCantidad[$key], 'compraSubtotal' => $subtotal]);
+        }
+
+        $compra->CompraSaldo = $total;
+        $compra->CompraTotal = $total;
+        $compra->save();
+
+        return redirect()->route('compras.show', ['compra' => $compra]);
+
     }
 
     /**
@@ -56,9 +112,15 @@ class CompraController extends Controller
      */
     public function show(Compra $compra)
     {
-		$productos = $compra->productos()->paginate(10);
-
-		return View('nuevacompra', compact(['venta', 'productos']));
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            return View('Compra.show', compact(['compra']));
+        } else {
+            if ($compra->fk_user == Auth::id()) {
+                return View('Compra.show', compact(['compra']));
+            }else{
+                abort(401, 'No Tiene permiso de acceder a los detalles de esta compra');
+            }
+        }
     }
 
     /**
@@ -92,6 +154,8 @@ class CompraController extends Controller
      */
     public function destroy(Compra $compra)
     {
-        //
+        $compra->delete();
+
+        return redirect()->route('compras.index');
     }
 }

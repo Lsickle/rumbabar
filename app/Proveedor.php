@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Proveedor extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -34,7 +37,7 @@ class Proveedor extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The proveedor that has Many producto.

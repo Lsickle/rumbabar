@@ -15,6 +15,7 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id('VentaId');
+            $table->string('VentaStatus')->default('Abierta');
             $table->float('VentaSaldo', 10, 2);
             $table->float('VentaTotal', 10, 2);
             $table->unsignedBigInteger('fk_user');

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Cliente extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -19,7 +22,7 @@ class Cliente extends Model
      * @var array
      */
     protected $fillable = [
-        'ClienteNombre', 'ClienteDocumento',
+        'ClienteNombre', 'ClienteDocumento', 'ClienteTipoDoc',
     ];
 
     /**
@@ -33,5 +36,5 @@ class Cliente extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 }

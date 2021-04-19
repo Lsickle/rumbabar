@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Producto extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -23,6 +26,8 @@ class Producto extends Model
         'ProductoDescripcion',
         'ProductoPrecio',
         'ProductoCantidad',
+        'ProductoCodigo',
+        'ProductoImage',
         'fk_proveedor',
     ];
 
@@ -37,7 +42,7 @@ class Producto extends Model
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The roles that belong to the permiso.

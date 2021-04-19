@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Rol extends Model
 {
+    use SoftDeletes;
     /**
      * The primary key associated with the table.
      *
@@ -27,13 +30,13 @@ class Rol extends Model
      *
      * @var string
      */
-    protected $table = 'roles';
+    protected $table = 'rols';
     /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     /**
      * The roles that belong to the permiso.

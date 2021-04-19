@@ -17,7 +17,7 @@ class CreatePermisoRolTable extends Migration
             $table->unsignedBigInteger('fk_permiso');
             $table->foreign('fk_permiso')->references('PermisoId')->on('permisos');
             $table->unsignedBigInteger('fk_rol');
-            $table->foreign('fk_rol')->references('RolId')->on('roles');
+            $table->foreign('fk_rol')->references('RolId')->on('rols');
             $table->timestamps();
             $table->softDeletes('deleted_at');
             $table->engine = 'InnoDB';

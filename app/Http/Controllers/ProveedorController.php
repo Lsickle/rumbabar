@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Proveedor;
 use App\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProveedorController extends Controller
 {
@@ -16,9 +18,12 @@ class ProveedorController extends Controller
     public function index()
     {
         // $proveedores = Proveedor::all('ProveedorID');
-        $roles = Rol::all('RolId');
+        // $roles = Rol::all('RolId');
 
-        return $roles->random()->RolId;
+        // return $roles->random()->RolId;
+        $proveedores  = Proveedor::paginate(10);
+
+		return View('Proveedor.index', compact(['proveedores']));
     }
 
     /**
@@ -29,6 +34,8 @@ class ProveedorController extends Controller
     public function create()
     {
         //
+        return View('Proveedor.create');
+
     }
 
     /**
@@ -40,6 +47,17 @@ class ProveedorController extends Controller
     public function store(Request $request)
     {
         //
+        $validate = $request->validate([
+            'ProveedorNombre' => 'required|string|max:255',
+            'ProveedorNit' => 'required'
+        ]);
+
+        $proveedor = new PRoveedor();
+		$proveedor->ProveedorNombre = $request->input('ProveedorNombre');
+		$proveedor->ProveedorNit = $request->input('ProveedorNit');
+		$proveedor->save();
+
+        return redirect()->route('proveedors.index');
     }
 
     /**
@@ -51,6 +69,8 @@ class ProveedorController extends Controller
     public function show(Proveedor $proveedor)
     {
         //
+        return View('Proveedor.show', compact('proveedor'));
+
     }
 
     /**
@@ -62,6 +82,12 @@ class ProveedorController extends Controller
     public function edit(Proveedor $proveedor)
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            return View('Proveedor.edit', compact('proveedor'));
+        } else {
+            abort(401, 'No Tiene permiso de editar  Proveedores');
+        }
+
     }
 
     /**
@@ -73,7 +99,15 @@ class ProveedorController extends Controller
      */
     public function update(Request $request, Proveedor $proveedor)
     {
-        //
+        $validate = $request->validate([
+            'ProveedorNombre' => 'required|string|max:255',
+            'ProveedorNit' => 'required'
+        ]);
+		$proveedor->ProveedorNombre = $request->input('ProveedorNombre');
+		$proveedor->ProveedorNit = $request->input('ProveedorNit');
+		$proveedor->save();
+
+        return redirect()->route('proveedors.index');
     }
 
     /**
@@ -85,5 +119,12 @@ class ProveedorController extends Controller
     public function destroy(Proveedor $proveedor)
     {
         //
+        if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
+            $proveedor->delete();
+
+            return redirect()->route('proveedors.index');
+        } else {
+            abort(401, 'No Tiene permiso de eliminar Proveedores');
+        }
     }
 }

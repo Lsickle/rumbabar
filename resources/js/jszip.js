@@ -1,0 +1,1 @@
+window.JSZip = require('jszip');

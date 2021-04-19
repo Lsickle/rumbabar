@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Usuario extends Authenticatable
 {
+    use SoftDeletes;
     use Notifiable;
 
         /**
@@ -16,7 +19,7 @@ class Usuario extends Authenticatable
      *
      * @var string
      */
-    protected $primaryKey = 'UsuarioId';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -24,9 +27,9 @@ class Usuario extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'UsuarioName',
-        'UsuarioEmail',
-        'UsuarioPassword',
+        'name',
+        'email',
+        'password',
         'fk_rol',
     ];
 
@@ -35,14 +38,14 @@ class Usuario extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'usuarios';
+    protected $table = 'users';
 
     /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
         /**
      * The roles that belong to the permiso.

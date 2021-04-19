@@ -1,4 +1,21 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/fontawesome.css": "/css/fontawesome.css",
+    "/css/datatables.css": "/css/datatables.css",
+    "/css/select2.css": "/css/select2.css",
+    "/css/toastr.css": "/css/toastr.css",
+    "/js/datatables-bs4.js": "/js/datatables-bs4.js",
+    "/js/jszip.js": "/js/jszip.js",
+    "/js/pdfmake.js": "/js/pdfmake.js",
+    "/js/select2.js": "/js/select2.js",
+    "/js/toastr.js": "/js/toastr.js",
+    "/js/jquery.easing.js": "/js/jquery.easing.js",
+    "/js/jquery.easing.compatibility.js": "/js/jquery.easing.compatibility.js",
+    "/js/scriptspersonalizados.js": "/js/scriptspersonalizados.js",
+    "/css/sb-admin-2.css": "/css/sb-admin-2.css",
+    "/js/sb-admin-2.js": "/js/sb-admin-2.js",
+    "/js/demo/chart-area-demo.js": "/js/demo/chart-area-demo.js",
+    "/js/demo/chart-bar-demo.js": "/js/demo/chart-bar-demo.js",
+    "/js/demo/chart-pie-demo.js": "/js/demo/chart-pie-demo.js"
 }

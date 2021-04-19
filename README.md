@@ -36,8 +36,8 @@ Aparte de los requerimientos solicitados incluye algunos adicionales como:
 
  - modify your .env file to especify your db_table, db_user and db_password 
 
- - run migrations 
-`php artisan migrate`
+ - run migrations and seeders
+`php artisan migrate:fresh --seed`
 
  - Enjoy!
 
