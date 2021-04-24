@@ -6,6 +6,8 @@ use App\Producto;
 use App\Proveedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class ProductoController extends Controller
@@ -150,8 +152,6 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
-        
         if ( Auth::user()->hasRole(['Programador', 'Administrador']) ) {
             $producto->delete();
 
